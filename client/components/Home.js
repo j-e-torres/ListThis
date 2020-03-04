@@ -10,19 +10,13 @@ import {
 } from 'react-native';
 import {TextInput} from 'react-native-gesture-handler';
 
-function Separator() {
-  return <View style={styles.separator} />;
-}
+const Separator = () => <View style={styles.separator} />;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'space-evenly',
-    // justifyContent: 'center',
-    // alignItems: 'center',
-    marginHorizontal: 25,
-    // width: '75%',
-    // margin: 0,
+    padding: 25,
   },
   title: {
     textAlign: 'center',
@@ -44,14 +38,24 @@ const styles = StyleSheet.create({
     color: '#fff',
     borderRadius: 50,
   },
-  myButton: {
-    paddingHorizontal: 20,
-    paddingVertical: 15,
-    backgroundColor: '#640d67',
+  invitationCodeContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  invitationCode: {
+    borderBottomWidth: 1,
+    borderBottomColor: '#222',
+    textAlign: 'center',
   },
 });
 
-const Home = () => {
+//psuedo loop for invitationCode
+let counter = [];
+for (let i = 0; i < 7; ++i) {
+  counter.push(i);
+}
+
+const Home = ({navigation}) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>
@@ -60,51 +64,21 @@ const Home = () => {
 
       <View>
         <Text style={styles.title}>Enter your invitation code</Text>
-        <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-          <TextInput
-            placeholder="_"
-            multiline
-            numberOfLines={1}
-            maxLength={1}
-          />
-          <TextInput
-            placeholder="_"
-            multiline
-            numberOfLines={1}
-            maxLength={1}
-          />
-          <TextInput
-            placeholder="_"
-            multiline
-            numberOfLines={1}
-            maxLength={1}
-          />
-          <TextInput
-            placeholder="_"
-            multiline
-            numberOfLines={1}
-            maxLength={1}
-          />
-          <TextInput
-            placeholder="_"
-            multiline
-            numberOfLines={1}
-            maxLength={1}
-          />
-          <TextInput
-            placeholder="_"
-            multiline
-            numberOfLines={1}
-            maxLength={1}
-          />
+
+        <View style={styles.invitationCodeContainer}>
+          {counter.map((num, idx) => {
+            return (
+              <TextInput
+                key={idx}
+                multiline
+                numberOfLines={1}
+                maxLength={1}
+                style={styles.invitationCode}
+              />
+            );
+          })}
         </View>
       </View>
-
-      {/* <Button
-        title="test me bitch"
-        onPress={() => Alert.alert('testing bitch')}
-        // color="#fff"
-      /> */}
 
       <Separator />
 
@@ -116,11 +90,24 @@ const Home = () => {
 
       <Separator />
 
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => Alert.alert('Simple Button pressed')}>
-        <Text style={{color: 'blue'}}> View Existing Groups or Lists</Text>
-      </TouchableOpacity>
+      <View style={{flexDirection: 'row', justifyContent: 'space-evenly'}}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => Alert.alert('Simple Button pressed')}>
+          <Text onPress={() => navigation.navigate} style={{color: 'blue'}}>
+            {' '}
+            Your Groups
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => Alert.alert('Simple Button pressed')}>
+          <Text onPress={() => navigation.navigate} style={{color: 'blue'}}>
+            {' '}
+            Your Lists
+          </Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
