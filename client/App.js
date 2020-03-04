@@ -33,6 +33,7 @@ export default class App extends Component {
               headerTitleStyle: {
                 fontWeight: 'bold',
               },
+              headerTitleAlign: 'center',
             }}
           />
           <Stack.Screen name="GroupScreen" component={GroupScreenOfLists} />
