@@ -1,8 +1,8 @@
 import React from 'react';
 import {Text, View} from 'react-native';
 
-import listArray from '../fakeDB';
-import ListScreenOfItems from './ListScreenOfItems';
+import listArray from '../fakeDB/listsDB';
+
 /*
    Will grab data of lists inside this particular group
    Will display a list of lists, show name of list, 2 items then ...
@@ -11,10 +11,10 @@ import ListScreenOfItems from './ListScreenOfItems';
    can user delete list?
 */
 
-const GroupScreenOfLists = ({navigation}) => {
+const Lists = ({navigation}) => {
   return (
     <View style={{padding: '10%'}}>
-      <Text style={{marginBottom: 50}}>Group Name: Test</Text>
+      <Text style={{marginBottom: 50}}>Here are your active Lists</Text>
       <View
         style={{
           flexDirection: 'row',
@@ -38,8 +38,16 @@ const GroupScreenOfLists = ({navigation}) => {
                   borderBottomWidth: 1,
                   borderBottomColor: 'red',
                 }}
-                onPress={() => navigation.navigate('ListScreen', list)}>
+                onPress={() => navigation.navigate('ListItems', list)}>
                 {list.listName}
+              </Text>
+              <Text
+                style={{
+                  textAlign: 'center',
+                  borderBottomWidth: 1,
+                  borderBottomColor: 'red',
+                }}>
+                Group: {list.groupName}
               </Text>
               <View style={{padding: '5%'}}>
                 <Text>
@@ -58,4 +66,4 @@ const GroupScreenOfLists = ({navigation}) => {
   );
 };
 
-export default GroupScreenOfLists;
+export default Lists;
