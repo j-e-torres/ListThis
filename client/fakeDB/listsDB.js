@@ -1,5 +1,6 @@
 const listArray = [
   {
+    groupName: 'Family',
     listName: 'target',
     listItems: [
       {
@@ -21,6 +22,7 @@ const listArray = [
     ],
   },
   {
+    groupName: 'Girlfriend',
     listName: 'trader joes',
     listItems: [
       {
@@ -46,6 +48,7 @@ const listArray = [
     ],
   },
   {
+    groupName: 'Girlfriend',
     listName: 'bloomingdales',
     listItems: [
       {
@@ -67,6 +70,7 @@ const listArray = [
     ],
   },
   {
+    groupName: 'Girlfriend',
     listName: 'chores',
     listItems: [
       {
@@ -88,6 +92,7 @@ const listArray = [
     ],
   },
   {
+    groupName: 'Neighbors',
     listName: 'babysitting',
     listItems: [
       {
