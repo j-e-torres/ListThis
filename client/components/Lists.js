@@ -1,7 +1,16 @@
+/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import {Text, View} from 'react-native';
+import {
+  Text,
+  View,
+  StyleSheet,
+  ScrollView,
+  ImageBackground,
+  Image,
+} from 'react-native';
 
 import listArray from '../fakeDB/listsDB';
+import {stickyNotesTiltDegrees} from '../helperFunctions';
 
 /*
    Will grab data of lists inside this particular group
@@ -11,57 +20,134 @@ import listArray from '../fakeDB/listsDB';
    can user delete list?
 */
 
+const panelStyle = idx =>
+  StyleSheet.create({
+    panel: {
+      // borderWidth: 1,
+      // borderColor: 'blue',
+      // borderRadius: 1,
+      backgroundColor: 'white',
+      width: '49%',
+      // margin: 1,
+      padding: '2%',
+      transform: stickyNotesTiltDegrees(),
+      // shadowOffset: {width: 100, height: 100},
+      // shadowColor: '#000',
+      // shadowOpacity: 0.8,
+      // shadowRadius: 50,
+      elevation: 20,
+    },
+  });
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  panelsContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    flexWrap: 'wrap',
+    alignItems: 'center',
+    borderColor: 'black',
+    borderWidth: 1,
+    borderRadius: 50,
+    padding: '5%',
+    backgroundColor: '#cc9966',
+  },
+});
+
 const Lists = ({navigation}) => {
   return (
-    <View style={{padding: '10%'}}>
+    <View style={styles.container}>
       <Text style={{marginBottom: 50}}>Here are your active Lists</Text>
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          flexWrap: 'wrap',
-          alignItems: 'center',
-        }}>
-        {listArray.map((list, idx) => {
-          return (
-            <View
-              style={{
-                width: '50%',
-                marginBottom: 25,
-                borderColor: 'black',
-                borderWidth: 1,
-              }}
-              key={idx}>
-              <Text
-                style={{
-                  textAlign: 'center',
-                  borderBottomWidth: 1,
-                  borderBottomColor: 'red',
-                }}
-                onPress={() => navigation.navigate('ListItems', list)}>
-                {list.listName}
-              </Text>
-              <Text
-                style={{
-                  textAlign: 'center',
-                  borderBottomWidth: 1,
-                  borderBottomColor: 'red',
-                }}>
-                Group: {list.groupName}
-              </Text>
-              <View style={{padding: '5%'}}>
-                <Text>
-                  {list.listItems[0].itemName ? list.listItems[0].itemName : ''}
+      <ScrollView>
+        {/* <Image source={require('../assets/bulletinBoard2.jpg')}> */}
+        {/* <ImageBackground
+          source={require('../assets/bulletinBoard2.jpg')}
+          style={{
+            width: '100%',
+            height: '100%',
+            alignSelf: 'stretch',
+            // flex: 1,
+          }}> */}
+        <View style={styles.panelsContainer}>
+          {listArray.map((list, idx) => {
+            return (
+              <View style={panelStyle(idx).panel} key={idx}>
+                <Text
+                  style={{
+                    paddingLeft: 10,
+                    borderLeftColor: '#F8D3D3',
+                    borderLeftWidth: 1,
+                    // textAlign: 'center',
+                    borderBottomWidth: 1,
+                    borderBottomColor: '#DFE8EC',
+                    // justifyContent: 'center',
+                    // alignSelf: 'stretch',
+                    fontSize: 25,
+                  }}
+                  onPress={() => navigation.navigate('ListItems', list)}>
+                  {list.listName}
                 </Text>
-                <Text>
-                  {list.listItems[1].itemName ? list.listItems[1].itemName : ''}
+                <Text
+                  style={{
+                    paddingLeft: 10,
+                    borderLeftColor: '#F8D3D3',
+                    borderLeftWidth: 1,
+                    // textAlign: 'center',
+                    borderBottomWidth: 1,
+                    borderBottomColor: '#DFE8EC',
+                    fontSize: 18,
+                  }}>
+                  Group: {list.groupName}
                 </Text>
-                <Text>...</Text>
+                <View>
+                  <Text
+                    style={{
+                      paddingLeft: 10,
+                      borderLeftColor: '#F8D3D3',
+                      borderLeftWidth: 1,
+                      borderBottomWidth: 1,
+                      borderBottomColor: '#DFE8EC',
+                    }}>
+                    {list.listItems[0].itemName
+                      ? list.listItems[0].itemName
+                      : ''}
+                  </Text>
+                  <Text
+                    style={{
+                      paddingLeft: 10,
+                      borderLeftColor: '#F8D3D3',
+                      borderLeftWidth: 1,
+                      borderBottomWidth: 1,
+                      borderBottomColor: '#DFE8EC',
+                    }}>
+                    {list.listItems[1].itemName
+                      ? list.listItems[1].itemName
+                      : ''}
+                  </Text>
+                  <Text
+                    style={{
+                      paddingLeft: 10,
+                      borderLeftColor: '#F8D3D3',
+                      borderLeftWidth: 1,
+                      borderBottomWidth: 1,
+                      borderBottomColor: '#DFE8EC',
+                      fontSize: 12,
+                      color: '#999',
+                      fontStyle: 'italic',
+                    }}>
+                    {list.listItems.length - 2 > 0 ? 'list continued...' : ''}
+                  </Text>
+                </View>
               </View>
-            </View>
-          );
-        })}
-      </View>
+            );
+          })}
+        </View>
+        {/* </Image> */}
+        {/* </ImageBackground> */}
+      </ScrollView>
     </View>
   );
 };
