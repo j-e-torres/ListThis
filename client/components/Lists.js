@@ -23,9 +23,6 @@ import {stickyNotesTiltDegrees} from '../helperFunctions';
 const panelStyle = idx =>
   StyleSheet.create({
     panel: {
-      // borderWidth: 1,
-      // borderColor: 'blue',
-      // borderRadius: 1,
       backgroundColor: 'white',
       width: '49%',
       // margin: 1,
@@ -60,94 +57,101 @@ const styles = StyleSheet.create({
 const Lists = ({navigation}) => {
   return (
     <View style={styles.container}>
-      <Text style={{marginBottom: 50}}>Here are your active Lists</Text>
-      <ScrollView>
-        {/* <Image source={require('../assets/bulletinBoard2.jpg')}> */}
-        {/* <ImageBackground
-          source={require('../assets/bulletinBoard2.jpg')}
-          style={{
-            width: '100%',
-            height: '100%',
-            alignSelf: 'stretch',
-            // flex: 1,
-          }}> */}
-        <View style={styles.panelsContainer}>
-          {listArray.map((list, idx) => {
-            return (
-              <View style={panelStyle(idx).panel} key={idx}>
-                <Text
-                  style={{
-                    paddingLeft: 10,
-                    borderLeftColor: '#F8D3D3',
-                    borderLeftWidth: 1,
-                    // textAlign: 'center',
-                    borderBottomWidth: 1,
-                    borderBottomColor: '#DFE8EC',
-                    // justifyContent: 'center',
-                    // alignSelf: 'stretch',
-                    fontSize: 25,
-                  }}
-                  onPress={() => navigation.navigate('ListItems', list)}>
-                  {list.listName}
-                </Text>
-                <Text
-                  style={{
-                    paddingLeft: 10,
-                    borderLeftColor: '#F8D3D3',
-                    borderLeftWidth: 1,
-                    // textAlign: 'center',
-                    borderBottomWidth: 1,
-                    borderBottomColor: '#DFE8EC',
-                    fontSize: 18,
-                  }}>
-                  Group: {list.groupName}
-                </Text>
-                <View>
+      <Text
+        style={{
+          flex: 1,
+          borderWidth: 1,
+          borderColor: 'black',
+          fontSize: 35,
+          textAlign: 'center',
+          textAlignVertical: 'center',
+          // alignContent: 'center',
+          // alignSelf: 'center',
+          // justifyContent: 'center',
+        }}>
+        Here are your active Lists
+      </Text>
+
+      <View style={{flex: 4}}>
+        <ScrollView>
+          <View style={styles.panelsContainer}>
+            {listArray.map((list, idx) => {
+              return (
+                <View style={panelStyle(idx).panel} key={idx}>
                   <Text
                     style={{
                       paddingLeft: 10,
                       borderLeftColor: '#F8D3D3',
                       borderLeftWidth: 1,
+                      // textAlign: 'center',
                       borderBottomWidth: 1,
                       borderBottomColor: '#DFE8EC',
-                    }}>
-                    {list.listItems[0].itemName
-                      ? list.listItems[0].itemName
-                      : ''}
+                      fontSize: 25,
+                      // textAlignVertical: 'center',
+                    }}
+                    adjustsFontSizeToFit
+                    // allowFontScaling
+                    numberOfLines={1}
+                    onPress={() => navigation.navigate('ListItems', list)}>
+                    {list.listName}
                   </Text>
                   <Text
                     style={{
                       paddingLeft: 10,
                       borderLeftColor: '#F8D3D3',
                       borderLeftWidth: 1,
+                      // textAlign: 'center',
                       borderBottomWidth: 1,
                       borderBottomColor: '#DFE8EC',
+                      fontSize: 18,
                     }}>
-                    {list.listItems[1].itemName
-                      ? list.listItems[1].itemName
-                      : ''}
+                    Group: {list.groupName}
                   </Text>
-                  <Text
-                    style={{
-                      paddingLeft: 10,
-                      borderLeftColor: '#F8D3D3',
-                      borderLeftWidth: 1,
-                      borderBottomWidth: 1,
-                      borderBottomColor: '#DFE8EC',
-                      fontSize: 12,
-                      color: '#999',
-                      fontStyle: 'italic',
-                    }}>
-                    {list.listItems.length - 2 > 0 ? 'list continued...' : ''}
-                  </Text>
+                  <View>
+                    <Text
+                      style={{
+                        paddingLeft: 10,
+                        borderLeftColor: '#F8D3D3',
+                        borderLeftWidth: 1,
+                        borderBottomWidth: 1,
+                        borderBottomColor: '#DFE8EC',
+                      }}>
+                      {list.listItems[0].itemName
+                        ? list.listItems[0].itemName
+                        : ''}
+                    </Text>
+                    <Text
+                      style={{
+                        paddingLeft: 10,
+                        borderLeftColor: '#F8D3D3',
+                        borderLeftWidth: 1,
+                        borderBottomWidth: 1,
+                        borderBottomColor: '#DFE8EC',
+                      }}>
+                      {list.listItems[1].itemName
+                        ? list.listItems[1].itemName
+                        : ''}
+                    </Text>
+                    <Text
+                      style={{
+                        paddingLeft: 10,
+                        borderLeftColor: '#F8D3D3',
+                        borderLeftWidth: 1,
+                        borderBottomWidth: 1,
+                        borderBottomColor: '#DFE8EC',
+                        fontSize: 12,
+                        color: '#999',
+                        fontStyle: 'italic',
+                      }}>
+                      {list.listItems.length - 2 > 0 ? 'list continued...' : ''}
+                    </Text>
+                  </View>
                 </View>
-              </View>
-            );
-          })}
-        </View>
-        {/* </Image> */}
-        {/* </ImageBackground> */}
-      </ScrollView>
+              );
+            })}
+          </View>
+        </ScrollView>
+      </View>
     </View>
   );
 };
