@@ -26,7 +26,8 @@ const panelStyle = idx =>
       backgroundColor: 'white',
       width: '49%',
       // margin: 1,
-      padding: '2%',
+      // padding: '2%',
+      paddingLeft: 15,
       transform: stickyNotesTiltDegrees(),
       // shadowOffset: {width: 100, height: 100},
       // shadowColor: '#000',
@@ -39,6 +40,7 @@ const panelStyle = idx =>
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    // padding: 10,
   },
   panelsContainer: {
     flex: 1,
@@ -57,20 +59,30 @@ const styles = StyleSheet.create({
 const Lists = ({navigation}) => {
   return (
     <View style={styles.container}>
-      <Text
-        style={{
-          flex: 1,
-          borderWidth: 1,
-          borderColor: 'black',
-          fontSize: 35,
-          textAlign: 'center',
-          textAlignVertical: 'center',
-          // alignContent: 'center',
-          // alignSelf: 'center',
-          // justifyContent: 'center',
-        }}>
-        Here are your active Lists
-      </Text>
+      <View style={{flex: 1, justifyContent: 'center'}}>
+        <Text
+          style={{
+            paddingBottom: '1%',
+            borderWidth: 1,
+            borderStyle: 'solid',
+            // borderColor: 'black',
+            // borderRadius: 40,
+            borderLeftColor: 'transparent',
+            borderRightColor: 'transparent',
+            borderBottomColor: '#f4511e',
+            borderTopColor: 'transparent',
+            // backgroundColor: 'blue',
+            borderBottomLeftRadius: 20,
+            borderBottomRightRadius: 20,
+            fontSize: 35,
+            textAlign: 'center',
+            textAlignVertical: 'center',
+            overflow: 'hidden',
+            color: '#f77a55',
+          }}>
+          Here are your active Lists
+        </Text>
+      </View>
 
       <View style={{flex: 4}}>
         <ScrollView>
@@ -80,7 +92,7 @@ const Lists = ({navigation}) => {
                 <View style={panelStyle(idx).panel} key={idx}>
                   <Text
                     style={{
-                      paddingLeft: 10,
+                      paddingLeft: 5,
                       borderLeftColor: '#F8D3D3',
                       borderLeftWidth: 1,
                       // textAlign: 'center',
@@ -97,7 +109,7 @@ const Lists = ({navigation}) => {
                   </Text>
                   <Text
                     style={{
-                      paddingLeft: 10,
+                      paddingLeft: 5,
                       borderLeftColor: '#F8D3D3',
                       borderLeftWidth: 1,
                       // textAlign: 'center',
@@ -110,7 +122,7 @@ const Lists = ({navigation}) => {
                   <View>
                     <Text
                       style={{
-                        paddingLeft: 10,
+                        paddingLeft: 5,
                         borderLeftColor: '#F8D3D3',
                         borderLeftWidth: 1,
                         borderBottomWidth: 1,
@@ -122,7 +134,7 @@ const Lists = ({navigation}) => {
                     </Text>
                     <Text
                       style={{
-                        paddingLeft: 10,
+                        paddingLeft: 5,
                         borderLeftColor: '#F8D3D3',
                         borderLeftWidth: 1,
                         borderBottomWidth: 1,
@@ -134,7 +146,7 @@ const Lists = ({navigation}) => {
                     </Text>
                     <Text
                       style={{
-                        paddingLeft: 10,
+                        paddingLeft: 5,
                         borderLeftColor: '#F8D3D3',
                         borderLeftWidth: 1,
                         borderBottomWidth: 1,
