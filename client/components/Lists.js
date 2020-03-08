@@ -40,89 +40,34 @@ const panelStyle = idx =>
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // padding: 10,
-    // backgroundColor: '#F7E0D4',
-    backgroundColor: 'white',
+    // backgroundColor: 'white',
   },
-  panelsContainer: {
+  panelsContainerClipBoard: {
     flex: 1,
-    flexDirection: 'row',
+    // flexDirection: 'row',
+    // justifyContent: 'space-between',
+    // flexWrap: 'wrap',
+    // alignItems: 'center',
+    borderColor: 'black',
+    borderRadius: 50,
+    borderWidth: 1,
+    backgroundColor: '#cc9966',
+    padding: '5%',
+  },
+  panelsContainerLayout: {
+    alignItems: 'center',
     justifyContent: 'space-between',
     flexWrap: 'wrap',
-    alignItems: 'center',
-    borderColor: 'black',
-    borderWidth: 1,
-    borderRadius: 50,
-    padding: '5%',
-    backgroundColor: '#cc9966',
-    // backgroundColor: '#973602',
+    flexDirection: 'row',
   },
 });
 
 const Lists = ({navigation}) => {
   return (
     <View style={styles.container}>
-      {/* <View style={{flex: 1, justifyContent: 'center'}}>
-        <Text
-          style={{
-            paddingBottom: '1%',
-            borderWidth: 4,
-            // borderStyle: 'solid',
-            // borderColor: 'black',
-            // borderRadius: 40,
-            borderLeftColor: 'transparent',
-            borderRightColor: 'transparent',
-            borderBottomColor: '#11526e',
-            // borderBottomColor: '#f4511e',
-            // borderBottomColor: '#092834',
-            borderTopColor: 'transparent',
-            borderBottomLeftRadius: 20,
-            borderBottomRightRadius: 20,
-            fontSize: 35,
-            textAlign: 'center',
-            textAlignVertical: 'center',
-            overflow: 'hidden',
-            color: '#11526e',
-            // color: '#092834',
-            // color: '#f4511e',
-          }}>
-          You have{' '}
-          {`${listArray.length} active ${
-            listArray.length > 1 ? 'lists' : 'list'
-          } `}
-        </Text>
-      </View> */}
-
-      <View style={{flex: 1}}>
-        <ScrollView>
-          <View style={styles.panelsContainer}>
-            <Text
-              style={{
-                paddingBottom: '1%',
-                borderWidth: 4,
-                borderLeftColor: 'transparent',
-                borderRightColor: 'transparent',
-                borderBottomColor: '#11526e',
-                // borderBottomColor: '#f4511e',
-                // borderBottomColor: '#092834',
-                borderTopColor: 'transparent',
-                borderBottomLeftRadius: 20,
-                borderBottomRightRadius: 20,
-                fontSize: 35,
-                textAlign: 'center',
-                textAlignVertical: 'center',
-                overflow: 'hidden',
-                color: '#11526e',
-                // color: '#092834',
-                // color: '#f4511e',
-                // flex: 1,
-              }}>
-              You have{' '}
-              {`${listArray.length} active ${
-                listArray.length > 1 ? 'lists' : 'list'
-              } `}
-            </Text>
-
+      <View style={{flex: 1, padding: '5%'}}>
+        <ScrollView style={styles.panelsContainerClipBoard}>
+          <View style={styles.panelsContainerLayout}>
             {listArray.map((list, idx) => {
               return (
                 <View style={panelStyle(idx).panel} key={idx}>
@@ -131,7 +76,6 @@ const Lists = ({navigation}) => {
                       paddingLeft: 5,
                       borderLeftColor: '#F8D3D3',
                       borderLeftWidth: 1,
-                      // textAlign: 'center',
                       borderBottomWidth: 1,
                       borderBottomColor: '#DFE8EC',
                       fontSize: 25,
@@ -148,7 +92,6 @@ const Lists = ({navigation}) => {
                       paddingLeft: 5,
                       borderLeftColor: '#F8D3D3',
                       borderLeftWidth: 1,
-                      // textAlign: 'center',
                       borderBottomWidth: 1,
                       borderBottomColor: '#DFE8EC',
                       fontSize: 18,
@@ -210,3 +153,29 @@ const Lists = ({navigation}) => {
 };
 
 export default Lists;
+
+/* <View style={{flex: 1, justifyContent: 'center'}}>
+            <Text
+              style={{
+                borderWidth: 4,
+                borderLeftColor: 'transparent',
+                borderRightColor: 'transparent',
+                borderBottomColor: 'black',
+                borderTopColor: 'transparent',
+                borderBottomLeftRadius: 20,
+                borderBottomRightRadius: 20,
+                fontSize: 35,
+                textAlign: 'center',
+                textAlignVertical: 'center',
+                overflow: 'hidden',
+                // color: '#11526e',
+                color: 'black',
+                // color: '#092834',
+                // color: '#f4511e',
+              }}>
+              You have{' '}
+              {`${listArray.length} active ${
+                listArray.length > 1 ? 'lists' : 'list'
+              } `}
+            </Text>
+          </View> */
