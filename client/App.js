@@ -39,7 +39,21 @@ export default class App extends Component {
             }}
           />
 
-          <Stack.Screen name="Lists" component={Lists} />
+          <Stack.Screen
+            name="Lists"
+            component={Lists}
+            options={{
+              title: 'My home',
+              headerStyle: {
+                backgroundColor: '#f4511e',
+              },
+              headerTintColor: '#fff',
+              headerTitleStyle: {
+                fontWeight: 'bold',
+              },
+              headerTitleAlign: 'center',
+            }}
+          />
           <Stack.Screen name="Groups" component={Groups} />
           <Stack.Screen name="GroupLists" component={GroupLists} />
 

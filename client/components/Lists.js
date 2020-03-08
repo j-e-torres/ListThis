@@ -41,6 +41,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     // padding: 10,
+    // backgroundColor: '#F7E0D4',
+    backgroundColor: 'white',
   },
   panelsContainer: {
     flex: 1,
@@ -53,40 +55,74 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     padding: '5%',
     backgroundColor: '#cc9966',
+    // backgroundColor: '#973602',
   },
 });
 
 const Lists = ({navigation}) => {
   return (
     <View style={styles.container}>
-      <View style={{flex: 1, justifyContent: 'center'}}>
+      {/* <View style={{flex: 1, justifyContent: 'center'}}>
         <Text
           style={{
             paddingBottom: '1%',
-            borderWidth: 1,
-            borderStyle: 'solid',
+            borderWidth: 4,
+            // borderStyle: 'solid',
             // borderColor: 'black',
             // borderRadius: 40,
             borderLeftColor: 'transparent',
             borderRightColor: 'transparent',
-            borderBottomColor: '#f4511e',
+            borderBottomColor: '#11526e',
+            // borderBottomColor: '#f4511e',
+            // borderBottomColor: '#092834',
             borderTopColor: 'transparent',
-            // backgroundColor: 'blue',
             borderBottomLeftRadius: 20,
             borderBottomRightRadius: 20,
             fontSize: 35,
             textAlign: 'center',
             textAlignVertical: 'center',
             overflow: 'hidden',
-            color: '#f77a55',
+            color: '#11526e',
+            // color: '#092834',
+            // color: '#f4511e',
           }}>
-          Here are your active Lists
+          You have{' '}
+          {`${listArray.length} active ${
+            listArray.length > 1 ? 'lists' : 'list'
+          } `}
         </Text>
-      </View>
+      </View> */}
 
-      <View style={{flex: 4}}>
+      <View style={{flex: 1}}>
         <ScrollView>
           <View style={styles.panelsContainer}>
+            <Text
+              style={{
+                paddingBottom: '1%',
+                borderWidth: 4,
+                borderLeftColor: 'transparent',
+                borderRightColor: 'transparent',
+                borderBottomColor: '#11526e',
+                // borderBottomColor: '#f4511e',
+                // borderBottomColor: '#092834',
+                borderTopColor: 'transparent',
+                borderBottomLeftRadius: 20,
+                borderBottomRightRadius: 20,
+                fontSize: 35,
+                textAlign: 'center',
+                textAlignVertical: 'center',
+                overflow: 'hidden',
+                color: '#11526e',
+                // color: '#092834',
+                // color: '#f4511e',
+                // flex: 1,
+              }}>
+              You have{' '}
+              {`${listArray.length} active ${
+                listArray.length > 1 ? 'lists' : 'list'
+              } `}
+            </Text>
+
             {listArray.map((list, idx) => {
               return (
                 <View style={panelStyle(idx).panel} key={idx}>
@@ -99,10 +135,10 @@ const Lists = ({navigation}) => {
                       borderBottomWidth: 1,
                       borderBottomColor: '#DFE8EC',
                       fontSize: 25,
-                      // textAlignVertical: 'center',
+                      color: '#f88d6d',
+                      fontWeight: 'bold',
                     }}
                     adjustsFontSizeToFit
-                    // allowFontScaling
                     numberOfLines={1}
                     onPress={() => navigation.navigate('ListItems', list)}>
                     {list.listName}
@@ -116,6 +152,9 @@ const Lists = ({navigation}) => {
                       borderBottomWidth: 1,
                       borderBottomColor: '#DFE8EC',
                       fontSize: 18,
+                      fontStyle: 'italic',
+                      fontWeight: '100',
+                      color: '#9d9d9d',
                     }}>
                     Group: {list.groupName}
                   </Text>
@@ -127,6 +166,7 @@ const Lists = ({navigation}) => {
                         borderLeftWidth: 1,
                         borderBottomWidth: 1,
                         borderBottomColor: '#DFE8EC',
+                        color: '#9d9d9d',
                       }}>
                       {list.listItems[0].itemName
                         ? list.listItems[0].itemName
@@ -139,6 +179,7 @@ const Lists = ({navigation}) => {
                         borderLeftWidth: 1,
                         borderBottomWidth: 1,
                         borderBottomColor: '#DFE8EC',
+                        color: '#9d9d9d',
                       }}>
                       {list.listItems[1].itemName
                         ? list.listItems[1].itemName
