@@ -20,27 +20,11 @@ import {stickyNotesTiltDegrees} from '../helperFunctions';
    can user delete list?
 */
 
-const panelStyle = idx =>
-  StyleSheet.create({
-    panel: {
-      backgroundColor: 'white',
-      width: '49%',
-      // margin: 1,
-      // padding: '2%',
-      paddingLeft: 15,
-      transform: stickyNotesTiltDegrees(),
-      // shadowOffset: {width: 100, height: 100},
-      // shadowColor: '#000',
-      // shadowOpacity: 0.8,
-      // shadowRadius: 50,
-      elevation: 20,
-    },
-  });
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'white',
+    padding: '3%',
   },
   panelsContainerClipBoard: {
     flex: 1,
@@ -50,87 +34,60 @@ const styles = StyleSheet.create({
     backgroundColor: '#cc9966',
     padding: '5%',
     marginHorizontal: -10,
-    // overflow: 'scroll',
   },
   panelsContainerLayout: {
-    flex: 7,
+    flex: 1,
     alignItems: 'center',
     justifyContent: 'space-between',
     flexWrap: 'wrap',
     flexDirection: 'row',
     marginVertical: 10,
-    // overflow: 'hidden',
+  },
+  panel: {
+    backgroundColor: 'white',
+    width: '49%',
+    // margin: 1,
+    // padding: '2%',
+    paddingLeft: 15,
+    transform: stickyNotesTiltDegrees(),
+    // shadowOffset: {width: 100, height: 100},
+    // shadowColor: '#000',
+    // shadowOpacity: 0.8,
+    // shadowRadius: 50,
+    elevation: 20,
   },
 });
 
 const Lists = ({navigation}) => {
   return (
     <View style={styles.container}>
-      <View style={{flex: 1, padding: '2%'}}>
-        <ScrollView
-          style={styles.panelsContainerClipBoard}
-          contentContainerStyle={{
-            flexGrow: 1,
-          }}>
-          <View style={{flex: 1, justifyContent: 'center'}}>
-            <Text
-              style={{
-                marginVertical: 10,
-                borderBottomWidth: 2,
-                // borderLeftColor: 'transparent',
-                // borderRightColor: 'transparent',
-                borderBottomColor: 'black',
-                // borderTopColor: 'transparent',
-                // borderBottomLeftRadius: 20,
-                // borderBottomRightRadius: 20,
-                fontSize: 25,
-                textAlign: 'center',
-                textAlignVertical: 'center',
-                overflow: 'hidden',
-                color: 'black',
-              }}>
-              You have{' '}
-              {`${listArray.length} active ${
-                listArray.length > 1 ? 'lists' : 'list'
-              } `}
-            </Text>
-          </View>
-
-          <View style={styles.panelsContainerLayout}>
-            {listArray.map((list, idx) => {
-              return (
-                <View style={panelStyle(idx).panel} key={idx}>
-                  <Text
-                    style={{
-                      paddingLeft: 5,
-                      borderLeftColor: '#F8D3D3',
-                      borderLeftWidth: 1,
-                      borderBottomWidth: 1,
-                      borderBottomColor: '#DFE8EC',
-                      fontSize: 25,
-                      color: '#f88d6d',
-                      fontWeight: 'bold',
-                    }}
-                    adjustsFontSizeToFit
-                    numberOfLines={1}
-                    onPress={() => navigation.navigate('ListItems', list)}>
-                    {list.listName}
-                  </Text>
-                  <Text
-                    style={{
-                      paddingLeft: 5,
-                      borderLeftColor: '#F8D3D3',
-                      borderLeftWidth: 1,
-                      borderBottomWidth: 1,
-                      borderBottomColor: '#DFE8EC',
-                      fontSize: 18,
-                      fontStyle: 'italic',
-                      fontWeight: '100',
-                      color: '#9d9d9d',
-                    }}>
-                    Group: {list.groupName}
-                  </Text>
-                  <View>
+      <View style={styles.panelsContainerClipBoard}>
+        <View style={{flex: 1}}>
+          <Text
+            style={{
+              marginVertical: 10,
+              borderBottomWidth: 2,
+              borderBottomColor: 'black',
+              fontSize: 25,
+              textAlign: 'center',
+              textAlignVertical: 'center',
+              color: 'black',
+            }}>
+            You have{' '}
+            {`${listArray.length} active ${
+              listArray.length > 1 ? 'lists' : 'list'
+            } `}
+          </Text>
+        </View>
+        <View style={{flex: 8}}>
+          <ScrollView
+            contentContainerStyle={{
+              flexGrow: 1,
+            }}>
+            <View style={styles.panelsContainerLayout}>
+              {listArray.map((list, idx) => {
+                return (
+                  <View style={styles.panel} key={idx}>
                     <Text
                       style={{
                         paddingLeft: 5,
@@ -138,11 +95,14 @@ const Lists = ({navigation}) => {
                         borderLeftWidth: 1,
                         borderBottomWidth: 1,
                         borderBottomColor: '#DFE8EC',
-                        color: '#9d9d9d',
-                      }}>
-                      {list.listItems[0].itemName
-                        ? list.listItems[0].itemName
-                        : ''}
+                        fontSize: 25,
+                        color: '#f88d6d',
+                        fontWeight: 'bold',
+                      }}
+                      adjustsFontSizeToFit
+                      numberOfLines={1}
+                      onPress={() => navigation.navigate('ListItems', list)}>
+                      {list.listName}
                     </Text>
                     <Text
                       style={{
@@ -151,31 +111,62 @@ const Lists = ({navigation}) => {
                         borderLeftWidth: 1,
                         borderBottomWidth: 1,
                         borderBottomColor: '#DFE8EC',
-                        color: '#9d9d9d',
-                      }}>
-                      {list.listItems[1].itemName
-                        ? list.listItems[1].itemName
-                        : ''}
-                    </Text>
-                    <Text
-                      style={{
-                        paddingLeft: 5,
-                        borderLeftColor: '#F8D3D3',
-                        borderLeftWidth: 1,
-                        borderBottomWidth: 1,
-                        borderBottomColor: '#DFE8EC',
-                        fontSize: 12,
-                        color: '#999',
+                        fontSize: 18,
                         fontStyle: 'italic',
+                        fontWeight: '100',
+                        color: '#9d9d9d',
                       }}>
-                      {list.listItems.length - 2 > 0 ? 'list continued...' : ''}
+                      Group: {list.groupName}
                     </Text>
+                    <View>
+                      <Text
+                        style={{
+                          paddingLeft: 5,
+                          borderLeftColor: '#F8D3D3',
+                          borderLeftWidth: 1,
+                          borderBottomWidth: 1,
+                          borderBottomColor: '#DFE8EC',
+                          color: '#9d9d9d',
+                        }}>
+                        {list.listItems[0].itemName
+                          ? list.listItems[0].itemName
+                          : ''}
+                      </Text>
+                      <Text
+                        style={{
+                          paddingLeft: 5,
+                          borderLeftColor: '#F8D3D3',
+                          borderLeftWidth: 1,
+                          borderBottomWidth: 1,
+                          borderBottomColor: '#DFE8EC',
+                          color: '#9d9d9d',
+                        }}>
+                        {list.listItems[1].itemName
+                          ? list.listItems[1].itemName
+                          : ''}
+                      </Text>
+                      <Text
+                        style={{
+                          paddingLeft: 5,
+                          borderLeftColor: '#F8D3D3',
+                          borderLeftWidth: 1,
+                          borderBottomWidth: 1,
+                          borderBottomColor: '#DFE8EC',
+                          fontSize: 12,
+                          color: '#999',
+                          fontStyle: 'italic',
+                        }}>
+                        {list.listItems.length - 2 > 0
+                          ? 'list continued...'
+                          : ''}
+                      </Text>
+                    </View>
                   </View>
-                </View>
-              );
-            })}
-          </View>
-        </ScrollView>
+                );
+              })}
+            </View>
+          </ScrollView>
+        </View>
       </View>
     </View>
   );
