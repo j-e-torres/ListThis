@@ -40,33 +40,62 @@ const panelStyle = idx =>
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // backgroundColor: 'white',
+    backgroundColor: 'white',
   },
   panelsContainerClipBoard: {
     flex: 1,
-    // flexDirection: 'row',
-    // justifyContent: 'space-between',
-    // flexWrap: 'wrap',
-    // alignItems: 'center',
     borderColor: 'black',
     borderRadius: 50,
     borderWidth: 1,
     backgroundColor: '#cc9966',
     padding: '5%',
+    marginHorizontal: -10,
+    // overflow: 'scroll',
   },
   panelsContainerLayout: {
+    flex: 7,
     alignItems: 'center',
     justifyContent: 'space-between',
     flexWrap: 'wrap',
     flexDirection: 'row',
+    marginVertical: 10,
+    // overflow: 'hidden',
   },
 });
 
 const Lists = ({navigation}) => {
   return (
     <View style={styles.container}>
-      <View style={{flex: 1, padding: '5%'}}>
-        <ScrollView style={styles.panelsContainerClipBoard}>
+      <View style={{flex: 1, padding: '2%'}}>
+        <ScrollView
+          style={styles.panelsContainerClipBoard}
+          contentContainerStyle={{
+            flexGrow: 1,
+          }}>
+          <View style={{flex: 1, justifyContent: 'center'}}>
+            <Text
+              style={{
+                marginVertical: 10,
+                borderBottomWidth: 2,
+                // borderLeftColor: 'transparent',
+                // borderRightColor: 'transparent',
+                borderBottomColor: 'black',
+                // borderTopColor: 'transparent',
+                // borderBottomLeftRadius: 20,
+                // borderBottomRightRadius: 20,
+                fontSize: 25,
+                textAlign: 'center',
+                textAlignVertical: 'center',
+                overflow: 'hidden',
+                color: 'black',
+              }}>
+              You have{' '}
+              {`${listArray.length} active ${
+                listArray.length > 1 ? 'lists' : 'list'
+              } `}
+            </Text>
+          </View>
+
           <View style={styles.panelsContainerLayout}>
             {listArray.map((list, idx) => {
               return (
@@ -153,29 +182,3 @@ const Lists = ({navigation}) => {
 };
 
 export default Lists;
-
-/* <View style={{flex: 1, justifyContent: 'center'}}>
-            <Text
-              style={{
-                borderWidth: 4,
-                borderLeftColor: 'transparent',
-                borderRightColor: 'transparent',
-                borderBottomColor: 'black',
-                borderTopColor: 'transparent',
-                borderBottomLeftRadius: 20,
-                borderBottomRightRadius: 20,
-                fontSize: 35,
-                textAlign: 'center',
-                textAlignVertical: 'center',
-                overflow: 'hidden',
-                // color: '#11526e',
-                color: 'black',
-                // color: '#092834',
-                // color: '#f4511e',
-              }}>
-              You have{' '}
-              {`${listArray.length} active ${
-                listArray.length > 1 ? 'lists' : 'list'
-              } `}
-            </Text>
-          </View> */
