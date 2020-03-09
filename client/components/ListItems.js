@@ -1,7 +1,7 @@
 import React from 'react';
 import {Text, View} from 'react-native';
 
-const ListScreenOfItems = ({route: {params}, navigation}) => {
+const ListItems = ({route: {params}, navigation}) => {
   return (
     <View
       style={{
@@ -32,4 +32,4 @@ const ListScreenOfItems = ({route: {params}, navigation}) => {
   );
 };
 
-export default ListScreenOfItems;
+export default ListItems;

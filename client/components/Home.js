@@ -94,7 +94,9 @@ const Home = ({navigation}) => {
         <TouchableOpacity
           style={styles.button}
           onPress={() => Alert.alert('Simple Button pressed')}>
-          <Text onPress={() => navigation.navigate} style={{color: 'blue'}}>
+          <Text
+            onPress={() => navigation.navigate('Groups')}
+            style={{color: 'blue'}}>
             {' '}
             Your Groups
           </Text>
@@ -102,7 +104,9 @@ const Home = ({navigation}) => {
         <TouchableOpacity
           style={styles.button}
           onPress={() => Alert.alert('Simple Button pressed')}>
-          <Text onPress={() => navigation.navigate} style={{color: 'blue'}}>
+          <Text
+            onPress={() => navigation.navigate('Lists')}
+            style={{color: 'blue'}}>
             {' '}
             Your Lists
           </Text>
