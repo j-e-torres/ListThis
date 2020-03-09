@@ -20,11 +20,28 @@ import {stickyNotesTiltDegrees} from '../helperFunctions';
    can user delete list?
 */
 
+const panelStyle = idx =>
+  StyleSheet.create({
+    panel: {
+      backgroundColor: 'white',
+      width: '49%',
+      // margin: 1,
+      // padding: '2%',
+      paddingLeft: 15,
+      transform: stickyNotesTiltDegrees(),
+      // shadowOffset: {width: 100, height: 100},
+      // shadowColor: '#000',
+      // shadowOpacity: 0.8,
+      // shadowRadius: 50,
+      elevation: 20,
+    },
+  });
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'white',
-    padding: '3%',
+    padding: '4%',
   },
   panelsContainerClipBoard: {
     flex: 1,
@@ -42,19 +59,6 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     flexDirection: 'row',
     marginVertical: 10,
-  },
-  panel: {
-    backgroundColor: 'white',
-    width: '49%',
-    // margin: 1,
-    // padding: '2%',
-    paddingLeft: 15,
-    transform: stickyNotesTiltDegrees(),
-    // shadowOffset: {width: 100, height: 100},
-    // shadowColor: '#000',
-    // shadowOpacity: 0.8,
-    // shadowRadius: 50,
-    elevation: 20,
   },
 });
 
@@ -87,7 +91,7 @@ const Lists = ({navigation}) => {
             <View style={styles.panelsContainerLayout}>
               {listArray.map((list, idx) => {
                 return (
-                  <View style={styles.panel} key={idx}>
+                  <View style={panelStyle().panel} key={idx}>
                     <Text
                       style={{
                         paddingLeft: 5,
