@@ -113,6 +113,94 @@ const listArray = [
       },
     ],
   },
+  {
+    groupName: 'Family',
+    listName: 'target',
+    listItems: [
+      {
+        itemName: 'ajax',
+        completed: false,
+      },
+      {
+        itemName: 'bacon',
+        completed: false,
+      },
+      {
+        itemName: 'salsa',
+        completed: false,
+      },
+      {
+        itemName: 'toilet paper',
+        completed: false,
+      },
+    ],
+  },
+  {
+    groupName: 'Family',
+    listName: 'target',
+    listItems: [
+      {
+        itemName: 'ajax',
+        completed: false,
+      },
+      {
+        itemName: 'bacon',
+        completed: false,
+      },
+      {
+        itemName: 'salsa',
+        completed: false,
+      },
+      {
+        itemName: 'toilet paper',
+        completed: false,
+      },
+    ],
+  },
+  {
+    groupName: 'Family',
+    listName: 'target',
+    listItems: [
+      {
+        itemName: 'ajax',
+        completed: false,
+      },
+      {
+        itemName: 'bacon',
+        completed: false,
+      },
+      {
+        itemName: 'salsa',
+        completed: false,
+      },
+      {
+        itemName: 'toilet paper',
+        completed: false,
+      },
+    ],
+  },
+  {
+    groupName: 'Family',
+    listName: 'target',
+    listItems: [
+      {
+        itemName: 'ajax',
+        completed: false,
+      },
+      {
+        itemName: 'bacon',
+        completed: false,
+      },
+      {
+        itemName: 'salsa',
+        completed: false,
+      },
+      {
+        itemName: 'toilet paper',
+        completed: false,
+      },
+    ],
+  },
 ];
 
 export default listArray;
