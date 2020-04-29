@@ -1,10 +1,15 @@
 import axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
-import {GET_USER} from '../constants';
+import {GET_USER, GET_USER_GROUPS} from '../constants';
 
 const getUser = user => ({
   type: GET_USER,
   user,
+});
+
+const getUserGroups = groups => ({
+  type: GET_USER_GROUPS,
+  groups,
 });
 
 export const loginUserThunk = creds => {
@@ -40,5 +45,14 @@ export const signUpThunk = credentials => {
       .then(({token}) => {
         AsyncStorage.setItem('token', token);
       });
+  };
+};
+
+export const userGroupsThunk = userId => {
+  return dispatch => {
+    return axios
+      .get(`https://listthisbackend.herokuapp.com/api/users/${userId}/groups`)
+      .then(res => res.data)
+      .then(groups => dispatch(getUserGroups(groups)));
   };
 };
