@@ -15,6 +15,11 @@ import {userGroupsThunk} from '../redux/actions/user';
 import {colors, borders, typography} from '../styles';
 
 class Home extends Component {
+  constructor() {
+    super();
+    this.state = {};
+  }
+
   componentDidMount() {
     const {_userGroups, userLogin} = this.props;
 
@@ -25,12 +30,12 @@ class Home extends Component {
     const {userGroups, navigation} = this.props;
     console.log('1111', userGroups);
 
-    const firstTextInputRef = useRef(null);
-    const secondTextInputRef = useRef(null);
-    const thirdTextInputRef = useRef(null);
-    const fourthTextInputRef = useRef(null);
-    const fifthTextInputRef = useRef(null);
-    const sixthTextInputRef = useRef(null);
+    // const firstTextInputRef = useRef(null);
+    // const secondTextInputRef = useRef(null);
+    // const thirdTextInputRef = useRef(null);
+    // const fourthTextInputRef = useRef(null);
+    // const fifthTextInputRef = useRef(null);
+    // const sixthTextInputRef = useRef(null);
 
     const testOnChange = ({nativeEvent}) => {
       // console.log('testOnChange', nativeEvent);
@@ -39,31 +44,31 @@ class Home extends Component {
       // else this.borderColor = colors.darkOrange;
     };
 
-    const onOtpChange = index => {
-      return value => {
-        if (isNaN(Number(value))) {
-          // do nothing when a non digit is pressed
-          return;
-        }
-        console.log(index, value);
+    // const onOtpChange = index => {
+    //   return value => {
+    //     if (isNaN(Number(value))) {
+    //       // do nothing when a non digit is pressed
+    //       return;
+    //     }
+    //     console.log(index, value);
 
-        // auto focus to next InputText if value is not blank
-        if (value !== '') {
-          if (index === 0) {
-            // this[borderColor] = colors.darkOrange;
-            secondTextInputRef.current.focus();
-          } else if (index === 1) {
-            thirdTextInputRef.current.focus();
-          } else if (index === 2) {
-            fourthTextInputRef.current.focus();
-          } else if (index === 3) {
-            fifthTextInputRef.current.focus();
-          } else if (index === 4) {
-            sixthTextInputRef.current.focus();
-          }
-        }
-      };
-    };
+    //     // auto focus to next InputText if value is not blank
+    //     if (value !== '') {
+    //       if (index === 0) {
+    //         // this[borderColor] = colors.darkOrange;
+    //         secondTextInputRef.current.focus();
+    //       } else if (index === 1) {
+    //         thirdTextInputRef.current.focus();
+    //       } else if (index === 2) {
+    //         fourthTextInputRef.current.focus();
+    //       } else if (index === 3) {
+    //         fifthTextInputRef.current.focus();
+    //       } else if (index === 4) {
+    //         sixthTextInputRef.current.focus();
+    //       }
+    //     }
+    //   };
+    // };
 
     return (
       <View style={styles.container}>
@@ -74,7 +79,7 @@ class Home extends Component {
           <Text style={styles.subTitle}>choose one of the options below</Text>
         </View>
 
-        <View
+        {/* <View
           style={{
             flex: 2,
             justifyContent: 'space-evenly',
@@ -105,7 +110,7 @@ class Home extends Component {
               );
             })}
           </View>
-        </View>
+        </View> */}
 
         <View
           style={{
@@ -125,10 +130,10 @@ class Home extends Component {
         <View
           style={{
             flex: 2,
-            flexDirection: 'row',
-            justifyContent: 'space-evenly',
+            // flexDirection: 'row',
+            // justifyContent: 'space-evenly',
             alignContent: 'center',
-            alignItems: 'center',
+            // alignItems: 'center',
           }}>
           <TouchableOpacity
             style={styles.button}
@@ -136,11 +141,11 @@ class Home extends Component {
             <Text style={styles.buttonText}>Your Groups</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity
+          {/* <TouchableOpacity
             style={styles.button}
             onPress={() => navigation.navigate('Lists')}>
             <Text style={styles.buttonText}>Your Lists</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
       </View>
     );
@@ -152,6 +157,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'space-between',
     padding: 25,
+    backgroundColor: 'white',
   },
 
   title: {
@@ -190,7 +196,7 @@ const styles = StyleSheet.create({
   buttonText: {color: colors.lightOrange, fontSize: 25},
 });
 
-const mapStateToProps = ({userLogin}) => ({userLogin});
+const mapStateToProps = ({userLogin, userGroups}) => ({userLogin, userGroups});
 
 const mapDispatchToProps = dispatch => ({
   _userGroups: userId => dispatch(userGroupsThunk(userId)),

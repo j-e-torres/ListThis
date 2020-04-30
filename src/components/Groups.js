@@ -1,5 +1,6 @@
 import React from 'react';
 import {Text, View, StyleSheet, ScrollView} from 'react-native';
+import {connect} from 'react-redux';
 
 import groupsArray from '../fakeDB/groupsDB';
 import {stickyNotesTiltDegrees} from '../helperFunctions';
@@ -57,15 +58,15 @@ const styles = StyleSheet.create({
   },
 });
 
-const Groups = ({navigation}) => {
+const Groups = ({navigation, userGroups}) => {
   return (
     <View style={styles.panelContainer}>
       <View style={styles.panelsContainerClipBoard}>
         <View style={{flex: 1}}>
           <Text style={styles.clipBoardTitle}>
             You have{' '}
-            {`${groupsArray.length} active ${
-              groupsArray.length > 1 ? 'groups' : 'group'
+            {`${userGroups.length} active ${
+              userGroups.length > 1 ? 'groups' : 'group'
             } `}
           </Text>
         </View>
@@ -73,12 +74,12 @@ const Groups = ({navigation}) => {
         <View style={{flex: 8}}>
           <ScrollView contentContainerStyle={{flexGrow: 1}}>
             <View style={styles.panelsContainerLayout}>
-              {groupsArray.map((group, idx) => {
+              {userGroups.map((group, idx) => {
                 return (
                   <View style={panelStyle().panel} key={idx}>
                     <Text
                       style={styles.title}
-                      adjustsFontSizeToFit
+                      // adjustsFontSizeToFit
                       numberOfLines={1}
                       onPress={() => navigation.navigate('GroupLists', group)}>
                       {group.groupName}
@@ -96,9 +97,7 @@ const Groups = ({navigation}) => {
                       </Text>
 
                       <Text style={styles.listItemsEnd}>
-                        {group.lists.length - 2 > 0
-                          ? 'groups continued...'
-                          : ''}
+                        {group.lists.length - 2 > 0 ? 'lists continued...' : ''}
                       </Text>
                     </View>
                   </View>
@@ -112,4 +111,6 @@ const Groups = ({navigation}) => {
   );
 };
 
-export default Groups;
+const mapStateToProps = ({userGroups}) => ({userGroups});
+
+export default connect(mapStateToProps)(Groups);
