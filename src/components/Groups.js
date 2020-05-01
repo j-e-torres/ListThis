@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {Text, View, StyleSheet, ScrollView} from 'react-native';
 import {connect} from 'react-redux';
@@ -70,6 +71,8 @@ const Groups = ({navigation, userGroups}) => {
             } `}
           </Text>
         </View>
+
+        <View style={{flex: 1}} />
 
         <View style={{flex: 8}}>
           <ScrollView contentContainerStyle={{flexGrow: 1}}>

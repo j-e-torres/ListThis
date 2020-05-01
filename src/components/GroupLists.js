@@ -21,6 +21,8 @@ const GroupLists = ({route, navigation}) => {
           </Text>
         </View>
 
+        <View style={{flex: 1}} />
+
         <View style={{flex: 8}}>
           <ScrollView contentContainerStyle={{flexGrow: 1}}>
             <View style={styles.panelsContainerLayout}>
@@ -29,18 +31,20 @@ const GroupLists = ({route, navigation}) => {
                   <View style={panelStyle().panel} key={idx}>
                     <Text
                       style={styles.title}
-                      adjustsFontSizeToFit
+                      // adjustsFontSizeToFit
                       numberOfLines={1}
                       onPress={() => navigation.navigate('ListItems', list)}>
                       {list.listName}
                     </Text>
                     <View>
                       <Text style={styles.listItems}>
-                        {list.tasks[0] ? list.tasks[0].itemName : ''}
+                        {list.tasks[0] ? list.tasks[0].taskName : ''}
                       </Text>
+
                       <Text style={styles.listItems}>
-                        {list.tasks[1] ? list.tasks[1].itemName : ''}
+                        {list.tasks[1] ? list.tasks[1].taskName : ''}
                       </Text>
+
                       <Text style={styles.listItemsEnd}>
                         {list.tasks.length - 2 > 0 ? 'list continued...' : ''}
                       </Text>
