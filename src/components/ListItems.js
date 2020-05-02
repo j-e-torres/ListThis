@@ -13,8 +13,9 @@ import Icon from 'react-native-vector-icons/Entypo';
 
 import {colors, borders, typography} from '../styles';
 
-const ListItems = ({route: {params}, navigation}) => {
-  // console.log('listItems 555', params);
+const ListItems = ({route: {params}, navigation}, userLogin) => {
+  console.log('listItems 555', params);
+  console.log('userlogin', userLogin);
   const {tasks, listNotes} = params;
   const sortByCompleted = tasks.sort((a, b) =>
     a.completed > b.completed ? 1 : -1,
@@ -25,20 +26,19 @@ const ListItems = ({route: {params}, navigation}) => {
       <View style={{flex: 1}}>
         <View style={{flex: 1}}>
           <View style={styles.iconHeader}>
-            <TouchableOpacity
-              onPress={() => Alert.alert('Simple Button pressed')}>
+            <TouchableOpacity onPress={() => Alert.alert('Add new task')}>
               <Icon name="add-to-list" size={40} color={colors.lightBlack} />
             </TouchableOpacity>
 
-            <TouchableOpacity
+            {/* <TouchableOpacity
               onPress={() => Alert.alert('Simple Button pressed')}>
               <Icon name="add-user" size={40} color={colors.lightBlack} />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
 
-            <TouchableOpacity
+            {/* <TouchableOpacity
               onPress={() => Alert.alert('Simple Button pressed')}>
               <Icon name="users" size={40} color={colors.lightBlack} />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
         </View>
       </View>
@@ -60,7 +60,9 @@ const ListItems = ({route: {params}, navigation}) => {
                   <TouchableOpacity
                     onPress={() => Alert.alert('Simple Button pressed')}
                     style={completed(task.completed).taskOwner}>
-                    <Icon name="edit" size={20} color={colors.lightBlack} />
+                    <Text style={styles.pencilRight}>
+                      <Icon name="edit" size={20} color={colors.lightBlack} />
+                    </Text>
                   </TouchableOpacity>
                 )}
               </View>
@@ -100,6 +102,7 @@ const completed = bool =>
   });
 
 const styles = StyleSheet.create({
+  pencilRight: {alignSelf: 'flex-end'},
   panelContainer: {
     flex: 1,
     backgroundColor: colors.white,

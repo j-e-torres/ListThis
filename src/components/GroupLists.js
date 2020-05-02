@@ -1,19 +1,48 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import {Text, View, StyleSheet, ScrollView} from 'react-native';
+import {
+  Text,
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  ScrollView,
+  Alert,
+} from 'react-native';
+
+import Icon from 'react-native-vector-icons/Entypo';
+
+import {connect} from 'react-redux';
 
 import {stickyNotesTiltDegrees} from '../helperFunctions';
 import {colors, borders, typography} from '../styles';
 
-const GroupLists = ({route, navigation}) => {
-  console.log('2222', route.params);
-  const {lists} = route.params;
-  const {groupName} = route.params;
-  console.log('3333', lists);
-  console.log('4444', lists[0].tasks);
+const GroupLists = ({route: {params}, navigation, userLogin}) => {
+  console.log('2222', params);
+  const {username} = userLogin;
+  const {lists, groupName, groupOwner} = params;
+  // console.log('3333', lists);
+  // console.log('4444', lists[0].tasks);
 
   return (
     <View style={styles.panelContainer}>
+      <View style={{flex: 1}}>
+        <View style={styles.iconHeader}>
+          <TouchableOpacity onPress={() => Alert.alert('Create new List')}>
+            <Icon name="add-to-list" size={40} color={colors.lightBlack} />
+          </TouchableOpacity>
+
+          {username === groupOwner && (
+            <TouchableOpacity onPress={() => Alert.alert('Add user')}>
+              <Icon name="add-user" size={40} color={colors.lightBlack} />
+            </TouchableOpacity>
+          )}
+
+          <TouchableOpacity onPress={() => Alert.alert('View users')}>
+            <Icon name="users" size={40} color={colors.lightBlack} />
+          </TouchableOpacity>
+        </View>
+      </View>
+
       <View style={styles.panelsContainerClipBoard}>
         <View style={{flex: 1}}>
           <Text style={styles.clipBoardTitle}>
@@ -76,13 +105,22 @@ const panelStyle = idx =>
   });
 
 const styles = StyleSheet.create({
+  iconHeader: {
+    borderBottomColor: colors.lightBlack,
+    borderBottomWidth: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    alignContent: 'center',
+    alignItems: 'center',
+    paddingBottom: '2%',
+  },
   panelContainer: {
     flex: 1,
     backgroundColor: colors.white,
     padding: '4%',
   },
   panelsContainerClipBoard: {
-    flex: 1,
+    flex: 7,
     ...borders.clipBoardBorder,
   },
   panelsContainerLayout: {
@@ -112,4 +150,6 @@ const styles = StyleSheet.create({
   },
 });
 
-export default GroupLists;
+const mapStateToProps = ({userLogin}) => ({userLogin});
+
+export default connect(mapStateToProps)(GroupLists);
