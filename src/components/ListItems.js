@@ -13,9 +13,7 @@ import Icon from 'react-native-vector-icons/Entypo';
 
 import {colors, borders, typography} from '../styles';
 
-const ListItems = ({route: {params}, navigation}, userLogin) => {
-  console.log('listItems 555', params);
-  console.log('userlogin', userLogin);
+const ListItems = ({route: {params}, navigation}) => {
   const {tasks, listNotes} = params;
   const sortByCompleted = tasks.sort((a, b) =>
     a.completed > b.completed ? 1 : -1,
@@ -29,46 +27,38 @@ const ListItems = ({route: {params}, navigation}, userLogin) => {
             <TouchableOpacity onPress={() => Alert.alert('Add new task')}>
               <Icon name="add-to-list" size={40} color={colors.lightBlack} />
             </TouchableOpacity>
-
-            {/* <TouchableOpacity
-              onPress={() => Alert.alert('Simple Button pressed')}>
-              <Icon name="add-user" size={40} color={colors.lightBlack} />
-            </TouchableOpacity> */}
-
-            {/* <TouchableOpacity
-              onPress={() => Alert.alert('Simple Button pressed')}>
-              <Icon name="users" size={40} color={colors.lightBlack} />
-            </TouchableOpacity> */}
           </View>
         </View>
       </View>
 
       <View style={{flex: 3}}>
-        <ScrollView contentContainerStyle={{flexGrow: 1}}>
-          {sortByCompleted.map((task, idx) => {
-            return (
-              <View key={idx} style={styles.itemLine}>
-                <Text style={completed(task.completed).task}>
-                  {task.taskName}
-                </Text>
-
-                {task.completed === true ? (
-                  <Text style={completed(task.completed).taskOwner}>
-                    completed by xxx
+        {sortByCompleted.length > 0 && (
+          <ScrollView contentContainerStyle={{flexGrow: 1}}>
+            {sortByCompleted.map((task, idx) => {
+              return (
+                <View key={idx} style={styles.itemLine}>
+                  <Text style={completed(task.completed).task}>
+                    {task.taskName}
                   </Text>
-                ) : (
-                  <TouchableOpacity
-                    onPress={() => Alert.alert('Simple Button pressed')}
-                    style={completed(task.completed).taskOwner}>
-                    <Text style={styles.pencilRight}>
-                      <Icon name="edit" size={20} color={colors.lightBlack} />
+
+                  {task.completed === true ? (
+                    <Text style={completed(task.completed).taskOwner}>
+                      completed by xxx
                     </Text>
-                  </TouchableOpacity>
-                )}
-              </View>
-            );
-          })}
-        </ScrollView>
+                  ) : (
+                    <TouchableOpacity
+                      onPress={() => Alert.alert('Simple Button pressed')}
+                      style={completed(task.completed).taskOwner}>
+                      <Text style={styles.pencilRight}>
+                        <Icon name="edit" size={20} color={colors.lightBlack} />
+                      </Text>
+                    </TouchableOpacity>
+                  )}
+                </View>
+              );
+            })}
+          </ScrollView>
+        )}
       </View>
 
       <View style={styles.footer}>

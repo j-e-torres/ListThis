@@ -20,7 +20,8 @@ const Groups = ({navigation, userGroups}) => {
     <View style={styles.panelContainer}>
       <View style={{flex: 1}}>
         <View style={styles.iconHeader}>
-          <TouchableOpacity onPress={() => Alert.alert('Create new Group')}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('CreateGroupModal')}>
             <Icon name="add-to-list" size={40} color={colors.lightBlack} />
           </TouchableOpacity>
         </View>
@@ -46,27 +47,32 @@ const Groups = ({navigation, userGroups}) => {
                   <View style={panelStyle().panel} key={idx}>
                     <Text
                       style={styles.title}
-                      // adjustsFontSizeToFit
                       numberOfLines={1}
                       onPress={() => navigation.navigate('GroupLists', group)}>
                       {group.groupName}
                     </Text>
 
-                    <Text style={styles.secondaryTitle}>Lists:</Text>
+                    <Text style={styles.secondaryTitle}>
+                      {group.lists ? 'Lists:' : 'No Lists'}
+                    </Text>
 
-                    <View>
-                      <Text style={styles.listItems}>
-                        {group.lists[0] ? group.lists[0].listName : ''}
-                      </Text>
+                    {group.lists && (
+                      <View>
+                        <Text style={styles.listItems}>
+                          {group.lists[0] ? group.lists[0].listName : ''}
+                        </Text>
 
-                      <Text style={styles.listItems}>
-                        {group.lists[1] ? group.lists[1].listName : ''}
-                      </Text>
+                        <Text style={styles.listItems}>
+                          {group.lists[1] ? group.lists[1].listName : ''}
+                        </Text>
 
-                      <Text style={styles.listItemsEnd}>
-                        {group.lists.length - 2 > 0 ? 'lists continued...' : ''}
-                      </Text>
-                    </View>
+                        <Text style={styles.listItemsEnd}>
+                          {group.lists.length - 2 > 0
+                            ? 'lists continued...'
+                            : ''}
+                        </Text>
+                      </View>
+                    )}
                   </View>
                 );
               })}

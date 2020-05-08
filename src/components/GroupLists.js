@@ -17,11 +17,9 @@ import {stickyNotesTiltDegrees} from '../helperFunctions';
 import {colors, borders, typography} from '../styles';
 
 const GroupLists = ({route: {params}, navigation, userLogin}) => {
-  console.log('2222', params);
   const {username} = userLogin;
-  const {lists, groupName, groupOwner} = params;
-  // console.log('3333', lists);
-  // console.log('4444', lists[0].tasks);
+  const {lists, groupName, groupOwner, users} = params;
+  console.log('groupLists', params);
 
   return (
     <View style={styles.panelContainer}>
@@ -32,12 +30,13 @@ const GroupLists = ({route: {params}, navigation, userLogin}) => {
           </TouchableOpacity>
 
           {username === groupOwner && (
-            <TouchableOpacity onPress={() => Alert.alert('Add user')}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('ViewUsers', users)}>
               <Icon name="add-user" size={40} color={colors.lightBlack} />
             </TouchableOpacity>
           )}
 
-          <TouchableOpacity onPress={() => Alert.alert('View users')}>
+          <TouchableOpacity onPress={() => Alert.alert('Users')}>
             <Icon name="users" size={40} color={colors.lightBlack} />
           </TouchableOpacity>
         </View>
@@ -60,24 +59,26 @@ const GroupLists = ({route: {params}, navigation, userLogin}) => {
                   <View style={panelStyle().panel} key={idx}>
                     <Text
                       style={styles.title}
-                      // adjustsFontSizeToFit
                       numberOfLines={1}
                       onPress={() => navigation.navigate('ListItems', list)}>
                       {list.listName}
                     </Text>
-                    <View>
-                      <Text style={styles.listItems}>
-                        {list.tasks[0] ? list.tasks[0].taskName : ''}
-                      </Text>
 
-                      <Text style={styles.listItems}>
-                        {list.tasks[1] ? list.tasks[1].taskName : ''}
-                      </Text>
+                    {list.tasks && (
+                      <View>
+                        <Text style={styles.listItems}>
+                          {list.tasks[0] ? list.tasks[0].taskName : ''}
+                        </Text>
 
-                      <Text style={styles.listItemsEnd}>
-                        {list.tasks.length - 2 > 0 ? 'list continued...' : ''}
-                      </Text>
-                    </View>
+                        <Text style={styles.listItems}>
+                          {list.tasks[1] ? list.tasks[1].taskName : ''}
+                        </Text>
+
+                        <Text style={styles.listItemsEnd}>
+                          {list.tasks.length - 2 > 0 ? 'list continued...' : ''}
+                        </Text>
+                      </View>
+                    )}
                   </View>
                 );
               })}

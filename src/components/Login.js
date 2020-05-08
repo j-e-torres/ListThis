@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
     color: colors.lightBlack,
   },
   error: {
-    textAlign: 'center',
+    padding: '1%',
     color: colors.lightGrey,
     fontSize: typography.font18,
   },
