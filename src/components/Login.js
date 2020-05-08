@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {Component} from 'react';
 import {
   View,
@@ -5,7 +6,6 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
-  Alert,
 } from 'react-native';
 
 import {connect} from 'react-redux';
@@ -26,17 +26,13 @@ class Login extends Component {
     const {authenticate, navigation} = this.props;
     const {username, password} = this.state;
     const creds = {username, password};
-    return (
-      loginUserThunk(creds)
-        .then(() => authenticate())
-        .then(() => navigation.navigate('Home'))
-        // .catch(e => console.log('eee', e.response.data.errors));
-        .catch(e => this.setState({error: e.response.data.errors}))
-    );
+    return loginUserThunk(creds)
+      .then(() => authenticate())
+      .then(() => navigation.navigate('Home'))
+      .catch(e => this.setState({error: e.response.data.errors}));
   };
 
   render() {
-    // console.log(this.state.error);
     const {loginUser} = this;
     const {error} = this.state;
 
@@ -48,7 +44,11 @@ class Login extends Component {
 
         <View>
           {error.map((e, idx) => {
-            return <Text key={idx}>{e}</Text>;
+            return (
+              <Text style={styles.error} key={idx}>
+                {e}
+              </Text>
+            );
           })}
         </View>
 
@@ -110,6 +110,11 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: typography.font30,
     color: colors.lightBlack,
+  },
+  error: {
+    padding: '1%',
+    color: colors.lightGrey,
+    fontSize: typography.font18,
   },
 });
 

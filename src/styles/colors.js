@@ -9,3 +9,4 @@ export const lightGrey = '#9d9d9d';
 export const lightBlack = '#4d4d4d';
 export const lightGreyBlue2 = '#bfd2d9';
 export const lightPink2 = '#f1a7a7';
+export const paleGreen = '#74be79';

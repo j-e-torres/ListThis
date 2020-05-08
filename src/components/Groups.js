@@ -1,9 +1,88 @@
+/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import {Text, View, StyleSheet, ScrollView} from 'react-native';
+import {
+  Text,
+  View,
+  StyleSheet,
+  Alert,
+  ScrollView,
+  TouchableOpacity,
+} from 'react-native';
+import {connect} from 'react-redux';
 
-import groupsArray from '../fakeDB/groupsDB';
+import Icon from 'react-native-vector-icons/Entypo';
+
 import {stickyNotesTiltDegrees} from '../helperFunctions';
 import {colors, borders, typography} from '../styles';
+
+const Groups = ({navigation, userGroups}) => {
+  return (
+    <View style={styles.panelContainer}>
+      <View style={{flex: 1}}>
+        <View style={styles.iconHeader}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('CreateGroupModal')}>
+            <Icon name="add-to-list" size={40} color={colors.lightBlack} />
+          </TouchableOpacity>
+        </View>
+      </View>
+
+      <View style={styles.panelsContainerClipBoard}>
+        <View style={{flex: 1}}>
+          <Text style={styles.clipBoardTitle}>
+            You have{' '}
+            {`${userGroups.length} active ${
+              userGroups.length > 1 ? 'groups' : 'group'
+            } `}
+          </Text>
+        </View>
+
+        <View style={{flex: 1}} />
+
+        <View style={{flex: 8}}>
+          <ScrollView contentContainerStyle={{flexGrow: 1}}>
+            <View style={styles.panelsContainerLayout}>
+              {userGroups.map((group, idx) => {
+                return (
+                  <View style={panelStyle().panel} key={idx}>
+                    <Text
+                      style={styles.title}
+                      numberOfLines={1}
+                      onPress={() => navigation.navigate('GroupLists', group)}>
+                      {group.groupName}
+                    </Text>
+
+                    <Text style={styles.secondaryTitle}>
+                      {group.lists ? 'Lists:' : 'No Lists'}
+                    </Text>
+
+                    {group.lists && (
+                      <View>
+                        <Text style={styles.listItems}>
+                          {group.lists[0] ? group.lists[0].listName : ''}
+                        </Text>
+
+                        <Text style={styles.listItems}>
+                          {group.lists[1] ? group.lists[1].listName : ''}
+                        </Text>
+
+                        <Text style={styles.listItemsEnd}>
+                          {group.lists.length - 2 > 0
+                            ? 'lists continued...'
+                            : ''}
+                        </Text>
+                      </View>
+                    )}
+                  </View>
+                );
+              })}
+            </View>
+          </ScrollView>
+        </View>
+      </View>
+    </View>
+  );
+};
 
 const panelStyle = idx =>
   StyleSheet.create({
@@ -21,13 +100,23 @@ const panelStyle = idx =>
   });
 
 const styles = StyleSheet.create({
+  iconHeader: {
+    borderBottomColor: colors.lightBlack,
+    borderBottomWidth: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    alignContent: 'center',
+    alignItems: 'center',
+    paddingBottom: '2%',
+  },
+
   panelContainer: {
     flex: 1,
     backgroundColor: colors.white,
     padding: '4%',
   },
   panelsContainerClipBoard: {
-    flex: 1,
+    flex: 7,
     ...borders.clipBoardBorder,
   },
   panelsContainerLayout: {
@@ -57,59 +146,6 @@ const styles = StyleSheet.create({
   },
 });
 
-const Groups = ({navigation}) => {
-  return (
-    <View style={styles.panelContainer}>
-      <View style={styles.panelsContainerClipBoard}>
-        <View style={{flex: 1}}>
-          <Text style={styles.clipBoardTitle}>
-            You have{' '}
-            {`${groupsArray.length} active ${
-              groupsArray.length > 1 ? 'groups' : 'group'
-            } `}
-          </Text>
-        </View>
+const mapStateToProps = ({userGroups}) => ({userGroups});
 
-        <View style={{flex: 8}}>
-          <ScrollView contentContainerStyle={{flexGrow: 1}}>
-            <View style={styles.panelsContainerLayout}>
-              {groupsArray.map((group, idx) => {
-                return (
-                  <View style={panelStyle().panel} key={idx}>
-                    <Text
-                      style={styles.title}
-                      adjustsFontSizeToFit
-                      numberOfLines={1}
-                      onPress={() => navigation.navigate('GroupLists', group)}>
-                      {group.groupName}
-                    </Text>
-
-                    <Text style={styles.secondaryTitle}>Lists:</Text>
-
-                    <View>
-                      <Text style={styles.listItems}>
-                        {group.lists[0] ? group.lists[0].listName : ''}
-                      </Text>
-
-                      <Text style={styles.listItems}>
-                        {group.lists[1] ? group.lists[1].listName : ''}
-                      </Text>
-
-                      <Text style={styles.listItemsEnd}>
-                        {group.lists.length - 2 > 0
-                          ? 'groups continued...'
-                          : ''}
-                      </Text>
-                    </View>
-                  </View>
-                );
-              })}
-            </View>
-          </ScrollView>
-        </View>
-      </View>
-    </View>
-  );
-};
-
-export default Groups;
+export default connect(mapStateToProps)(Groups);

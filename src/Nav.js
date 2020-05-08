@@ -4,12 +4,13 @@ import {createStackNavigator} from '@react-navigation/stack';
 
 import {
   Home,
-  Lists,
   ListItems,
   Groups,
   GroupLists,
   SignUp,
   Login,
+  Root,
+  CreateGroup,
 } from './components';
 
 const Stack = createStackNavigator();
@@ -19,7 +20,7 @@ export default class Nav extends Component {
     return (
       <NavigationContainer>
         <Stack.Navigator
-          initialRouteName="Login"
+          initialRouteName="Root"
           screenOptions={{
             headerStyle: {
               backgroundColor: '#f4511e',
@@ -37,9 +38,18 @@ export default class Nav extends Component {
               title: 'My home',
             }}
           />
-          <Stack.Screen name="Login" component={Login} />
+
+          <Stack.Screen
+            name="Root"
+            options={{
+              title: 'ListThis',
+            }}
+            component={Root}
+          />
           <Stack.Screen name="SignUp" component={SignUp} />
-          <Stack.Screen name="Lists" component={Lists} />
+          <Stack.Screen name="Login" component={Login} />
+          <Stack.Screen name="CreateGroupModal" component={CreateGroup} />
+
           <Stack.Screen name="Groups" component={Groups} />
           <Stack.Screen
             name="GroupLists"

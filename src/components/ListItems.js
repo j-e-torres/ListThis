@@ -13,6 +13,69 @@ import Icon from 'react-native-vector-icons/Entypo';
 
 import {colors, borders, typography} from '../styles';
 
+const ListItems = ({route: {params}, navigation}) => {
+  const {tasks, listNotes} = params;
+  const sortByCompleted = tasks.sort((a, b) =>
+    a.completed > b.completed ? 1 : -1,
+  );
+
+  return (
+    <View style={styles.panelContainer}>
+      <View style={{flex: 1}}>
+        <View style={{flex: 1}}>
+          <View style={styles.iconHeader}>
+            <TouchableOpacity onPress={() => Alert.alert('Add new task')}>
+              <Icon name="add-to-list" size={40} color={colors.lightBlack} />
+            </TouchableOpacity>
+          </View>
+        </View>
+      </View>
+
+      <View style={{flex: 3}}>
+        {sortByCompleted.length > 0 && (
+          <ScrollView contentContainerStyle={{flexGrow: 1}}>
+            {sortByCompleted.map((task, idx) => {
+              return (
+                <View key={idx} style={styles.itemLine}>
+                  <Text style={completed(task.completed).task}>
+                    {task.taskName}
+                  </Text>
+
+                  {task.completed === true ? (
+                    <Text style={completed(task.completed).taskOwner}>
+                      completed by xxx
+                    </Text>
+                  ) : (
+                    <TouchableOpacity
+                      onPress={() => Alert.alert('Simple Button pressed')}
+                      style={completed(task.completed).taskOwner}>
+                      <Text style={styles.pencilRight}>
+                        <Icon name="edit" size={20} color={colors.lightBlack} />
+                      </Text>
+                    </TouchableOpacity>
+                  )}
+                </View>
+              );
+            })}
+          </ScrollView>
+        )}
+      </View>
+
+      <View style={styles.footer}>
+        <View style={{flex: 1, padding: '2%'}}>
+          <View style={{flex: 1}}>
+            <Text style={styles.footerHeader}>Notes</Text>
+          </View>
+
+          <View style={{flex: 3}}>
+            <Text style={styles.footerContent}>{listNotes}</Text>
+          </View>
+        </View>
+      </View>
+    </View>
+  );
+};
+
 const completed = bool =>
   StyleSheet.create({
     task: {
@@ -29,6 +92,7 @@ const completed = bool =>
   });
 
 const styles = StyleSheet.create({
+  pencilRight: {alignSelf: 'flex-end'},
   panelContainer: {
     flex: 1,
     backgroundColor: colors.white,
@@ -97,77 +161,5 @@ const styles = StyleSheet.create({
     fontSize: typography.font20,
   },
 });
-
-const ListItems = ({route: {params}, navigation}) => {
-  const sortByCompleted = params.listItems.sort((a, b) =>
-    a.completed > b.completed ? 1 : -1,
-  );
-
-  return (
-    <View style={styles.panelContainer}>
-      <View style={{flex: 1}}>
-        <View style={{flex: 1}}>
-          <View style={styles.iconHeader}>
-            <TouchableOpacity
-              onPress={() => Alert.alert('Simple Button pressed')}>
-              <Icon name="add-to-list" size={40} color={colors.lightBlack} />
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              onPress={() => Alert.alert('Simple Button pressed')}>
-              <Icon name="add-user" size={40} color={colors.lightBlack} />
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              onPress={() => Alert.alert('Simple Button pressed')}>
-              <Icon name="users" size={40} color={colors.lightBlack} />
-            </TouchableOpacity>
-          </View>
-        </View>
-      </View>
-
-      <View style={{flex: 3}}>
-        <ScrollView contentContainerStyle={{flexGrow: 1}}>
-          {sortByCompleted.map((item, idx) => {
-            return (
-              <View key={idx} style={styles.itemLine}>
-                <Text style={completed(item.completed).task}>
-                  {item.itemName}
-                </Text>
-
-                {item.completed === true ? (
-                  <Text style={completed(item.completed).taskOwner}>
-                    completed by xxx
-                  </Text>
-                ) : (
-                  <TouchableOpacity
-                    onPress={() => Alert.alert('Simple Button pressed')}
-                    style={completed(item.completed).taskOwner}>
-                    <Icon name="edit" size={20} color={colors.lightBlack} />
-                  </TouchableOpacity>
-                )}
-              </View>
-            );
-          })}
-        </ScrollView>
-      </View>
-
-      <View style={styles.footer}>
-        <View style={{flex: 1, padding: '2%'}}>
-          <View>
-            <Text style={styles.footerHeader}>Notes</Text>
-          </View>
-
-          <View>
-            <Text style={styles.footerContent}>
-              Blah blah
-              oqefokoqkfoqkfqejfgoiqejgiqoejgioeqjgiqejgoqiejgiqejgioqjgiqegjq
-            </Text>
-          </View>
-        </View>
-      </View>
-    </View>
-  );
-};
 
 export default ListItems;

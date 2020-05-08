@@ -1,9 +1,94 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import {Text, View, StyleSheet, ScrollView} from 'react-native';
+import {
+  Text,
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  ScrollView,
+  Alert,
+} from 'react-native';
+
+import Icon from 'react-native-vector-icons/Entypo';
+
+import {connect} from 'react-redux';
 
 import {stickyNotesTiltDegrees} from '../helperFunctions';
 import {colors, borders, typography} from '../styles';
+
+const GroupLists = ({route: {params}, navigation, userLogin}) => {
+  const {username} = userLogin;
+  const {lists, groupName, groupOwner, users} = params;
+  console.log('groupLists', params);
+
+  return (
+    <View style={styles.panelContainer}>
+      <View style={{flex: 1}}>
+        <View style={styles.iconHeader}>
+          <TouchableOpacity onPress={() => Alert.alert('Create new List')}>
+            <Icon name="add-to-list" size={40} color={colors.lightBlack} />
+          </TouchableOpacity>
+
+          {username === groupOwner && (
+            <TouchableOpacity
+              onPress={() => navigation.navigate('ViewUsers', users)}>
+              <Icon name="add-user" size={40} color={colors.lightBlack} />
+            </TouchableOpacity>
+          )}
+
+          <TouchableOpacity onPress={() => Alert.alert('Users')}>
+            <Icon name="users" size={40} color={colors.lightBlack} />
+          </TouchableOpacity>
+        </View>
+      </View>
+
+      <View style={styles.panelsContainerClipBoard}>
+        <View style={{flex: 1}}>
+          <Text style={styles.clipBoardTitle}>
+            Active Lists for {groupName}.
+          </Text>
+        </View>
+
+        <View style={{flex: 1}} />
+
+        <View style={{flex: 8}}>
+          <ScrollView contentContainerStyle={{flexGrow: 1}}>
+            <View style={styles.panelsContainerLayout}>
+              {lists.map((list, idx) => {
+                return (
+                  <View style={panelStyle().panel} key={idx}>
+                    <Text
+                      style={styles.title}
+                      numberOfLines={1}
+                      onPress={() => navigation.navigate('ListItems', list)}>
+                      {list.listName}
+                    </Text>
+
+                    {list.tasks && (
+                      <View>
+                        <Text style={styles.listItems}>
+                          {list.tasks[0] ? list.tasks[0].taskName : ''}
+                        </Text>
+
+                        <Text style={styles.listItems}>
+                          {list.tasks[1] ? list.tasks[1].taskName : ''}
+                        </Text>
+
+                        <Text style={styles.listItemsEnd}>
+                          {list.tasks.length - 2 > 0 ? 'list continued...' : ''}
+                        </Text>
+                      </View>
+                    )}
+                  </View>
+                );
+              })}
+            </View>
+          </ScrollView>
+        </View>
+      </View>
+    </View>
+  );
+};
 
 const panelStyle = idx =>
   StyleSheet.create({
@@ -21,13 +106,22 @@ const panelStyle = idx =>
   });
 
 const styles = StyleSheet.create({
+  iconHeader: {
+    borderBottomColor: colors.lightBlack,
+    borderBottomWidth: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    alignContent: 'center',
+    alignItems: 'center',
+    paddingBottom: '2%',
+  },
   panelContainer: {
     flex: 1,
     backgroundColor: colors.white,
     padding: '4%',
   },
   panelsContainerClipBoard: {
-    flex: 1,
+    flex: 7,
     ...borders.clipBoardBorder,
   },
   panelsContainerLayout: {
@@ -57,54 +151,6 @@ const styles = StyleSheet.create({
   },
 });
 
-const GroupLists = ({route, navigation}) => {
-  const {lists} = route.params;
-  const {groupName} = route.params;
+const mapStateToProps = ({userLogin}) => ({userLogin});
 
-  return (
-    <View style={styles.panelContainer}>
-      <View style={styles.panelsContainerClipBoard}>
-        <View style={{flex: 1}}>
-          <Text style={styles.clipBoardTitle}>
-            Active Lists for {groupName}.
-          </Text>
-        </View>
-
-        <View style={{flex: 8}}>
-          <ScrollView contentContainerStyle={{flexGrow: 1}}>
-            <View style={styles.panelsContainerLayout}>
-              {lists.map((list, idx) => {
-                return (
-                  <View style={panelStyle().panel} key={idx}>
-                    <Text
-                      style={styles.title}
-                      adjustsFontSizeToFit
-                      numberOfLines={1}
-                      onPress={() => navigation.navigate('ListItems', list)}>
-                      {list.listName}
-                    </Text>
-                    <View>
-                      <Text style={styles.listItems}>
-                        {list.listItems[0] ? list.listItems[0].itemName : ''}
-                      </Text>
-                      <Text style={styles.listItems}>
-                        {list.listItems[1] ? list.listItems[1].itemName : ''}
-                      </Text>
-                      <Text style={styles.listItemsEnd}>
-                        {list.listItems.length - 2 > 0
-                          ? 'list continued...'
-                          : ''}
-                      </Text>
-                    </View>
-                  </View>
-                );
-              })}
-            </View>
-          </ScrollView>
-        </View>
-      </View>
-    </View>
-  );
-};
-
-export default GroupLists;
+export default connect(mapStateToProps)(GroupLists);

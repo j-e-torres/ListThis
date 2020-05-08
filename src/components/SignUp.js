@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {Component} from 'react';
 import {
   View,
@@ -5,11 +6,10 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
-  Alert,
 } from 'react-native';
 
 import {connect} from 'react-redux';
-import {signUpThunk} from '../redux/actions/user';
+import {signUpThunk, authorizeTokenThunk} from '../redux/actions/user';
 import {colors, borders, typography} from '../styles';
 
 class SignUp extends Component {
@@ -19,24 +19,36 @@ class SignUp extends Component {
       username: '',
       displayName: '',
       password: '',
+      error: [],
     };
   }
 
   registerUser = () => {
-    const {signUp, navigation} = this.props;
+    const {signUp, navigation, authenticate} = this.props;
     const {username, displayName, password} = this.state;
 
     return signUp({username, displayName, password})
+      .then(() => authenticate())
       .then(() => navigation.navigate('Home'))
-      .catch(e => console.log('lll', e.response.data.errors));
+      .catch(e => this.setState({error: e.response.data.errors}));
   };
 
   render() {
     const {registerUser} = this;
+    const {error} = this.state;
     return (
       <View style={styles.container}>
         <View style={{flex: 20, justifyContent: 'center'}}>
           <Text style={styles.title}>Create your account</Text>
+        </View>
+        <View>
+          {error.map((e, idx) => {
+            return (
+              <Text style={styles.error} key={idx}>
+                {e}
+              </Text>
+            );
+          })}
         </View>
 
         <View style={{flex: 80}}>
@@ -104,10 +116,17 @@ const styles = StyleSheet.create({
     fontSize: typography.font30,
     color: colors.lightBlack,
   },
+  error: {
+    // textAlign: 'center',
+    padding: '1%',
+    color: colors.lightGrey,
+    fontSize: typography.font18,
+  },
 });
 
 const mapDispatchToProps = dispatch => ({
   signUp: credentials => dispatch(signUpThunk(credentials)),
+  authenticate: () => dispatch(authorizeTokenThunk()),
 });
 
 export default connect(
