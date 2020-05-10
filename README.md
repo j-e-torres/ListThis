@@ -10,12 +10,13 @@
 
 - need an icon in top corner for a dropdown
 - will show groups and animate like slack from left
+- user skips Root screen if alrdy logged in with token
 
 # `Functionality`
 
 - √ Create a group with current user
 - Create a list for group
-- view users in a group
+- √ view users in a group
 - Create new task for list
 - complete a task
 - remove a user from group

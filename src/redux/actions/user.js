@@ -1,6 +1,6 @@
 import axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
-import {GET_USER, GET_USER_GROUPS, ADD_GROUP} from '../constants';
+import {GET_USER, GET_USER_GROUPS, CREATE_GROUP} from '../constants';
 
 const getUser = user => ({
   type: GET_USER,
@@ -13,7 +13,7 @@ const getUserGroups = groups => ({
 });
 
 const addNewGroup = newGroup => ({
-  type: ADD_GROUP,
+  type: CREATE_GROUP,
   newGroup,
 });
 

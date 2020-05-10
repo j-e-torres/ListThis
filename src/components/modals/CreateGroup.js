@@ -9,9 +9,9 @@ import {
 } from 'react-native';
 
 import {connect} from 'react-redux';
-import {createGroupThunk} from '../redux/actions/user';
+import {createGroupThunk} from '../../redux/actions/user';
 
-import {colors, borders, typography} from '../styles';
+import {colors, borders, typography} from '../../styles';
 
 class CreateGroup extends Component {
   constructor() {
@@ -37,7 +37,6 @@ class CreateGroup extends Component {
         }, 1500),
       )
       .catch(e => {
-        console.log('1111', e.response.data);
         this.setState({error: e.response.data.errors});
       });
   };
@@ -91,8 +90,7 @@ class CreateGroup extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'flex-start',
-    backgroundColor: 'white',
+    justifyContent: 'center',
     padding: '5%',
   },
   input: {
@@ -121,13 +119,11 @@ const styles = StyleSheet.create({
     fontSize: 25,
   },
   error: {
-    // textAlign: 'center',
     padding: '1%',
     color: colors.lightGrey,
     fontSize: typography.font18,
   },
   success: {
-    // textAlign: 'center',
     padding: '1%',
     color: colors.paleGreen,
     fontSize: typography.font18,

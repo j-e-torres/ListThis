@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 
+// import {Animated, Easing} from 'react-native';
+
 import {
   Home,
   ListItems,
@@ -11,6 +13,8 @@ import {
   Login,
   Root,
   CreateGroup,
+  ViewUsers,
+  CreateList,
 } from './components';
 
 const MainStack = createStackNavigator();
@@ -91,20 +95,78 @@ export default class Nav extends Component {
   render() {
     return (
       <NavigationContainer>
-        <RootStack.Navigator mode="modal" initialRouteName="RootNav">
+        <RootStack.Navigator
+          initialRouteName="RootNav"
+          mode="modal"
+          screenOptions={{
+            headerStyle: {
+              backgroundColor: '#f4511e',
+            },
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+            headerTitleAlign: 'center',
+          }}>
           <RootStack.Screen
             name="MainStackScreen"
             component={MainStackScreen}
             options={{headerShown: false}}
           />
-
           <RootStack.Screen
             name="RootNav"
             component={RootNav}
-            options={{headerShown: false}}
+            options={{
+              headerShown: false,
+              // transitionSpec: {
+              //   open: {
+              //     duration: 750,
+              //     easing: Easing.out(Easing.poly(4)),
+              //     timing: Animated.timing,
+              //     useNativeDriver: true,
+              //   },
+              // },
+              // screenInterpolator: sceneProps => {
+              //   const {layout, position, scene} = sceneProps;
+              //   const thisSceneIndex = scene.index;
+
+              //   const height = layout.initHeight;
+              //   const translateY = position.interpolate({
+              //     inputRange: [
+              //       thisSceneIndex - 1,
+              //       thisSceneIndex,
+              //       thisSceneIndex + 1,
+              //     ],
+              //     outputRange: [height, 0, 0],
+              //   });
+
+              //   return {transform: [{translateY}]};
+              // },
+            }}
+          />
+          <RootStack.Screen
+            name="CreateGroupModal"
+            component={CreateGroup}
+            options={{
+              title: 'New Group',
+            }}
           />
 
-          <RootStack.Screen name="CreateGroupModal" component={CreateGroup} />
+          <RootStack.Screen
+            name="ViewUsersModal"
+            component={ViewUsers}
+            options={{
+              title: 'People in Group',
+            }}
+          />
+
+          <RootStack.Screen
+            name="CreateListModal"
+            component={CreateList}
+            options={{
+              title: 'Create a new List',
+            }}
+          />
         </RootStack.Navigator>
       </NavigationContainer>
     );
