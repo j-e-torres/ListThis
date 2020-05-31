@@ -15,6 +15,7 @@ import {
   CreateGroup,
   ViewUsers,
   CreateList,
+  GroupAddUser,
 } from './components';
 
 const MainStack = createStackNavigator();
@@ -165,6 +166,14 @@ export default class Nav extends Component {
             component={CreateList}
             options={{
               title: 'Create a new List',
+            }}
+          />
+
+          <RootStack.Screen
+            name="GroupAddUserModal"
+            component={GroupAddUser}
+            options={{
+              title: 'Add user to Group',
             }}
           />
         </RootStack.Navigator>

@@ -1,16 +1,32 @@
 import axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
-import {GET_USER, GET_USER_GROUPS, CREATE_GROUP} from '../constants';
+import {
+  GET_USER,
+  GET_USER_GROUPS,
+  CREATE_GROUP,
+  ADD_USER,
+  GET_USERS,
+} from '../constants';
 
 const getUser = user => ({
   type: GET_USER,
   user,
 });
 
-const getUserGroups = groups => ({
-  type: GET_USER_GROUPS,
-  groups,
+const getUsers = users => ({
+  type: GET_USERS,
+  users,
 });
+
+const addUser = newUser => ({
+  type: ADD_USER,
+  newUser,
+});
+
+// const getUserGroups = groups => ({
+//   type: GET_USER_GROUPS,
+//   groups,
+// });
 
 const addNewGroup = newGroup => ({
   type: CREATE_GROUP,
@@ -53,14 +69,14 @@ export const signUpThunk = credentials => {
   };
 };
 
-export const userGroupsThunk = userId => {
-  return dispatch => {
-    return axios
-      .get(`https://listthisbackend.herokuapp.com/api/users/${userId}/groups`)
-      .then(res => res.data)
-      .then(groups => dispatch(getUserGroups(groups)));
-  };
-};
+// export const userGroupsThunk = userId => {
+//   return dispatch => {
+//     return axios
+//       .get(`https://listthisbackend.herokuapp.com/api/users/${userId}/groups`)
+//       .then(res => res.data)
+//       .then(groups => dispatch(getUserGroups(groups)));
+//   };
+// };
 
 export const createGroupThunk = (userId, groupName) => {
   return dispatch => {
@@ -71,5 +87,23 @@ export const createGroupThunk = (userId, groupName) => {
       )
       .then(res => res.data)
       .then(group => dispatch(addNewGroup(group)));
+  };
+};
+
+export const getUsersThunk = () => {
+  return dispatch => {
+    return axios
+      .get('https://listthisbackend.herokuapp.com/api/users')
+      .then(res => res.data)
+      .then(users => dispatch(getUsers(users)));
+  };
+};
+
+export const groupAddUserThunk = (userId, groupId, username) => {
+  return dispatch => {
+    return axios.post(
+      `https://listthisbackend.herokuapp.com/api/users/${userId}/groups/${groupId}`,
+      username,
+    );
   };
 };
