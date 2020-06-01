@@ -7,6 +7,7 @@
 - Groups.js: groups with 0 lists do not show 'No Lists', instead shows "Lists:"
 - space between notes and tasks in Listitems.js
 - can use back button on android from home to go back to login screen
+- android: groupLists.js: panels overlapping clipboard title
 
 # `Login/Home page`
 

@@ -156,6 +156,7 @@ const styles = StyleSheet.create({
 
   footer: {
     flex: 2,
+    marginTop: '2%',
     borderWidth: 1,
     borderColor: colors.lightBlack,
     borderRadius: 50,
