@@ -8,6 +8,7 @@
 - can use back button on android from home to go back to login screen
 - √ android: groupLists.js: panels overlapping clipboard title
 - new tasks created are not sorted
+-
 
 # `Login/Home page`
 
