@@ -28,7 +28,6 @@ export const clipBoardBorderHeader = {
   marginVertical: 10,
   textAlign: 'center',
   textAlignVertical: 'center',
-
   // fontSize prop causing error
   // fontSize: typography.font25,
 };

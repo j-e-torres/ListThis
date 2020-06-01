@@ -29,7 +29,8 @@ const ListItems = ({route: {params}, navigation, tasks}) => {
       <View style={{flex: 1}}>
         <View style={{flex: 1}}>
           <View style={styles.iconHeader}>
-            <TouchableOpacity onPress={() => Alert.alert('Add new task')}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('CreateTaskModal', {id})}>
               <Icon name="add-to-list" size={40} color={colors.lightBlack} />
             </TouchableOpacity>
           </View>

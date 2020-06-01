@@ -24,7 +24,7 @@ export const createTaskThunk = (listId, newTask) => {
   return dispatch => {
     return axios
       .post(
-        `https://listthisbackend.herokuapp.com/api/list/${listId}/tasks`,
+        `https://listthisbackend.herokuapp.com/api/lists/${listId}/tasks`,
         newTask,
       )
       .then(res => res.data)

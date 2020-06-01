@@ -1,6 +1,5 @@
 import {
   GET_USER,
-  GET_USER_GROUPS,
   CREATE_GROUP,
   CREATE_LIST,
   GET_LISTS,
@@ -9,7 +8,6 @@ import {
   GET_GROUPS,
   ADD_USER,
   GET_USERS,
-  REFRESH_GROUPS,
 } from './constants';
 
 export const usersReducer = (state = [], action) => {

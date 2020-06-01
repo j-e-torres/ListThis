@@ -50,7 +50,7 @@ const GroupLists = ({route: {params}, navigation, userLogin, lists}) => {
 
       <View style={styles.panelsContainerClipBoard}>
         <View style={{flex: 1}}>
-          <Text style={styles.clipBoardTitle}>
+          <Text allowFontScaling style={styles.clipBoardTitle}>
             Active Lists for {groupName}.
           </Text>
         </View>
