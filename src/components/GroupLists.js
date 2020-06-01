@@ -55,9 +55,9 @@ const GroupLists = ({route: {params}, navigation, userLogin, lists}) => {
           </Text>
         </View>
 
-        <View style={{flex: 1}} />
+        {/* <View style={{flex: 1}} /> */}
 
-        <View style={{flex: 8}}>
+        <View style={{flex: 2}}>
           <ScrollView contentContainerStyle={{flexGrow: 1}}>
             {groupLists.length > 0 && (
               <View style={styles.panelsContainerLayout}>
@@ -103,6 +103,7 @@ const GroupLists = ({route: {params}, navigation, userLogin, lists}) => {
 const panelStyle = idx =>
   StyleSheet.create({
     panel: {
+      // flex: 1,
       backgroundColor: colors.white,
       width: '49%',
       paddingLeft: 15,

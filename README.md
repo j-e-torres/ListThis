@@ -1,5 +1,14 @@
 ### Things to do
 
+# Issues
+
+- when adding new user to current group, viewUser modal doesn't update
+- when creating new group, viewUser modal shows no user instead of at least 1(group creator)
+- Groups.js: groups with 0 lists do not show 'No Lists', instead shows "Lists:"
+- space between notes and tasks in Listitems.js
+- can use back button on android from home to go back to login screen
+- android: groupLists.js: panels overlapping clipboard title
+
 # `Login/Home page`
 
 - √ Need a page for login or register options
@@ -18,7 +27,7 @@
 - √ Create a list for group
 - √ view users in a group
 - √ Create logout button
-- add user to current group
+- √ add user to current group
 - Create new task for list
 - complete a task
 - remove a user from group

@@ -37,9 +37,7 @@ const Groups = ({navigation, groups, userLogin}) => {
           </Text>
         </View>
 
-        <View style={{flex: 1}} />
-
-        <View style={{flex: 8}}>
+        <View style={{flex: 2}}>
           <ScrollView contentContainerStyle={{flexGrow: 1}}>
             <View style={styles.panelsContainerLayout}>
               {userGroups.map((group, idx) => {
