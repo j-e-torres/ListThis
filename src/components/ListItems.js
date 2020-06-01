@@ -9,13 +9,18 @@ import {
   Alert,
 } from 'react-native';
 
+import {connect} from 'react-redux';
+
 import Icon from 'react-native-vector-icons/Entypo';
 
 import {colors, borders, typography} from '../styles';
 
-const ListItems = ({route: {params}, navigation}) => {
-  const {tasks, listNotes} = params;
-  const sortByCompleted = tasks.sort((a, b) =>
+const ListItems = ({route: {params}, navigation, tasks}) => {
+  const {listNotes, id} = params;
+
+  const listTasks = tasks.filter(task => task.listId === id);
+
+  const sortByCompleted = listTasks.sort((a, b) =>
     a.completed > b.completed ? 1 : -1,
   );
 
@@ -32,7 +37,7 @@ const ListItems = ({route: {params}, navigation}) => {
       </View>
 
       <View style={{flex: 3}}>
-        {sortByCompleted.length > 0 && (
+        {sortByCompleted.length > 0 ? (
           <ScrollView contentContainerStyle={{flexGrow: 1}}>
             {sortByCompleted.map((task, idx) => {
               return (
@@ -58,6 +63,8 @@ const ListItems = ({route: {params}, navigation}) => {
               );
             })}
           </ScrollView>
+        ) : (
+          <Text style={styles.noTasks}>No tasks created yet</Text>
         )}
       </View>
 
@@ -140,6 +147,13 @@ const styles = StyleSheet.create({
     paddingBottom: '2%',
   },
 
+  noTasks: {
+    flex: 1,
+    fontSize: 25,
+    color: colors.lightGrey,
+    textAlign: 'center',
+  },
+
   footer: {
     flex: 2,
     borderWidth: 1,
@@ -162,4 +176,6 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ListItems;
+const mapStateToProps = ({tasks}) => ({tasks});
+
+export default connect(mapStateToProps)(ListItems);

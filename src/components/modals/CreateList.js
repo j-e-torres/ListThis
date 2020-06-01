@@ -1,35 +1,42 @@
-/* eslint-disable react-native/no-inline-styles */
 import React, {Component} from 'react';
 import {
   View,
-  TextInput,
   Text,
+  TextInput,
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
 
 import {connect} from 'react-redux';
-import {createGroupThunk} from '../redux/actions/user';
+import {createListThunk} from '../../redux/actions/lists';
 
-import {colors, borders, typography} from '../styles';
+import {colors, borders, typography} from '../../styles';
 
-class CreateGroup extends Component {
+class CreateList extends Component {
   constructor() {
     super();
     this.state = {
-      groupName: '',
+      listName: '',
+      listNotes: '',
       success: '',
       error: '',
     };
   }
 
-  createGroup = () => {
-    const {createNewGroup, navigation, userLogin} = this.props;
-    const {groupName} = this.state;
+  createList = () => {
+    const {
+      createNewList,
+      route: {params},
+      navigation,
+    } = this.props;
 
-    return createNewGroup(userLogin.id, {groupName})
+    const {id} = params;
+
+    const {listName, listNotes} = this.state;
+
+    return createNewList(id, {listName, listNotes})
       .then(() =>
-        this.setState({success: 'Group created! Returning to previous screen'}),
+        this.setState({success: 'List created! Returning to previous screen'}),
       )
       .then(() =>
         setTimeout(function() {
@@ -37,21 +44,16 @@ class CreateGroup extends Component {
         }, 1500),
       )
       .catch(e => {
-        console.log('1111', e.response.data);
         this.setState({error: e.response.data.errors});
       });
   };
 
   render() {
-    const {createGroup} = this;
+    // console.log('crealist, props', this.props);
     const {success, error} = this.state;
-
+    const {createList} = this;
     return (
       <View style={styles.container}>
-        <View>
-          <Text style={styles.title}>Enter your new group name</Text>
-        </View>
-
         {success.length > 0 && (
           <View>
             <Text style={styles.success}>{success}</Text>
@@ -69,20 +71,25 @@ class CreateGroup extends Component {
             })}
           </View>
         )}
+        <Text style={styles.title}>List Name</Text>
 
-        <View>
-          <TextInput
-            style={styles.input}
-            onChangeText={groupName => this.setState({groupName})}
-            placeholder="Group name"
-          />
-        </View>
+        <TextInput
+          style={styles.input}
+          onChangeText={listName => this.setState({listName})}
+          placeholder="List name"
+        />
 
-        <View>
-          <TouchableOpacity style={styles.button} onPress={createGroup}>
-            <Text style={styles.buttonText}>Create group</Text>
-          </TouchableOpacity>
-        </View>
+        <Text style={styles.title}>List Notes (Optional)</Text>
+
+        <TextInput
+          style={styles.input}
+          onChangeText={listNotes => this.setState({listNotes})}
+          placeholder="List notes optional"
+        />
+
+        <TouchableOpacity style={styles.button} onPress={createList}>
+          <Text style={styles.buttonText}>Create list</Text>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -91,8 +98,7 @@ class CreateGroup extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'flex-start',
-    backgroundColor: 'white',
+    justifyContent: 'center',
     padding: '5%',
   },
   input: {
@@ -121,27 +127,23 @@ const styles = StyleSheet.create({
     fontSize: 25,
   },
   error: {
-    // textAlign: 'center',
     padding: '1%',
     color: colors.lightGrey,
     fontSize: typography.font18,
   },
   success: {
-    // textAlign: 'center',
     padding: '1%',
     color: colors.paleGreen,
     fontSize: typography.font18,
   },
 });
 
-const mapStateToProps = ({userLogin}) => ({userLogin});
-
 const mapDispatchToProps = dispatch => ({
-  createNewGroup: (userId, groupName) =>
-    dispatch(createGroupThunk(userId, groupName)),
+  createNewList: (groupId, newList) =>
+    dispatch(createListThunk(groupId, newList)),
 });
 
 export default connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps,
-)(CreateGroup);
+)(CreateList);

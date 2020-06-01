@@ -6,7 +6,6 @@ import {
   StyleSheet,
   TouchableOpacity,
   ScrollView,
-  Alert,
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/Entypo';
@@ -16,27 +15,34 @@ import {connect} from 'react-redux';
 import {stickyNotesTiltDegrees} from '../helperFunctions';
 import {colors, borders, typography} from '../styles';
 
-const GroupLists = ({route: {params}, navigation, userLogin}) => {
+const GroupLists = ({route: {params}, navigation, userLogin, lists}) => {
   const {username} = userLogin;
-  const {lists, groupName, groupOwner, users} = params;
-  console.log('groupLists', params);
+  const {groupName, groupOwner, users, id} = params;
+  const groupLists = lists.filter(list => list.groupId === id);
 
   return (
     <View style={styles.panelContainer}>
       <View style={{flex: 1}}>
         <View style={styles.iconHeader}>
-          <TouchableOpacity onPress={() => Alert.alert('Create new List')}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('CreateListModal', {id})}>
             <Icon name="add-to-list" size={40} color={colors.lightBlack} />
           </TouchableOpacity>
 
           {username === groupOwner && (
             <TouchableOpacity
-              onPress={() => navigation.navigate('ViewUsers', users)}>
+              onPress={() =>
+                navigation.navigate('GroupAddUserModal', {
+                  groupId: id,
+                  userId: userLogin.id,
+                })
+              }>
               <Icon name="add-user" size={40} color={colors.lightBlack} />
             </TouchableOpacity>
           )}
 
-          <TouchableOpacity onPress={() => Alert.alert('Users')}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('ViewUsersModal', {id})}>
             <Icon name="users" size={40} color={colors.lightBlack} />
           </TouchableOpacity>
         </View>
@@ -53,36 +59,40 @@ const GroupLists = ({route: {params}, navigation, userLogin}) => {
 
         <View style={{flex: 8}}>
           <ScrollView contentContainerStyle={{flexGrow: 1}}>
-            <View style={styles.panelsContainerLayout}>
-              {lists.map((list, idx) => {
-                return (
-                  <View style={panelStyle().panel} key={idx}>
-                    <Text
-                      style={styles.title}
-                      numberOfLines={1}
-                      onPress={() => navigation.navigate('ListItems', list)}>
-                      {list.listName}
-                    </Text>
+            {groupLists.length > 0 && (
+              <View style={styles.panelsContainerLayout}>
+                {groupLists.map((list, idx) => {
+                  return (
+                    <View style={panelStyle().panel} key={idx}>
+                      <Text
+                        style={styles.title}
+                        numberOfLines={1}
+                        onPress={() => navigation.navigate('ListItems', list)}>
+                        {list.listName}
+                      </Text>
 
-                    {list.tasks && (
-                      <View>
-                        <Text style={styles.listItems}>
-                          {list.tasks[0] ? list.tasks[0].taskName : ''}
-                        </Text>
+                      {list.tasks && (
+                        <View>
+                          <Text style={styles.listItems}>
+                            {list.tasks[0] ? list.tasks[0].taskName : ''}
+                          </Text>
 
-                        <Text style={styles.listItems}>
-                          {list.tasks[1] ? list.tasks[1].taskName : ''}
-                        </Text>
+                          <Text style={styles.listItems}>
+                            {list.tasks[1] ? list.tasks[1].taskName : ''}
+                          </Text>
 
-                        <Text style={styles.listItemsEnd}>
-                          {list.tasks.length - 2 > 0 ? 'list continued...' : ''}
-                        </Text>
-                      </View>
-                    )}
-                  </View>
-                );
-              })}
-            </View>
+                          <Text style={styles.listItemsEnd}>
+                            {list.tasks.length - 2 > 0
+                              ? 'list continued...'
+                              : ''}
+                          </Text>
+                        </View>
+                      )}
+                    </View>
+                  );
+                })}
+              </View>
+            )}
           </ScrollView>
         </View>
       </View>
@@ -151,6 +161,11 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapStateToProps = ({userLogin}) => ({userLogin});
+const mapStateToProps = ({userLogin, lists}) => {
+  return {
+    userLogin,
+    lists,
+  };
+};
 
 export default connect(mapStateToProps)(GroupLists);

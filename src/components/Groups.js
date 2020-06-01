@@ -4,7 +4,6 @@ import {
   Text,
   View,
   StyleSheet,
-  Alert,
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
@@ -15,7 +14,8 @@ import Icon from 'react-native-vector-icons/Entypo';
 import {stickyNotesTiltDegrees} from '../helperFunctions';
 import {colors, borders, typography} from '../styles';
 
-const Groups = ({navigation, userGroups}) => {
+const Groups = ({navigation, groups, userLogin}) => {
+  const userGroups = groups;
   return (
     <View style={styles.panelContainer}>
       <View style={{flex: 1}}>
@@ -146,6 +146,6 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapStateToProps = ({userGroups}) => ({userGroups});
+const mapStateToProps = ({userLogin, groups}) => ({userLogin, groups});
 
 export default connect(mapStateToProps)(Groups);

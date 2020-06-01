@@ -24,7 +24,7 @@ class Root extends Component {
 
       if (token) {
         return authenticate()
-          .then(() => navigation.navigate('Home'))
+          .then(() => navigation.navigate('MainStackScreen'))
           .catch(e => {
             console.log('authenticate Root', e.response.data);
           });

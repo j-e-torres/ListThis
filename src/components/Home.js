@@ -2,20 +2,40 @@
 import React, {Component, useRef} from 'react';
 
 import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 
 import {connect} from 'react-redux';
-import {userGroupsThunk} from '../redux/actions/user';
+import {groupsThunk} from '../redux/actions/group';
+import {getListsThunk} from '../redux/actions/lists';
+import {getTasksThunk} from '../redux/actions/tasks';
+import {getUsersThunk} from '../redux/actions/user';
+
 import {colors, borders, typography} from '../styles';
 
 class Home extends Component {
   componentDidMount() {
-    const {loadUserGroups, userLogin} = this.props;
+    const {fetchGroups, fetchLists, fetchTasks, fetchUsers} = this.props;
 
-    return loadUserGroups(userLogin.id);
+    return (
+      Promise.all([fetchGroups(), fetchLists(), fetchTasks(), fetchUsers()])
+        // .then(() => console.log('stuff loaded'))
+        .catch(e => console.log('home didmount', e.response))
+    );
   }
 
+  logout = () => {
+    const {navigation} = this.props;
+
+    return AsyncStorage.removeItem('token')
+      .then(() => navigation.navigate('RootNav'))
+      .catch(e => console.log(e));
+  };
+
   render() {
-    const {navigation, userLogin} = this.props;
+    const {navigation, userLogin, users} = this.props;
+    const {logout} = this;
+
+    // console.log('home, users', users);
 
     return (
       <View style={styles.container}>
@@ -50,11 +70,9 @@ class Home extends Component {
             <Text style={styles.buttonText}>Your Groups</Text>
           </TouchableOpacity>
 
-          {/* <TouchableOpacity
-            style={styles.button}
-            onPress={() => navigation.navigate('Lists')}>
-            <Text style={styles.buttonText}>Your Lists</Text>
-          </TouchableOpacity> */}
+          <TouchableOpacity style={styles.button} onPress={logout}>
+            <Text style={styles.buttonText}>Logout</Text>
+          </TouchableOpacity>
         </View>
       </View>
     );
@@ -105,10 +123,16 @@ const styles = StyleSheet.create({
   buttonText: {color: colors.lightOrange, fontSize: 25},
 });
 
-const mapStateToProps = ({userLogin, userGroups}) => ({userLogin, userGroups});
+const mapStateToProps = ({userLogin, users}) => ({
+  userLogin,
+  users,
+});
 
 const mapDispatchToProps = dispatch => ({
-  loadUserGroups: userId => dispatch(userGroupsThunk(userId)),
+  fetchGroups: () => dispatch(groupsThunk()),
+  fetchLists: () => dispatch(getListsThunk()),
+  fetchTasks: () => dispatch(getTasksThunk()),
+  fetchUsers: () => dispatch(getUsersThunk()),
 });
 
 export default connect(
