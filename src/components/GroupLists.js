@@ -6,29 +6,19 @@ import {
   StyleSheet,
   TouchableOpacity,
   ScrollView,
-  Alert,
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/Entypo';
 
 import {connect} from 'react-redux';
-import {groupListsThunk} from '../redux/actions/group';
 
 import {stickyNotesTiltDegrees} from '../helperFunctions';
 import {colors, borders, typography} from '../styles';
 
-const GroupLists = ({
-  route: {params},
-  navigation,
-  userLogin,
-  groupLists,
-  fetchGroupLists,
-}) => {
+const GroupLists = ({route: {params}, navigation, userLogin, lists}) => {
   const {username} = userLogin;
   const {groupName, groupOwner, users, id} = params;
-  fetchGroupLists(id);
-  // console.log('groupList, params', params);
-  // console.log('groupLists, userGroups', userGroups);
+  const groupLists = lists.filter(list => list.groupId === id);
 
   return (
     <View style={styles.panelContainer}>
@@ -40,13 +30,19 @@ const GroupLists = ({
           </TouchableOpacity>
 
           {username === groupOwner && (
-            <TouchableOpacity onPress={() => Alert.alert('Add user to group')}>
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate('GroupAddUserModal', {
+                  groupId: id,
+                  userId: userLogin.id,
+                })
+              }>
               <Icon name="add-user" size={40} color={colors.lightBlack} />
             </TouchableOpacity>
           )}
 
           <TouchableOpacity
-            onPress={() => navigation.navigate('ViewUsersModal', {users})}>
+            onPress={() => navigation.navigate('ViewUsersModal', {id})}>
             <Icon name="users" size={40} color={colors.lightBlack} />
           </TouchableOpacity>
         </View>
@@ -165,18 +161,11 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapStateToProps = ({userLogin, groupLists}) => {
+const mapStateToProps = ({userLogin, lists}) => {
   return {
     userLogin,
-    groupLists,
+    lists,
   };
 };
 
-const mapDispatchToProps = dispatch => ({
-  fetchGroupLists: groupId => dispatch(groupListsThunk(groupId)),
-});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(GroupLists);
+export default connect(mapStateToProps)(GroupLists);

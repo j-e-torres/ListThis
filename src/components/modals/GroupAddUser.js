@@ -1,47 +1,46 @@
 import React, {Component} from 'react';
-import {
-  View,
-  Text,
-  TextInput,
-  StyleSheet,
-  TouchableOpacity,
-} from 'react-native';
 
 import {connect} from 'react-redux';
-import {createListThunk} from '../../redux/actions/lists';
+import {groupAddUserThunk} from '../../redux/actions/user';
+
+import {
+  View,
+  TextInput,
+  TouchableOpacity,
+  Text,
+  StyleSheet,
+} from 'react-native';
 
 import {colors, borders, typography} from '../../styles';
 
-class CreateList extends Component {
+class GroupAddUser extends Component {
   constructor() {
     super();
     this.state = {
-      listName: '',
-      listNotes: '',
+      username: '',
       success: '',
       error: '',
     };
   }
 
-  createList = () => {
+  _groupAddUser = () => {
     const {
-      createNewList,
-      route: {params},
       navigation,
+      route: {params},
+      groupAddUser,
     } = this.props;
+    const {groupId, userId} = params;
+    const {username} = this.state;
+    // console.log('groupadduser, params', this.props);
 
-    const {id} = params;
-
-    const {listName, listNotes} = this.state;
-
-    return createNewList(id, {listName, listNotes})
+    return groupAddUser(userId, groupId, {username})
       .then(() =>
-        this.setState({success: 'List created! Returning to previous screen'}),
+        this.setState({success: 'User added! Returning to previous screen'}),
       )
       .then(() =>
         setTimeout(function() {
           navigation.goBack();
-        }, 1500),
+        }, 1250),
       )
       .catch(e => {
         this.setState({error: e.response.data.errors});
@@ -49,11 +48,15 @@ class CreateList extends Component {
   };
 
   render() {
-    // console.log('crealist, props', this.props);
     const {success, error} = this.state;
-    const {createList} = this;
+    const {_groupAddUser} = this;
+
     return (
       <View style={styles.container}>
+        <View>
+          <Text style={styles.title}>Enter user you wish to add</Text>
+        </View>
+
         {success.length > 0 && (
           <View>
             <Text style={styles.success}>{success}</Text>
@@ -71,25 +74,20 @@ class CreateList extends Component {
             })}
           </View>
         )}
-        <Text style={styles.title}>List Name</Text>
 
-        <TextInput
-          style={styles.input}
-          onChangeText={listName => this.setState({listName})}
-          placeholder="List name"
-        />
+        <View>
+          <TextInput
+            style={styles.input}
+            onChangeText={username => this.setState({username})}
+            placeholder="Username"
+          />
+        </View>
 
-        <Text style={styles.title}>List Notes (Optional)</Text>
-
-        <TextInput
-          style={styles.input}
-          onChangeText={listNotes => this.setState({listNotes})}
-          placeholder="List notes optional"
-        />
-
-        <TouchableOpacity style={styles.button} onPress={createList}>
-          <Text style={styles.buttonText}>Create list</Text>
-        </TouchableOpacity>
+        <View>
+          <TouchableOpacity style={styles.button} onPress={_groupAddUser}>
+            <Text style={styles.buttonText}>Add user to group</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }
@@ -139,11 +137,11 @@ const styles = StyleSheet.create({
 });
 
 const mapDispatchToProps = dispatch => ({
-  createNewList: (groupId, newList) =>
-    dispatch(createListThunk(groupId, newList)),
+  groupAddUser: (userId, groupId, username) =>
+    dispatch(groupAddUserThunk(userId, groupId, username)),
 });
 
 export default connect(
   null,
   mapDispatchToProps,
-)(CreateList);
+)(GroupAddUser);

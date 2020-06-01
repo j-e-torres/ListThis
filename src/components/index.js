@@ -5,7 +5,7 @@ import ListItems from './ListItems';
 import Root from './Root';
 import Login from './Login';
 import SignUp from './SignUp';
-import {CreateGroup, ViewUsers, CreateList} from './modals';
+import {CreateGroup, ViewUsers, CreateList, GroupAddUser} from './modals';
 
 export {
   GroupLists,
@@ -18,4 +18,5 @@ export {
   CreateGroup,
   ViewUsers,
   CreateList,
+  GroupAddUser,
 };
