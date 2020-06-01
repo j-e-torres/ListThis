@@ -6,7 +6,12 @@ import {
   CREATE_GROUP,
   ADD_USER,
   GET_USERS,
+  REFRESH_GROUPS,
 } from '../constants';
+
+const refreshGroups = () => ({
+  type: REFRESH_GROUPS,
+});
 
 const getUser = user => ({
   type: GET_USER,
@@ -105,5 +110,6 @@ export const groupAddUserThunk = (userId, groupId, username) => {
       `https://listthisbackend.herokuapp.com/api/users/${userId}/groups/${groupId}`,
       username,
     );
+    // .then(() => dispatch(refreshGroups()));
   };
 };

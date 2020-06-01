@@ -16,14 +16,11 @@ class Home extends Component {
   componentDidMount() {
     const {fetchGroups, fetchLists, fetchTasks, fetchUsers} = this.props;
 
-    return Promise.all([
-      fetchGroups(),
-      fetchLists(),
-      fetchTasks(),
-      fetchUsers(),
-    ])
-      .then(() => console.log('stuff loaded'))
-      .catch(e => console.log('home didmount', e.response));
+    return (
+      Promise.all([fetchGroups(), fetchLists(), fetchTasks(), fetchUsers()])
+        // .then(() => console.log('stuff loaded'))
+        .catch(e => console.log('home didmount', e.response))
+    );
   }
 
   logout = () => {

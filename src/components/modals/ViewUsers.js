@@ -6,11 +6,8 @@ import {connect} from 'react-redux';
 
 import {colors} from '../../styles';
 
-const ViewUsers = ({navigation, route: {params}, users, userLogin}) => {
+const ViewUsers = ({navigation, route: {params}, users}) => {
   const {id} = params;
-  // console.log('viewUsers,userLogin', userLogin);
-  // console.log('viewUsers,user 1', users[0]);
-  // console.log('viewUsers,user 2', users[1]);
 
   const groupUsers = users.reduce((acc, user) => {
     const found = user.groups.find(group => group.id === id);
@@ -19,8 +16,6 @@ const ViewUsers = ({navigation, route: {params}, users, userLogin}) => {
     }
     return acc;
   }, []);
-
-  // console.log('viewUsers, groupUsers', groupUsers);
 
   return (
     <View style={styles.container}>
@@ -51,6 +46,6 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapStateToProps = ({users, userLogin}) => ({users, userLogin});
+const mapStateToProps = ({users}) => ({users});
 
 export default connect(mapStateToProps)(ViewUsers);

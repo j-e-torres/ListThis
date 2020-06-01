@@ -9,6 +9,7 @@ import {
   GET_GROUPS,
   ADD_USER,
   GET_USERS,
+  REFRESH_GROUPS,
 } from './constants';
 
 export const usersReducer = (state = [], action) => {

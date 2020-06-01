@@ -5,6 +5,7 @@ export const ADD_USER = 'ADD_USER';
 
 export const CREATE_GROUP = 'CREATE_GROUP';
 export const GET_GROUPS = 'GET_GROUPS';
+export const REFRESH_GROUPS = 'REFRESH_GROUPS';
 
 export const GET_LISTS = 'GET_LISTS';
 export const CREATE_LIST = 'CREATE_LIST';
