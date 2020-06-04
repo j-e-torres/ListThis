@@ -20,6 +20,8 @@ const GroupLists = ({route: {params}, navigation, userLogin, lists}) => {
   const {groupName, groupOwner, users, id} = params;
   const groupLists = lists.filter(list => list.groupId === id);
 
+  // console.log('groupLists.js, lists', lists);
+
   return (
     <View style={styles.panelContainer}>
       <View style={{flex: 1}}>

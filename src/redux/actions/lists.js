@@ -14,7 +14,7 @@ const addNewList = newList => ({
 export const getListsThunk = () => {
   return dispatch => {
     return axios
-      .get('https://listthisbackend.herokuapp.com/api/lists/')
+      .get('https://listthisbackend.herokuapp.com/api/lists')
       .then(res => res.data)
       .then(lists => dispatch(getLists(lists)));
   };
