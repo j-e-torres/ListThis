@@ -31,6 +31,7 @@
 - √ add user to current group
 - √ Create new task for list
 - complete a task
+- delete a task
 - remove a user from group
 - delete a group
 - complete a list

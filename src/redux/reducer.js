@@ -8,6 +8,7 @@ import {
   GET_GROUPS,
   ADD_USER,
   GET_USERS,
+  COMPLETED_TASK,
 } from './constants';
 
 export const usersReducer = (state = [], action) => {
@@ -60,12 +61,24 @@ export const listsReducer = (state = [], action) => {
 };
 
 export const tasksReducer = (state = [], action) => {
+  // console.log('taskReducer, action.completedTask', action);
+  let remainingTasks;
+
+  if (action.completedTask) {
+    remainingTasks = [...state].filter(
+      task => task.taskName !== action.completedTask.taskName,
+    );
+  }
+
   switch (action.type) {
     case GET_TASKS:
       return action.tasks;
 
     case CREATE_TASK:
       return [...state, action.newTask];
+
+    case COMPLETED_TASK:
+      return [...remainingTasks, action.completedTask];
 
     default:
       return state;
