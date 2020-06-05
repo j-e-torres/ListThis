@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 
 import {connect} from 'react-redux';
-import {completeTaskThunk} from '../redux/actions/tasks';
+import {completeTaskThunk, deleteTaskThunk} from '../redux/actions/tasks';
 
 import Icon from 'react-native-vector-icons/Entypo';
 
@@ -20,7 +20,7 @@ class ListItems extends Component {
   constructor() {
     super();
     this.state = {
-      success: '',
+      deleteSuccess: '',
       error: '',
     };
   }
@@ -29,6 +29,12 @@ class ListItems extends Component {
     const {completeTask} = this.props;
 
     return completeTask(task.id).catch(e => console.log(e));
+  };
+
+  _deleteTask = task => {
+    const {deleteTask} = this.props;
+
+    return deleteTask(task).catch(e => console.log(e));
   };
 
   render() {
@@ -44,7 +50,7 @@ class ListItems extends Component {
       a.completed > b.completed ? 1 : -1,
     );
 
-    const {_completeTask} = this;
+    const {_completeTask, _deleteTask} = this;
 
     return (
       <View style={styles.panelContainer}>
@@ -88,7 +94,7 @@ class ListItems extends Component {
                         </TouchableOpacity>
 
                         <TouchableOpacity
-                          onPress={() => Alert.alert('delete Button pressed')}
+                          onPress={() => _deleteTask(task)}
                           style={completed(task.completed).taskOwner}>
                           <Text>
                             <Icon
@@ -124,97 +130,6 @@ class ListItems extends Component {
     );
   }
 }
-
-// const ListItems = ({route: {params}, navigation, tasks, completeTask}) => {
-//   const {listNotes, id} = params;
-
-//   const listTasks = tasks.filter(task => task.listId === id);
-
-//   const sortByCompleted = listTasks.sort((a, b) =>
-//     a.completed > b.completed ? 1 : -1,
-//   );
-
-//   const _completeTask = task => {
-//     return completeTask(task.id).catch(e => console.log(e));
-//   };
-
-//   return (
-//     <View style={styles.panelContainer}>
-//       <View style={{flex: 1}}>
-//         <View style={{flex: 1}}>
-//           <View style={styles.iconHeader}>
-//             <TouchableOpacity
-//               onPress={() => navigation.navigate('CreateTaskModal', {id})}>
-//               <Icon name="add-to-list" size={40} color={colors.lightBlack} />
-//             </TouchableOpacity>
-//           </View>
-//         </View>
-//       </View>
-
-//       <View style={{flex: 3}}>
-//         {sortByCompleted.length > 0 ? (
-//           <ScrollView contentContainerStyle={{flexGrow: 1}}>
-//             {sortByCompleted.map((task, idx) => {
-//               return (
-//                 <View key={idx} style={styles.itemLine}>
-//                   <Text style={completed(task.completed).task}>
-//                     {task.taskName}
-//                   </Text>
-
-//                   {task.completed === true ? (
-//                     <Text style={completed(task.completed).taskOwner}>
-//                       completed by xxx
-//                     </Text>
-//                   ) : (
-//                     <View style={styles.iconContainer}>
-//                       <TouchableOpacity
-//                         onPress={_completeTask(task)}
-//                         style={completed(task.completed).taskOwner}>
-//                         <Text>
-//                           <Icon
-//                             name="circle"
-//                             size={20}
-//                             color={colors.lightBlack}
-//                           />
-//                         </Text>
-//                       </TouchableOpacity>
-
-//                       <TouchableOpacity
-//                         onPress={() => Alert.alert('Simple Button pressed')}
-//                         style={completed(task.completed).taskOwner}>
-//                         <Text>
-//                           <Icon
-//                             name="cross"
-//                             size={20}
-//                             color={colors.lightBlack}
-//                           />
-//                         </Text>
-//                       </TouchableOpacity>
-//                     </View>
-//                   )}
-//                 </View>
-//               );
-//             })}
-//           </ScrollView>
-//         ) : (
-//           <Text style={styles.noTasks}>No tasks created yet</Text>
-//         )}
-//       </View>
-
-//       <View style={styles.footer}>
-//         <View style={{flex: 1, padding: '2%'}}>
-//           <View style={{flex: 1}}>
-//             <Text style={styles.footerHeader}>Notes</Text>
-//           </View>
-
-//           <View style={{flex: 3}}>
-//             <Text style={styles.footerContent}>{listNotes}</Text>
-//           </View>
-//         </View>
-//       </View>
-//     </View>
-//   );
-// };
 
 const completed = bool =>
   StyleSheet.create({
@@ -317,6 +232,7 @@ const mapStateToProps = ({tasks}) => ({tasks});
 
 const mapDispatchToProps = dispatch => ({
   completeTask: taskId => dispatch(completeTaskThunk(taskId)),
+  deleteTask: task => dispatch(deleteTaskThunk(task)),
 });
 
 export default connect(

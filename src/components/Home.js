@@ -16,11 +16,12 @@ class Home extends Component {
   componentDidMount() {
     const {fetchGroups, fetchLists, fetchTasks, fetchUsers} = this.props;
 
-    return (
-      Promise.all([fetchGroups(), fetchLists(), fetchTasks(), fetchUsers()])
-        // .then(() => console.log('stuff loaded'))
-        .catch(e => console.log('home didmount', e.response))
-    );
+    return Promise.all([
+      fetchGroups(),
+      fetchLists(),
+      fetchTasks(),
+      fetchUsers(),
+    ]).catch(e => console.log('home didmount', e.response));
   }
 
   logout = () => {
@@ -34,8 +35,6 @@ class Home extends Component {
   render() {
     const {navigation, userLogin, lists} = this.props;
     const {logout} = this;
-
-    console.log('home, lists', lists);
 
     return (
       <View style={styles.container}>
