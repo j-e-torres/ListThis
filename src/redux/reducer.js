@@ -70,19 +70,6 @@ export const tasksReducer = (state = [], action) => {
     );
   }
 
-  console.log('taskreducaer, completedtasks', remainingTasks);
-  // [...state, action.completedTask]
-
-  // const completedTasks = [...state].reduce((acc, task) => {
-  //   if (task.taskName === action.completedTask.taskName) {
-  //     acc.push(action.completedTask);
-  //   } else {
-  //     acc.push(task);
-  //   }
-
-  //   return acc;
-  // }, []);
-
   switch (action.type) {
     case GET_TASKS:
       return action.tasks;
