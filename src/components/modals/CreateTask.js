@@ -2,41 +2,38 @@ import React, {Component} from 'react';
 import {
   View,
   Text,
-  TextInput,
   StyleSheet,
+  TextInput,
   TouchableOpacity,
 } from 'react-native';
 
 import {connect} from 'react-redux';
-import {createListThunk} from '../../redux/actions/lists';
+import {createTaskThunk} from '../../redux/actions/tasks';
 
 import {colors, borders, typography} from '../../styles';
 
-class CreateList extends Component {
+class CreateTask extends Component {
   constructor() {
     super();
     this.state = {
-      listName: '',
-      listNotes: '',
+      taskName: '',
       success: '',
       error: '',
     };
   }
 
-  createList = () => {
+  _createTask = () => {
+    const {taskName} = this.state;
     const {
-      createNewList,
-      route: {params},
+      createTask,
       navigation,
+      route: {params},
     } = this.props;
-
     const {id} = params;
 
-    const {listName, listNotes} = this.state;
-
-    return createNewList(id, {listName, listNotes})
+    return createTask(id, {taskName})
       .then(() =>
-        this.setState({success: 'List created! Returning to previous screen'}),
+        this.setState({success: 'Task created! Returning to previous screen'}),
       )
       .then(() =>
         setTimeout(function() {
@@ -44,16 +41,21 @@ class CreateList extends Component {
         }, 1200),
       )
       .catch(e => {
-        this.setState({error: e.response.data.errors});
+        console.log('createTask, error', e);
+        this.setState({error: e});
       });
   };
 
   render() {
-    // console.log('crealist, props', this.props);
     const {success, error} = this.state;
-    const {createList} = this;
+    const {_createTask} = this;
+
     return (
       <View style={styles.container}>
+        <View>
+          <Text style={styles.title}>Create a new task</Text>
+        </View>
+
         {success.length > 0 && (
           <View>
             <Text style={styles.success}>{success}</Text>
@@ -71,25 +73,20 @@ class CreateList extends Component {
             })}
           </View>
         )}
-        <Text style={styles.title}>List Name</Text>
 
-        <TextInput
-          style={styles.input}
-          onChangeText={listName => this.setState({listName})}
-          placeholder="List name"
-        />
+        <View>
+          <TextInput
+            style={styles.input}
+            onChangeText={taskName => this.setState({taskName})}
+            placeholder="Task name"
+          />
+        </View>
 
-        <Text style={styles.title}>List Notes (Optional)</Text>
-
-        <TextInput
-          style={styles.input}
-          onChangeText={listNotes => this.setState({listNotes})}
-          placeholder="List notes optional"
-        />
-
-        <TouchableOpacity style={styles.button} onPress={createList}>
-          <Text style={styles.buttonText}>Create list</Text>
-        </TouchableOpacity>
+        <View>
+          <TouchableOpacity style={styles.button} onPress={_createTask}>
+            <Text style={styles.buttonText}>Create task</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }
@@ -139,11 +136,10 @@ const styles = StyleSheet.create({
 });
 
 const mapDispatchToProps = dispatch => ({
-  createNewList: (groupId, newList) =>
-    dispatch(createListThunk(groupId, newList)),
+  createTask: (listId, newTask) => dispatch(createTaskThunk(listId, newTask)),
 });
 
 export default connect(
   null,
   mapDispatchToProps,
-)(CreateList);
+)(CreateTask);

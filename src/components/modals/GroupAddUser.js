@@ -40,7 +40,7 @@ class GroupAddUser extends Component {
       .then(() =>
         setTimeout(function() {
           navigation.goBack();
-        }, 1250),
+        }, 1200),
       )
       .catch(e => {
         this.setState({error: e.response.data.errors});
