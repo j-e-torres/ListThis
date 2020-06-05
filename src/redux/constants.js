@@ -13,3 +13,4 @@ export const CREATE_LIST = 'CREATE_LIST';
 export const GET_TASKS = 'GET_TASKS';
 export const CREATE_TASK = 'CREATE_TASK';
 export const COMPLETED_TASK = 'COMPLETE_TASK';
+export const DELETE_TASK = 'DELETE_TASK';

@@ -9,6 +9,7 @@ import {
   ADD_USER,
   GET_USERS,
   COMPLETED_TASK,
+  DELETE_TASK,
 } from './constants';
 
 export const usersReducer = (state = [], action) => {
@@ -61,12 +62,18 @@ export const listsReducer = (state = [], action) => {
 };
 
 export const tasksReducer = (state = [], action) => {
-  // console.log('taskReducer, action.completedTask', action);
+  let uncompletedTasks;
   let remainingTasks;
 
   if (action.completedTask) {
-    remainingTasks = [...state].filter(
+    uncompletedTasks = [...state].filter(
       task => task.taskName !== action.completedTask.taskName,
+    );
+  }
+
+  if (action.deletedTask) {
+    remainingTasks = [...state].filter(
+      task => task.id !== action.deletedTask.id,
     );
   }
 
@@ -78,7 +85,10 @@ export const tasksReducer = (state = [], action) => {
       return [...state, action.newTask];
 
     case COMPLETED_TASK:
-      return [...remainingTasks, action.completedTask];
+      return [...uncompletedTasks, action.completedTask];
+
+    case DELETE_TASK:
+      return [...remainingTasks];
 
     default:
       return state;
