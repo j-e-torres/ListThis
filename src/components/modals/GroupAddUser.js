@@ -29,19 +29,25 @@ class GroupAddUser extends Component {
       route: {params},
       groupAddUser,
     } = this.props;
-    const {groupId, userId} = params;
+    const {groupId, userId, users} = params;
     const {username} = this.state;
 
-    return groupAddUser(userId, groupId, {username})
-      .then(() => this.setState({success: 'User added.'}))
-      .then(() =>
-        setTimeout(function() {
-          navigation.goBack();
-        }, 250),
-      )
-      .catch(e => {
-        this.setState({error: e.response.data.errors});
-      });
+    const userExists = users.find(user => user.username === username);
+
+    if (!userExists) {
+      return groupAddUser(userId, groupId, {username})
+        .then(() => this.setState({success: 'User added.'}))
+        .then(() =>
+          setTimeout(function() {
+            navigation.goBack();
+          }, 250),
+        )
+        .catch(e => {
+          this.setState({error: e.response.data.errors});
+        });
+    } else {
+      this.setState({error: ['User already belongs to group!']});
+    }
   };
 
   render() {
@@ -75,7 +81,9 @@ class GroupAddUser extends Component {
         <View>
           <TextInput
             style={styles.input}
-            onChangeText={username => this.setState({username})}
+            onChangeText={username =>
+              this.setState({username: username.toLowerCase()})
+            }
             placeholder="Username"
           />
         </View>

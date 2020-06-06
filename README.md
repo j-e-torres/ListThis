@@ -2,12 +2,9 @@
 
 # Issues
 
-- when creating new group, viewUser modal shows no user instead of at least 1(group creator)
-
 - can use back button on android from home to go back to login screen
 - new tasks created are not sorted
 - logged in user id does not match heroku sometimes?
-- adding user to group must be lowercase
 
 # `Login/Home page`
 
