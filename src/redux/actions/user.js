@@ -77,7 +77,11 @@ export const createGroupThunk = (userId, groupName) => {
         groupName,
       )
       .then(res => res.data)
-      .then(group => dispatch(addNewGroup(group)));
+      .then(group => {
+        dispatch(addNewGroup(group));
+        return group;
+      })
+      .then(_group => dispatch(refreshUsers(_group.users[0])));
   };
 };
 
