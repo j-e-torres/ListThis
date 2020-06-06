@@ -6,7 +6,6 @@ import {
   StyleSheet,
   TouchableOpacity,
   ScrollView,
-  Alert,
 } from 'react-native';
 
 import {connect} from 'react-redux';
@@ -76,9 +75,7 @@ class ListItems extends Component {
                     </Text>
 
                     {task.completed === true ? (
-                      <Text style={completed(task.completed).taskOwner}>
-                        completed by xxx
-                      </Text>
+                      <Text style={completed(task.completed).taskOwner} />
                     ) : (
                       <View style={styles.iconContainer}>
                         <TouchableOpacity

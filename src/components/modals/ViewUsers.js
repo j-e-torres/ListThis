@@ -10,7 +10,14 @@ const ViewUsers = ({navigation, route: {params}, users}) => {
   const {id} = params;
 
   const groupUsers = users.reduce((acc, user) => {
-    const found = user.groups.find(group => group.id === id);
+    let found;
+
+    if (user.groups) {
+      found = user.groups.find(group => group.id === id);
+    } else if (user.usergroup) {
+      found = user.usergroup.groupId === id ? user : undefined;
+    }
+
     if (found) {
       acc.push(user);
     }

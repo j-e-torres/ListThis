@@ -2,6 +2,7 @@ export const GET_USER = 'GET_USER';
 export const GET_USER_GROUPS = 'GET_USER_GROUPS';
 export const GET_USERS = 'GET_USERS';
 export const ADD_USER = 'ADD_USER';
+export const REFRESH_USERS = 'REFRESH_USERS';
 
 export const CREATE_GROUP = 'CREATE_GROUP';
 export const GET_GROUPS = 'GET_GROUPS';

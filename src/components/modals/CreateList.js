@@ -35,13 +35,11 @@ class CreateList extends Component {
     const {listName, listNotes} = this.state;
 
     return createNewList(id, {listName, listNotes})
-      .then(() =>
-        this.setState({success: 'List created! Returning to previous screen'}),
-      )
+      .then(() => this.setState({success: 'Successfully created.'}))
       .then(() =>
         setTimeout(function() {
           navigation.goBack();
-        }, 1200),
+        }, 250),
       )
       .catch(e => {
         this.setState({error: e.response.data.errors});
