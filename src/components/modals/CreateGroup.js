@@ -28,13 +28,11 @@ class CreateGroup extends Component {
     const {groupName} = this.state;
 
     return createNewGroup(userLogin.id, {groupName})
-      .then(() =>
-        this.setState({success: 'Group created! Returning to previous screen'}),
-      )
+      .then(() => this.setState({success: 'Successfully created.'}))
       .then(() =>
         setTimeout(function() {
           navigation.goBack();
-        }, 1200),
+        }, 250),
       )
       .catch(e => {
         this.setState({error: e.response.data.errors});

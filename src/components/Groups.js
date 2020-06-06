@@ -15,6 +15,7 @@ import {stickyNotesTiltDegrees} from '../helperFunctions';
 import {colors, borders, typography} from '../styles';
 
 const Groups = ({navigation, groups, userLogin}) => {
+  // console.log('groups', groups[2].lists.length);
   const userGroups = groups;
   return (
     <View style={styles.panelContainer}>
@@ -51,7 +52,7 @@ const Groups = ({navigation, groups, userLogin}) => {
                     </Text>
 
                     <Text style={styles.secondaryTitle}>
-                      {group.lists ? 'Lists:' : 'No Lists'}
+                      {group.lists.length > 0 ? 'Lists:' : 'No Lists'}
                     </Text>
 
                     {group.lists && (

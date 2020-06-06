@@ -33,8 +33,10 @@ class Home extends Component {
   };
 
   render() {
-    const {navigation, userLogin, lists} = this.props;
+    const {navigation, groups, userLogin} = this.props;
     const {logout} = this;
+
+    // console.log('home.js, groups', groups[0]);
 
     return (
       <View style={styles.container}>
@@ -122,9 +124,9 @@ const styles = StyleSheet.create({
   buttonText: {color: colors.lightOrange, fontSize: 25},
 });
 
-const mapStateToProps = ({userLogin, lists}) => ({
+const mapStateToProps = ({userLogin, groups}) => ({
   userLogin,
-  lists,
+  groups,
 });
 
 const mapDispatchToProps = dispatch => ({

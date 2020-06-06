@@ -31,16 +31,13 @@ class GroupAddUser extends Component {
     } = this.props;
     const {groupId, userId} = params;
     const {username} = this.state;
-    // console.log('groupadduser, params', this.props);
 
     return groupAddUser(userId, groupId, {username})
-      .then(() =>
-        this.setState({success: 'User added! Returning to previous screen'}),
-      )
+      .then(() => this.setState({success: 'User added.'}))
       .then(() =>
         setTimeout(function() {
           navigation.goBack();
-        }, 1200),
+        }, 250),
       )
       .catch(e => {
         this.setState({error: e.response.data.errors});
