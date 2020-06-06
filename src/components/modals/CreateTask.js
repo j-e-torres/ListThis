@@ -32,13 +32,11 @@ class CreateTask extends Component {
     const {id} = params;
 
     return createTask(id, {taskName})
-      .then(() =>
-        this.setState({success: 'Task created! Returning to previous screen'}),
-      )
+      .then(() => this.setState({success: 'Successfully created. '}))
       .then(() =>
         setTimeout(function() {
           navigation.goBack();
-        }, 1200),
+        }, 250),
       )
       .catch(e => {
         console.log('createTask, error', e);

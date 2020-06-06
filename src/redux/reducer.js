@@ -10,15 +10,27 @@ import {
   GET_USERS,
   COMPLETED_TASK,
   DELETE_TASK,
+  REFRESH_USERS,
 } from './constants';
 
 export const usersReducer = (state = [], action) => {
+  let refreshingUsers;
+
+  if (action.addedGroupUser) {
+    refreshingUsers = [...state].filter(
+      user => user.id !== action.addedGroupUser.id,
+    );
+  }
+
   switch (action.type) {
     case GET_USERS:
       return action.users;
 
     case ADD_USER:
       return [...state, action.newUser];
+
+    case REFRESH_USERS:
+      return [...refreshingUsers, action.addedGroupUser];
 
     default:
       return state;

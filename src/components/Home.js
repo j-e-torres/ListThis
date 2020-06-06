@@ -33,8 +33,10 @@ class Home extends Component {
   };
 
   render() {
-    const {navigation, userLogin, lists} = this.props;
+    const {navigation, userLogin} = this.props;
     const {logout} = this;
+
+    // console.log('home.js, userLogin', userLogin);
 
     return (
       <View style={styles.container}>

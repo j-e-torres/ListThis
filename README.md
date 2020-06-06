@@ -4,11 +4,12 @@
 
 - when adding new user to current group, viewUser modal doesn't update
 - when creating new group, viewUser modal shows no user instead of at least 1(group creator)
-- Groups.js: groups with 0 lists do not show 'No Lists', instead shows "Lists:"
+
 - can use back button on android from home to go back to login screen
 - √ android: groupLists.js: panels overlapping clipboard title
 - new tasks created are not sorted
--
+- logged in user id does not match heroku sometimes?
+- adding user to group must be lowercase
 
 # `Login/Home page`
 
@@ -34,4 +35,4 @@
 - √ delete a task
 - remove a user from group
 - delete a group
-- complete a list
+- complete/delete a list
