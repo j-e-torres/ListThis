@@ -20,7 +20,7 @@ const GroupLists = ({route: {params}, navigation, userLogin, lists}) => {
   const {groupName, groupOwner, users, id} = params;
   const groupLists = lists.filter(list => list.groupId === id);
 
-  // console.log('groupLists.js, lists', lists);
+  console.log('groupLists.js, params', params);
 
   return (
     <View style={styles.panelContainer}>
@@ -37,6 +37,7 @@ const GroupLists = ({route: {params}, navigation, userLogin, lists}) => {
                 navigation.navigate('GroupAddUserModal', {
                   groupId: id,
                   userId: userLogin.id,
+                  users: users,
                 })
               }>
               <Icon name="add-user" size={40} color={colors.lightBlack} />
