@@ -21,19 +21,20 @@ class Home extends Component {
       fetchLists(),
       fetchTasks(),
       fetchUsers(),
-    ]).catch(e => console.log('home didmount', e.response));
+    ]);
   }
 
   logout = () => {
     const {navigation} = this.props;
 
-    return AsyncStorage.removeItem('token')
-      .then(() => navigation.navigate('RootNav'))
-      .catch(e => console.log(e));
+    return AsyncStorage.removeItem('token').then(() =>
+      navigation.navigate('RootNav'),
+    );
+    // .catch(e => console.log(e));
   };
 
   render() {
-    const {navigation, groups, userLogin} = this.props;
+    const {navigation, userLogin} = this.props;
     const {logout} = this;
 
     // console.log('home.js, groups', groups[0]);

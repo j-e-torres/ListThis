@@ -113,14 +113,12 @@ class ListItems extends Component {
         </View>
 
         <View style={styles.footer}>
-          <View style={{flex: 1, padding: '2%'}}>
-            <View style={{flex: 1}}>
-              <Text style={styles.footerHeader}>Notes</Text>
-            </View>
+          <View style={{flex: 1, marginBottom: '2%'}}>
+            <Text style={styles.footerHeader}>Notes</Text>
+          </View>
 
-            <View style={{flex: 3}}>
-              <Text style={styles.footerContent}>{listNotes}</Text>
-            </View>
+          <View style={{flex: 3, padding: '1%'}}>
+            <Text style={styles.footerContent}>{listNotes}</Text>
           </View>
         </View>
       </View>
@@ -208,7 +206,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: colors.lightBlack,
     borderRadius: 50,
-    flexWrap: 'wrap',
+    // flexWrap: 'wrap',
   },
 
   footerHeader: {

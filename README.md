@@ -8,9 +8,7 @@
 
 # `Login/Home page`
 
-- √ Need a page for login or register options
-- √ logged in user must persist
-  - √ unless user deletes own token/logout
+- √ unless user deletes own token/logout
 
 # `Nav`
 
@@ -20,14 +18,6 @@
 
 # `Functionality`
 
-- √ Create a group with current user
-- √ Create a list for group
-- √ view users in a group
-- √ Create logout button
-- √ add user to current group
-- √ Create new task for list
-- √ complete a task
-- √ delete a task
 - remove a user from group
 - delete a group
 - complete/delete a list
