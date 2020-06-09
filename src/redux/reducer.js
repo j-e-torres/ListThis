@@ -11,6 +11,7 @@ import {
   COMPLETED_TASK,
   DELETE_TASK,
   REFRESH_USERS,
+  UPDATE_LIST_NOTES,
 } from './constants';
 
 export const usersReducer = (state = [], action) => {
@@ -61,12 +62,23 @@ export const groupsReducer = (state = [], action) => {
 };
 
 export const listsReducer = (state = [], action) => {
+  let nonUpdatedLists;
+
+  if (action.updatedListNotes) {
+    nonUpdatedLists = [...state].filter(
+      list => list.id !== action.updatedListNotes.id,
+    );
+  }
+
   switch (action.type) {
     case GET_LISTS:
       return action.lists;
 
     case CREATE_LIST:
       return [...state, action.newList];
+
+    case UPDATE_LIST_NOTES:
+      return [...nonUpdatedLists, action.updatedListNotes];
 
     default:
       return state;

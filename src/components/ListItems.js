@@ -10,30 +10,49 @@ import {
 
 import {connect} from 'react-redux';
 import {completeTaskThunk, deleteTaskThunk} from '../redux/actions/tasks';
+import {updateListNotesThunk} from '../redux/actions/lists';
 
 import Icon from 'react-native-vector-icons/Entypo';
 
 import {colors, borders, typography} from '../styles';
 
 class ListItems extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+
+    const {
+      route: {params},
+    } = this.props;
+
+    const {listNotes} = params;
+
     this.state = {
       deleteSuccess: '',
       error: '',
+      currentListNotes: listNotes,
     };
   }
+
+  _updateListNotes = () => {
+    const {
+      route: {params},
+      navigation,
+    } = this.props;
+
+    const {id} = params;
+    const {currentListNotes} = this.state;
+  };
 
   _completeTask = task => {
     const {completeTask} = this.props;
 
-    return completeTask(task.id).catch(e => console.log(e));
+    return completeTask(task.id);
   };
 
   _deleteTask = task => {
     const {deleteTask} = this.props;
 
-    return deleteTask(task).catch(e => console.log(e));
+    return deleteTask(task);
   };
 
   render() {
@@ -42,7 +61,8 @@ class ListItems extends Component {
       navigation,
       tasks,
     } = this.props;
-    const {listNotes, id} = params;
+    const {id} = params;
+    const {currentListNotes} = this.state;
 
     const listTasks = tasks.filter(task => task.listId === id);
     const sortByCompleted = listTasks.sort((a, b) =>
@@ -113,12 +133,15 @@ class ListItems extends Component {
         </View>
 
         <View style={styles.footer}>
-          <View style={{flex: 1, marginBottom: '2%'}}>
+          <View style={styles.footerHeaderContainer}>
             <Text style={styles.footerHeader}>Notes</Text>
+            <TouchableOpacity style={{flex: 1}}>
+              <Icon name="pencil" size={20} color={colors.lightBlack} />
+            </TouchableOpacity>
           </View>
 
           <View style={{flex: 3, padding: '1%'}}>
-            <Text style={styles.footerContent}>{listNotes}</Text>
+            <Text style={styles.footerContent}>{currentListNotes}</Text>
           </View>
         </View>
       </View>
@@ -209,11 +232,20 @@ const styles = StyleSheet.create({
     // flexWrap: 'wrap',
   },
 
-  footerHeader: {
-    color: colors.lightOrange,
-    fontSize: typography.font30,
+  footerHeaderContainer: {
     borderBottomWidth: 1,
     borderBottomColor: colors.lightOrange,
+    flex: 1,
+    marginBottom: '2%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
+  },
+
+  footerHeader: {
+    flex: 2,
+    color: colors.lightOrange,
+    fontSize: typography.font30,
     textAlign: 'center',
   },
 
@@ -228,6 +260,8 @@ const mapStateToProps = ({tasks}) => ({tasks});
 const mapDispatchToProps = dispatch => ({
   completeTask: taskId => dispatch(completeTaskThunk(taskId)),
   deleteTask: task => dispatch(deleteTaskThunk(task)),
+  updateListNotes: (listId, listNotes) =>
+    dispatch(updateListNotesThunk(listId, listNotes)),
 });
 
 export default connect(

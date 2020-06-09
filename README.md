@@ -21,3 +21,4 @@
 - remove a user from group
 - delete a group
 - complete/delete a list
+- update notes, put request
