@@ -6,6 +6,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   ScrollView,
+  TextInput,
 } from 'react-native';
 
 import {connect} from 'react-redux';
@@ -29,18 +30,27 @@ class ListItems extends Component {
     this.state = {
       deleteSuccess: '',
       error: '',
+      notesEditable: false,
       currentListNotes: listNotes,
     };
   }
 
   _updateListNotes = () => {
-    const {
-      route: {params},
-      navigation,
-    } = this.props;
+    // const {
+    //   route: {params},
+    //   navigation,
+    // } = this.props;
 
-    const {id} = params;
+    // const {id} = params;
     const {currentListNotes} = this.state;
+    console.log('press edit button', currentListNotes);
+  };
+
+  handleEditable = () => {
+    const {notesEditable} = this.state;
+    notesEditable
+      ? this.setState({notesEditable: false})
+      : this.setState({notesEditable: true});
   };
 
   _completeTask = task => {
@@ -62,14 +72,14 @@ class ListItems extends Component {
       tasks,
     } = this.props;
     const {id} = params;
-    const {currentListNotes} = this.state;
+    const {currentListNotes, notesEditable} = this.state;
 
     const listTasks = tasks.filter(task => task.listId === id);
     const sortByCompleted = listTasks.sort((a, b) =>
       a.completed > b.completed ? 1 : -1,
     );
 
-    const {_completeTask, _deleteTask} = this;
+    const {_completeTask, _deleteTask, _updateListNotes, handleEditable} = this;
 
     return (
       <View style={styles.panelContainer}>
@@ -135,13 +145,34 @@ class ListItems extends Component {
         <View style={styles.footer}>
           <View style={styles.footerHeaderContainer}>
             <Text style={styles.footerHeader}>Notes</Text>
-            <TouchableOpacity style={{flex: 1}}>
-              <Icon name="pencil" size={20} color={colors.lightBlack} />
-            </TouchableOpacity>
+
+            {notesEditable ? (
+              <View style={styles.iconContainer}>
+                <TouchableOpacity onPress={_updateListNotes} style={{flex: 1}}>
+                  <Icon name="check" size={25} color={colors.lightBlack} />
+                </TouchableOpacity>
+
+                <TouchableOpacity onPress={handleEditable} style={{flex: 1}}>
+                  <Icon name="cross" size={25} color={colors.lightBlack} />
+                </TouchableOpacity>
+              </View>
+            ) : (
+              <TouchableOpacity
+                onPress={handleEditable}
+                style={{flex: 1, alignItems: 'center'}}>
+                <Icon name="pencil" size={25} color={colors.lightBlack} />
+              </TouchableOpacity>
+            )}
           </View>
 
-          <View style={{flex: 3, padding: '1%'}}>
-            <Text style={styles.footerContent}>{currentListNotes}</Text>
+          <View style={{flex: 3}}>
+            {/* <Text style={styles.footerContent}>{listNotes}</Text> */}
+            <TextInput
+              style={styles.footerContent}
+              value={currentListNotes}
+              editable={notesEditable}
+              onChangeText={text => this.setState({currentListNotes: text})}
+            />
           </View>
         </View>
       </View>
@@ -236,16 +267,17 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: colors.lightOrange,
     flex: 1,
-    marginBottom: '2%',
+    // marginBottom: '2%',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-evenly',
+    padding: '1%',
   },
 
   footerHeader: {
     flex: 2,
     color: colors.lightOrange,
-    fontSize: typography.font30,
+    fontSize: typography.font25,
     textAlign: 'center',
   },
 
