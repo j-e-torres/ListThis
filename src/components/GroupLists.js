@@ -56,8 +56,6 @@ const GroupLists = ({route: {params}, navigation, userLogin, lists}) => {
           </Text>
         </View>
 
-        {/* <View style={{flex: 1}} /> */}
-
         <View style={{flex: 2}}>
           <ScrollView contentContainerStyle={{flexGrow: 1}}>
             {groupLists.length > 0 && (

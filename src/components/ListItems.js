@@ -36,18 +36,23 @@ class ListItems extends Component {
   }
 
   _updateListNotes = () => {
-    // const {
-    //   route: {params},
-    //   navigation,
-    // } = this.props;
+    const {
+      route: {params},
+      updateListNotes,
+    } = this.props;
 
-    // const {id} = params;
+    const {id} = params;
     const {currentListNotes} = this.state;
-    console.log('press edit button', currentListNotes);
+
+    return updateListNotes(id, {listNotes: currentListNotes})
+      .then(() => this.setState({currentListNotes}))
+      .then(() => this.handleEditable())
+      .catch(e => console.log(e.response.data));
   };
 
   handleEditable = () => {
     const {notesEditable} = this.state;
+
     notesEditable
       ? this.setState({notesEditable: false})
       : this.setState({notesEditable: true});
@@ -166,7 +171,6 @@ class ListItems extends Component {
           </View>
 
           <View style={{flex: 3}}>
-            {/* <Text style={styles.footerContent}>{listNotes}</Text> */}
             <TextInput
               style={styles.footerContent}
               value={currentListNotes}
@@ -275,7 +279,7 @@ const styles = StyleSheet.create({
   },
 
   footerHeader: {
-    flex: 2,
+    flex: 1,
     color: colors.lightOrange,
     fontSize: typography.font25,
     textAlign: 'center',

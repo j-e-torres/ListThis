@@ -41,10 +41,12 @@ export const updateListNotesThunk = (listId, listNotes) => {
   return dispatch => {
     return axios
       .put(
-        `https://listthisbackend.herokuapp.com/api/list/${listId}/notes`,
+        `https://listthisbackend.herokuapp.com/api/lists/${listId}/notes`,
         listNotes,
       )
-      .then(res => res.data)
+      .then(res => {
+        return res.data;
+      })
       .then(list => dispatch(updateListNotes(list)));
   };
 };
