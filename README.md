@@ -7,7 +7,6 @@
 - logged in user id does not match heroku sometimes?
 - fix styling when editing notes
 - make entire panels clickable
-- even tho loggged in as another user, still see same lists
 
 # `Login/Home page`
 

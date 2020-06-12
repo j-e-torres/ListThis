@@ -30,14 +30,11 @@ class Home extends Component {
     return AsyncStorage.removeItem('token').then(() =>
       navigation.navigate('RootNav'),
     );
-    // .catch(e => console.log(e));
   };
 
   render() {
     const {navigation, userLogin} = this.props;
     const {logout} = this;
-
-    // console.log('home.js, groups', groups[0]);
 
     return (
       <View style={styles.container}>

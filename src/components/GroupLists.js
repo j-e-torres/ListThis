@@ -62,11 +62,11 @@ const GroupLists = ({route: {params}, navigation, userLogin, lists}) => {
               <View style={styles.panelsContainerLayout}>
                 {groupLists.map((list, idx) => {
                   return (
-                    <View style={panelStyle().panel} key={idx}>
-                      <Text
-                        style={styles.title}
-                        numberOfLines={1}
-                        onPress={() => navigation.navigate('ListItems', list)}>
+                    <TouchableOpacity
+                      onPress={() => navigation.navigate('ListItems', list)}
+                      style={panelStyle().panel}
+                      key={idx}>
+                      <Text style={styles.title} numberOfLines={1}>
                         {list.listName}
                       </Text>
 
@@ -87,7 +87,7 @@ const GroupLists = ({route: {params}, navigation, userLogin, lists}) => {
                           </Text>
                         </View>
                       )}
-                    </View>
+                    </TouchableOpacity>
                   );
                 })}
               </View>

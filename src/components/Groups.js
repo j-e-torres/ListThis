@@ -15,8 +15,20 @@ import {stickyNotesTiltDegrees} from '../helperFunctions';
 import {colors, borders, typography} from '../styles';
 
 const Groups = ({navigation, groups, userLogin}) => {
-  // console.log('groups', groups[2].lists.length);
-  const userGroups = groups;
+  const userGroups = groups.reduce((acc, group) => {
+    let found;
+
+    if (group.users) {
+      found = group.users.find(user => user.id === userLogin.id);
+    }
+
+    if (found) {
+      acc.push(group);
+    }
+
+    return acc;
+  }, []);
+
   return (
     <View style={styles.panelContainer}>
       <View style={{flex: 1}}>
@@ -43,11 +55,11 @@ const Groups = ({navigation, groups, userLogin}) => {
             <View style={styles.panelsContainerLayout}>
               {userGroups.map((group, idx) => {
                 return (
-                  <View style={panelStyle().panel} key={idx}>
-                    <Text
-                      style={styles.title}
-                      numberOfLines={1}
-                      onPress={() => navigation.navigate('GroupLists', group)}>
+                  <TouchableOpacity
+                    onPress={() => navigation.navigate('GroupLists', group)}
+                    style={panelStyle().panel}
+                    key={idx}>
+                    <Text style={styles.title} numberOfLines={1}>
                       {group.groupName}
                     </Text>
 
@@ -72,7 +84,7 @@ const Groups = ({navigation, groups, userLogin}) => {
                         </Text>
                       </View>
                     )}
-                  </View>
+                  </TouchableOpacity>
                 );
               })}
             </View>
