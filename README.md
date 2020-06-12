@@ -5,10 +5,14 @@
 - can use back button on android from home to go back to login screen
 - new tasks created are not sorted
 - logged in user id does not match heroku sometimes?
+- fix styling when editing notes
+- make entire panels clickable
+- even tho loggged in as another user, still see same lists
 
 # `Login/Home page`
 
 - √ unless user deletes own token/logout
+  - put logout button in nav
 
 # `Nav`
 
@@ -19,5 +23,8 @@
 # `Functionality`
 
 - remove a user from group
+- remove yourself from a group
 - delete a group
 - complete/delete a list
+- update notes, put request
+  - when edit is pressed, move cursor to notes

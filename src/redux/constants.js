@@ -10,6 +10,7 @@ export const REFRESH_GROUPS = 'REFRESH_GROUPS';
 
 export const GET_LISTS = 'GET_LISTS';
 export const CREATE_LIST = 'CREATE_LIST';
+export const UPDATE_LIST_NOTES = 'UPDATE_LIST_NOTES';
 
 export const GET_TASKS = 'GET_TASKS';
 export const CREATE_TASK = 'CREATE_TASK';
