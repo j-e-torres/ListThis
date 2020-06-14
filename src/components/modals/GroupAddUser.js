@@ -34,7 +34,9 @@ class GroupAddUser extends Component {
 
     const userExists = users.find(user => user.username === username);
 
-    if (!userExists) {
+    if (userExists) {
+      this.setState({error: ['User already belongs to group!']});
+    } else {
       return groupAddUser(userId, groupId, {username})
         .then(() => this.setState({success: 'User added.'}))
         .then(() =>
@@ -43,10 +45,10 @@ class GroupAddUser extends Component {
           }, 250),
         )
         .catch(e => {
-          this.setState({error: e.response.data.errors});
+          this.setState({
+            error: ['Error! Please make sure username is correct.'],
+          });
         });
-    } else {
-      this.setState({error: ['User already belongs to group!']});
     }
   };
 

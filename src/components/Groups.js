@@ -29,21 +29,23 @@ const Groups = ({navigation, groups, userLogin}) => {
     return acc;
   }, []);
 
+  console.log('groups.js, userGroups.users', userGroups[0].users);
+
   return (
     <View style={styles.panelContainer}>
-      <View style={{flex: 1}}>
-        <View style={styles.iconHeader}>
-          <TouchableOpacity
-            onPress={() => navigation.navigate('CreateGroupModal')}>
-            <Icon name="add-to-list" size={40} color={colors.lightBlack} />
-          </TouchableOpacity>
-        </View>
+      <View style={styles.iconHeader}>
+        <TouchableOpacity
+          style={{justifyContent: 'center', alignItems: 'center'}}
+          onPress={() => navigation.navigate('CreateGroupModal')}>
+          <Icon name="add-to-list" size={40} color={colors.lightBlack} />
+          <Text style={{color: colors.lightBlack}}>New Group</Text>
+        </TouchableOpacity>
       </View>
 
       <View style={styles.panelsContainerClipBoard}>
         <View style={{flex: 1}}>
           <Text style={styles.clipBoardTitle}>
-            You have{' '}
+            You are in{' '}
             {`${userGroups.length} active ${
               userGroups.length > 1 ? 'groups' : 'group'
             } `}
@@ -64,23 +66,21 @@ const Groups = ({navigation, groups, userLogin}) => {
                     </Text>
 
                     <Text style={styles.secondaryTitle}>
-                      {group.lists.length > 0 ? 'Lists:' : 'No Lists'}
+                      {group.users.length > 0 ? 'Users:' : ''}
                     </Text>
 
                     {group.lists && (
                       <View>
                         <Text style={styles.listItems}>
-                          {group.lists[0] ? group.lists[0].listName : ''}
+                          {group.users[0] ? group.users[0].displayName : ''}
                         </Text>
 
                         <Text style={styles.listItems}>
-                          {group.lists[1] ? group.lists[1].listName : ''}
+                          {group.users[1] ? group.users[1].displayName : ''}
                         </Text>
 
                         <Text style={styles.listItemsEnd}>
-                          {group.lists.length - 2 > 0
-                            ? 'lists continued...'
-                            : ''}
+                          {group.users.length - 2 > 0 ? 'more users...' : ''}
                         </Text>
                       </View>
                     )}
@@ -107,6 +107,7 @@ const panelStyle = idx =>
       // shadowOpacity: 0.8,
       // shadowRadius: 50,
       elevation: 20,
+      // flexShrink: 1,
     },
   });
 
@@ -118,7 +119,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
     alignContent: 'center',
     alignItems: 'center',
-    paddingBottom: '2%',
+    marginBottom: '2%',
+    flex: 1,
   },
 
   panelContainer: {
@@ -131,6 +133,7 @@ const styles = StyleSheet.create({
     ...borders.clipBoardBorder,
   },
   panelsContainerLayout: {
+    flex: 1,
     ...typography.clipBoardListLayout,
   },
   clipBoardTitle: {

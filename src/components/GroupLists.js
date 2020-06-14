@@ -22,37 +22,41 @@ const GroupLists = ({route: {params}, navigation, userLogin, lists}) => {
 
   return (
     <View style={styles.panelContainer}>
-      <View style={{flex: 1}}>
-        <View style={styles.iconHeader}>
-          <TouchableOpacity
-            onPress={() => navigation.navigate('CreateListModal', {id})}>
-            <Icon name="add-to-list" size={40} color={colors.lightBlack} />
-          </TouchableOpacity>
+      <View style={styles.iconHeader}>
+        <TouchableOpacity
+          style={{justifyContent: 'center', alignItems: 'center'}}
+          onPress={() => navigation.navigate('CreateListModal', {id})}>
+          <Icon name="add-to-list" size={40} color={colors.lightBlack} />
+          <Text style={{color: colors.lightBlack}}>New List</Text>
+        </TouchableOpacity>
 
-          {username === groupOwner && (
-            <TouchableOpacity
-              onPress={() =>
-                navigation.navigate('GroupAddUserModal', {
-                  groupId: id,
-                  userId: userLogin.id,
-                  users: users,
-                })
-              }>
-              <Icon name="add-user" size={40} color={colors.lightBlack} />
-            </TouchableOpacity>
-          )}
-
+        {username === groupOwner && (
           <TouchableOpacity
-            onPress={() => navigation.navigate('ViewUsersModal', {id})}>
-            <Icon name="users" size={40} color={colors.lightBlack} />
+            style={{justifyContent: 'center', alignItems: 'center'}}
+            onPress={() =>
+              navigation.navigate('GroupAddUserModal', {
+                groupId: id,
+                userId: userLogin.id,
+                users: users,
+              })
+            }>
+            <Icon name="add-user" size={40} color={colors.lightBlack} />
+            <Text style={{color: colors.lightBlack}}>Add User</Text>
           </TouchableOpacity>
-        </View>
+        )}
+
+        <TouchableOpacity
+          style={{justifyContent: 'center', alignItems: 'center'}}
+          onPress={() => navigation.navigate('ViewUsersModal', {id})}>
+          <Icon name="users" size={40} color={colors.lightBlack} />
+          <Text style={{color: colors.lightBlack}}>View Users</Text>
+        </TouchableOpacity>
       </View>
 
       <View style={styles.panelsContainerClipBoard}>
         <View style={{flex: 1}}>
           <Text allowFontScaling style={styles.clipBoardTitle}>
-            Active Lists for {groupName}.
+            Lists that belong to this group: {groupName}.
           </Text>
         </View>
 
@@ -123,7 +127,9 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
     alignContent: 'center',
     alignItems: 'center',
-    paddingBottom: '2%',
+    // paddingBottom: '2%',
+    marginBottom: '2%',
+    flex: 1,
   },
   panelContainer: {
     flex: 1,
