@@ -7,15 +7,13 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {
   Home,
   ListItems,
-  Groups,
-  GroupLists,
+  UserLists,
   SignUp,
   Login,
   Root,
-  CreateGroup,
   ViewUsers,
   CreateList,
-  GroupAddUser,
+  ListAddUser,
   CreateTask,
 } from './components';
 
@@ -72,14 +70,12 @@ const MainStackScreen = () => {
         }}
       />
 
-      <MainStack.Screen name="Groups" component={Groups} />
-
       <MainStack.Screen
-        name="GroupLists"
+        name="UserLists"
         options={({route}) => ({
-          title: route.params.groupName,
+          title: 'Your Lists',
         })}
-        component={GroupLists}
+        component={UserLists}
       />
 
       <MainStack.Screen
@@ -146,19 +142,12 @@ export default class Nav extends Component {
               // },
             }}
           />
-          <RootStack.Screen
-            name="CreateGroupModal"
-            component={CreateGroup}
-            options={{
-              title: 'New Group',
-            }}
-          />
 
           <RootStack.Screen
             name="ViewUsersModal"
             component={ViewUsers}
             options={{
-              title: 'People in Group',
+              title: 'People in List',
             }}
           />
 
@@ -171,10 +160,10 @@ export default class Nav extends Component {
           />
 
           <RootStack.Screen
-            name="GroupAddUserModal"
-            component={GroupAddUser}
+            name="ListAddUserModal"
+            component={ListAddUser}
             options={{
-              title: 'Add user to Group',
+              title: 'Assign user to List',
             }}
           />
 
@@ -182,7 +171,7 @@ export default class Nav extends Component {
             name="CreateTaskModal"
             component={CreateTask}
             options={{
-              title: 'Add task to List',
+              title: 'Add to List',
             }}
           />
         </RootStack.Navigator>

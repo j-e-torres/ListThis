@@ -15,10 +15,20 @@ import {connect} from 'react-redux';
 import {stickyNotesTiltDegrees} from '../helperFunctions';
 import {colors, borders, typography} from '../styles';
 
-const GroupLists = ({route: {params}, navigation, userLogin, lists}) => {
-  const {username} = userLogin;
-  const {groupName, groupOwner, users, id} = params;
-  const groupLists = lists.filter(list => list.groupId === id);
+const UserLists = ({route: {params}, navigation, userLogin, lists}) => {
+  const {id} = userLogin;
+
+  const userLists = lists.reduce((acc, list) => {
+    let found;
+
+    if (list.users) {
+      found = list.users.find(user => user.userlist.userId === id);
+    }
+    if (found) {
+      acc.push(list);
+    }
+    return acc;
+  }, []);
 
   return (
     <View style={styles.panelContainer}>
@@ -29,42 +39,20 @@ const GroupLists = ({route: {params}, navigation, userLogin, lists}) => {
           <Icon name="add-to-list" size={40} color={colors.lightBlack} />
           <Text style={{color: colors.lightBlack}}>New List</Text>
         </TouchableOpacity>
-
-        {username === groupOwner && (
-          <TouchableOpacity
-            style={{justifyContent: 'center', alignItems: 'center'}}
-            onPress={() =>
-              navigation.navigate('GroupAddUserModal', {
-                groupId: id,
-                userId: userLogin.id,
-                users: users,
-              })
-            }>
-            <Icon name="add-user" size={40} color={colors.lightBlack} />
-            <Text style={{color: colors.lightBlack}}>Add User</Text>
-          </TouchableOpacity>
-        )}
-
-        <TouchableOpacity
-          style={{justifyContent: 'center', alignItems: 'center'}}
-          onPress={() => navigation.navigate('ViewUsersModal', {id})}>
-          <Icon name="users" size={40} color={colors.lightBlack} />
-          <Text style={{color: colors.lightBlack}}>View Users</Text>
-        </TouchableOpacity>
       </View>
 
       <View style={styles.panelsContainerClipBoard}>
         <View style={{flex: 1}}>
           <Text allowFontScaling style={styles.clipBoardTitle}>
-            Lists that belong to this group: {groupName}.
+            Here are your lists.
           </Text>
         </View>
 
-        <View style={{flex: 2}}>
+        <View style={{flex: 4}}>
           <ScrollView contentContainerStyle={{flexGrow: 1}}>
-            {groupLists.length > 0 && (
+            {userLists.length > 0 && (
               <View style={styles.panelsContainerLayout}>
-                {groupLists.map((list, idx) => {
+                {userLists.map((list, idx) => {
                   return (
                     <TouchableOpacity
                       onPress={() => navigation.navigate('ListItems', list)}
@@ -141,6 +129,7 @@ const styles = StyleSheet.create({
     ...borders.clipBoardBorder,
   },
   panelsContainerLayout: {
+    flex: 1,
     ...typography.clipBoardListLayout,
   },
   clipBoardTitle: {
@@ -174,4 +163,4 @@ const mapStateToProps = ({userLogin, lists}) => {
   };
 };
 
-export default connect(mapStateToProps)(GroupLists);
+export default connect(mapStateToProps)(UserLists);

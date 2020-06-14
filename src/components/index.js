@@ -1,29 +1,20 @@
-import Groups from './Groups';
-import GroupLists from './GroupLists';
+import UserLists from './UserLists';
 import Home from './Home';
 import ListItems from './ListItems';
 import Root from './Root';
 import Login from './Login';
 import SignUp from './SignUp';
-import {
-  CreateGroup,
-  ViewUsers,
-  CreateList,
-  GroupAddUser,
-  CreateTask,
-} from './modals';
+import {ViewUsers, CreateList, ListAddUser, CreateTask} from './modals';
 
 export {
-  GroupLists,
-  Groups,
+  UserLists,
   Home,
   ListItems,
   Login,
   Root,
   SignUp,
-  CreateGroup,
   ViewUsers,
   CreateList,
-  GroupAddUser,
+  ListAddUser,
   CreateTask,
 };
