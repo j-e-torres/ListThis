@@ -4,19 +4,19 @@
 
 - can use back button on android from home to go back to login screen
 - new tasks created are not sorted
-- logged in user id does not match heroku sometimes?
 - fix styling when editing notes
   - when edit is pressed, move cursor to notes
-- tasks do not update in the grouplists.js on to list
 - current user does not show up in viewusers.js after creating group
 
 # UX issues
 
-- user just wants to start a list
 - add multiple items to a list in one shot
-- show group users in groups.js
 - no list notes in create list screen
-- show users in groups in groups.js
+
+# refactoring
+
+- need to fix ViewUsers
+  - add buttons to top on ListItems.js
 
 # `Login/Home page`
 
@@ -32,7 +32,6 @@
 # `Functionality`
 
 - show password functionality
-- remove a user from group
-- remove yourself from a group
-- delete a group
+- remove a user from list
+- remove yourself from a list
 - complete/delete a list

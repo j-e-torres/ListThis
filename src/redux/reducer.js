@@ -1,11 +1,9 @@
 import {
   GET_USER,
-  CREATE_GROUP,
   CREATE_LIST,
   GET_LISTS,
   GET_TASKS,
   CREATE_TASK,
-  GET_GROUPS,
   ADD_USER,
   GET_USERS,
   COMPLETED_TASK,
@@ -27,9 +25,6 @@ export const usersReducer = (state = [], action) => {
     case GET_USERS:
       return action.users;
 
-    case ADD_USER:
-      return [...state, action.newUser];
-
     case REFRESH_USERS:
       return [...refreshingUsers, action.addedGroupUser];
 
@@ -42,19 +37,6 @@ export const loginReducer = (state = {}, action) => {
   switch (action.type) {
     case GET_USER:
       return action.user;
-
-    default:
-      return state;
-  }
-};
-
-export const groupsReducer = (state = [], action) => {
-  switch (action.type) {
-    case GET_GROUPS:
-      return action.groups;
-
-    case CREATE_GROUP:
-      return [...state, action.newGroup];
 
     default:
       return state;
