@@ -13,7 +13,7 @@ import {
 
 import {colors, borders, typography} from '../../styles';
 
-class GroupAddUser extends Component {
+class ListAddUser extends Component {
   constructor() {
     super();
     this.state = {
@@ -23,7 +23,7 @@ class GroupAddUser extends Component {
     };
   }
 
-  _groupAddUser = () => {
+  _listAddUser = () => {
     const {
       navigation,
       route: {params},
@@ -35,7 +35,7 @@ class GroupAddUser extends Component {
     const userExists = users.find(user => user.username === username);
 
     if (userExists) {
-      this.setState({error: ['User already belongs to group!']});
+      this.setState({error: ['User already belongs to list!']});
     } else {
       return groupAddUser(userId, groupId, {username})
         .then(() => this.setState({success: 'User added.'}))
@@ -144,11 +144,11 @@ const styles = StyleSheet.create({
 });
 
 const mapDispatchToProps = dispatch => ({
-  groupAddUser: (userId, groupId, username) =>
+  listAddUser: (userId, groupId, username) =>
     dispatch(groupAddUserThunk(userId, groupId, username)),
 });
 
 export default connect(
   null,
   mapDispatchToProps,
-)(GroupAddUser);
+)(ListAddUser);

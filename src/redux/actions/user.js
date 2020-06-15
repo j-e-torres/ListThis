@@ -1,12 +1,6 @@
 import axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
-import {
-  GET_USER,
-  CREATE_GROUP,
-  ADD_USER,
-  GET_USERS,
-  REFRESH_USERS,
-} from '../constants';
+import {GET_USER, GET_USERS, REFRESH_USERS, CREATE_LIST} from '../constants';
 
 const refreshUsers = addedGroupUser => ({
   type: REFRESH_USERS,
@@ -23,14 +17,9 @@ const getUsers = users => ({
   users,
 });
 
-const addUser = newUser => ({
-  type: ADD_USER,
-  newUser,
-});
-
-const addNewGroup = newGroup => ({
-  type: CREATE_GROUP,
-  newGroup,
+const addNewList = newList => ({
+  type: CREATE_LIST,
+  newList,
 });
 
 export const loginUserThunk = creds => {
@@ -69,19 +58,19 @@ export const signUpThunk = credentials => {
   };
 };
 
-export const createGroupThunk = (userId, groupName) => {
+export const createListThunk = (userId, listName) => {
   return dispatch => {
     return axios
       .post(
-        `https://listthisbackend.herokuapp.com/api/users/${userId}/groups`,
-        groupName,
+        `https://listthisbackend.herokuapp.com/api/users/${userId}/lists`,
+        listName,
       )
       .then(res => res.data)
-      .then(group => {
-        dispatch(addNewGroup(group));
-        return group;
+      .then(list => {
+        dispatch(addNewList(list));
+        return list;
       })
-      .then(_group => dispatch(refreshUsers(_group.users[0])));
+      .then(_list => dispatch(refreshUsers(_list.users[0])));
   };
 };
 
@@ -94,11 +83,11 @@ export const getUsersThunk = () => {
   };
 };
 
-export const groupAddUserThunk = (userId, groupId, username) => {
+export const listAddUserThunk = (userId, listId, username) => {
   return dispatch => {
     return axios
       .post(
-        `https://listthisbackend.herokuapp.com/api/users/${userId}/groups/${groupId}`,
+        `https://listthisbackend.herokuapp.com/api/users/${userId}/lists/${listId}`,
         username,
       )
       .then(res => res.data)

@@ -84,7 +84,35 @@ class ListItems extends Component {
       a.completed > b.completed ? 1 : -1,
     );
 
+    console.log('ListItems.js, id params', params);
+
     const {_completeTask, _deleteTask, _updateListNotes, handleEditable} = this;
+
+    {
+      /* {username.id === groupOwner && (
+          <TouchableOpacity
+            style={{justifyContent: 'center', alignItems: 'center'}}
+            onPress={() =>
+              navigation.navigate('GroupAddUserModal', {
+                groupId: id,
+                userId: userLogin.id,
+                users: users,
+              })
+            }>
+            <Icon name="add-user" size={40} color={colors.lightBlack} />
+            <Text style={{color: colors.lightBlack}}>Add User</Text>
+          </TouchableOpacity>
+        )} */
+
+      {
+        /* <TouchableOpacity
+          style={{justifyContent: 'center', alignItems: 'center'}}
+          onPress={() => navigation.navigate('ViewUsersModal', {id})}>
+          <Icon name="users" size={40} color={colors.lightBlack} />
+          <Text style={{color: colors.lightBlack}}>View Users</Text>
+        </TouchableOpacity> */
+      }
+    }
 
     return (
       <View style={styles.panelContainer}>

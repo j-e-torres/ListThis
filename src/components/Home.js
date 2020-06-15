@@ -5,7 +5,6 @@ import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 
 import {connect} from 'react-redux';
-import {groupsThunk} from '../redux/actions/group';
 import {getListsThunk} from '../redux/actions/lists';
 import {getTasksThunk} from '../redux/actions/tasks';
 import {getUsersThunk} from '../redux/actions/user';
@@ -14,14 +13,11 @@ import {colors, borders, typography} from '../styles';
 
 class Home extends Component {
   componentDidMount() {
-    const {fetchGroups, fetchLists, fetchTasks, fetchUsers} = this.props;
+    const {fetchLists, fetchTasks, fetchUsers} = this.props;
 
-    return Promise.all([
-      fetchGroups(),
-      fetchLists(),
-      fetchTasks(),
-      fetchUsers(),
-    ]);
+    return Promise.all([fetchLists(), fetchTasks(), fetchUsers()]).catch(e =>
+      console.log(e.response),
+    );
   }
 
   logout = () => {
@@ -33,8 +29,10 @@ class Home extends Component {
   };
 
   render() {
-    const {navigation, userLogin} = this.props;
+    const {navigation, userLogin, lists} = this.props;
     const {logout} = this;
+
+    // console.log('home, lists', lists[0].users);
 
     return (
       <View style={styles.container}>
@@ -51,9 +49,9 @@ class Home extends Component {
           }}>
           <TouchableOpacity
             style={styles.button}
-            onPress={() => navigation.navigate('CreateGroupModal')}>
+            onPress={() => navigation.navigate('CreateListModal')}>
             <Text style={{color: colors.lightOrange, fontSize: 25}}>
-              Create a Group
+              Start a List
             </Text>
           </TouchableOpacity>
         </View>
@@ -62,11 +60,12 @@ class Home extends Component {
           style={{
             flex: 2,
             alignContent: 'center',
+            justifyContent: 'space-evenly',
           }}>
           <TouchableOpacity
             style={styles.button}
-            onPress={() => navigation.navigate('Groups')}>
-            <Text style={styles.buttonText}>Your Groups</Text>
+            onPress={() => navigation.navigate('UserLists')}>
+            <Text style={styles.buttonText}>View your lists</Text>
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.button} onPress={logout}>
@@ -122,13 +121,12 @@ const styles = StyleSheet.create({
   buttonText: {color: colors.lightOrange, fontSize: 25},
 });
 
-const mapStateToProps = ({userLogin, groups}) => ({
+const mapStateToProps = ({userLogin, lists}) => ({
   userLogin,
-  groups,
+  lists,
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchGroups: () => dispatch(groupsThunk()),
   fetchLists: () => dispatch(getListsThunk()),
   fetchTasks: () => dispatch(getTasksThunk()),
   fetchUsers: () => dispatch(getUsersThunk()),
