@@ -15,7 +15,9 @@ class Home extends Component {
   componentDidMount() {
     const {fetchLists, fetchTasks, fetchUsers} = this.props;
 
-    return Promise.all([fetchLists(), fetchTasks(), fetchUsers()]);
+    return Promise.all([fetchLists(), fetchTasks(), fetchUsers()]).catch(e =>
+      console.log(e.response),
+    );
   }
 
   logout = () => {
@@ -30,7 +32,7 @@ class Home extends Component {
     const {navigation, userLogin, lists} = this.props;
     const {logout} = this;
 
-    console.log('home, lists', lists[0].users);
+    // console.log('home, lists', lists[0].users);
 
     return (
       <View style={styles.container}>
