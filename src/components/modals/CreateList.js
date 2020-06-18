@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 
 import {connect} from 'react-redux';
-import {createListThunk} from '../../redux/actions/lists';
+import {createListThunk} from '../../redux/actions/user';
 
 import {colors, borders, typography} from '../../styles';
 
@@ -17,24 +17,25 @@ class CreateList extends Component {
     super();
     this.state = {
       listName: '',
-      listNotes: '',
+      taskName: '',
+      tasks: [],
       success: '',
       error: '',
     };
   }
 
+  addToList = () => {
+    const {taskName, tasks} = this.state;
+
+    this.setState({tasks: [...tasks, {taskName}], taskName: ''});
+  };
+
   createList = () => {
-    const {
-      createNewList,
-      route: {params},
-      navigation,
-    } = this.props;
+    const {createNewList, navigation, userLogin} = this.props;
 
-    const {id} = params;
+    const {listName, tasks} = this.state;
 
-    const {listName, listNotes} = this.state;
-
-    return createNewList(id, {listName, listNotes})
+    return createNewList(userLogin.id, {listName, tasks})
       .then(() => this.setState({success: 'Successfully created.'}))
       .then(() =>
         setTimeout(function() {
@@ -47,9 +48,9 @@ class CreateList extends Component {
   };
 
   render() {
-    // console.log('crealist, props', this.props);
-    const {success, error} = this.state;
-    const {createList} = this;
+    const {success, error, taskName} = this.state;
+    const {createList, addToList} = this;
+
     return (
       <View style={styles.container}>
         {success.length > 0 && (
@@ -69,7 +70,6 @@ class CreateList extends Component {
             })}
           </View>
         )}
-        <Text style={styles.title}>List Name</Text>
 
         <TextInput
           style={styles.input}
@@ -77,16 +77,19 @@ class CreateList extends Component {
           placeholder="List name"
         />
 
-        <Text style={styles.title}>List Notes (Optional)</Text>
-
         <TextInput
+          value={taskName}
           style={styles.input}
-          onChangeText={listNotes => this.setState({listNotes})}
-          placeholder="List notes optional"
+          onChangeText={taskName => this.setState({taskName})}
+          placeholder="Add something to list"
         />
 
+        <TouchableOpacity style={styles.button} onPress={addToList}>
+          <Text style={styles.buttonText}>Add to list</Text>
+        </TouchableOpacity>
+
         <TouchableOpacity style={styles.button} onPress={createList}>
-          <Text style={styles.buttonText}>Create list</Text>
+          <Text style={styles.buttonText}>Done with List</Text>
         </TouchableOpacity>
       </View>
     );
@@ -96,7 +99,7 @@ class CreateList extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     padding: '5%',
   },
   input: {
@@ -136,12 +139,14 @@ const styles = StyleSheet.create({
   },
 });
 
+const mapStateToProps = ({userLogin}) => ({userLogin});
+
 const mapDispatchToProps = dispatch => ({
   createNewList: (groupId, newList) =>
     dispatch(createListThunk(groupId, newList)),
 });
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps,
 )(CreateList);
