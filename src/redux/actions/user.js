@@ -58,19 +58,19 @@ export const signUpThunk = credentials => {
   };
 };
 
-export const createListThunk = (userId, listName) => {
+export const createListThunk = (userId, list) => {
   return dispatch => {
     return axios
       .post(
         `https://listthisbackend.herokuapp.com/api/users/${userId}/lists`,
-        listName,
+        list,
       )
       .then(res => res.data)
-      .then(list => {
-        dispatch(addNewList(list));
-        return list;
+      .then(_list => {
+        dispatch(addNewList(_list));
+        return _list;
       })
-      .then(_list => dispatch(refreshUsers(_list.users[0])));
+      .then(__list => dispatch(refreshUsers(__list.users[0])));
   };
 };
 
