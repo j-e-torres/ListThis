@@ -45,7 +45,6 @@ class ListAddUser extends Component {
           }, 250),
         )
         .catch(e => {
-          console.log('error, listadduser', e.response.data);
           this.setState({
             error: ['Error! Please make sure username is correct.'],
           });

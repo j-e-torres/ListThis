@@ -87,13 +87,6 @@ class ListItems extends Component {
 
     const {_completeTask, _deleteTask, _updateListNotes, handleEditable} = this;
 
-    /* <TouchableOpacity
-          style={{justifyContent: 'center', alignItems: 'center'}}
-          onPress={() => navigation.navigate('ViewUsersModal', {id})}>
-          <Icon name="users" size={40} color={colors.lightBlack} />
-          <Text style={{color: colors.lightBlack}}>View Users</Text>
-        </TouchableOpacity> */
-
     return (
       <View style={styles.panelContainer}>
         <View style={{flex: 1}}>
@@ -120,6 +113,13 @@ class ListItems extends Component {
                   <Text style={{color: colors.lightBlack}}>Add User</Text>
                 </TouchableOpacity>
               )}
+
+              <TouchableOpacity
+                style={{justifyContent: 'center', alignItems: 'center'}}
+                onPress={() => navigation.navigate('ViewUsersModal', {id})}>
+                <Icon name="users" size={40} color={colors.lightBlack} />
+                <Text style={{color: colors.lightBlack}}>View Users</Text>
+              </TouchableOpacity>
             </View>
           </View>
         </View>
