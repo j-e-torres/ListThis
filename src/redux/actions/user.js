@@ -1,10 +1,24 @@
 import axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
-import {GET_USER, GET_USERS, REFRESH_USERS, CREATE_LIST} from '../constants';
+import {
+  GET_USER,
+  GET_USERS,
+  REFRESH_USERS,
+  CREATE_LIST,
+  REFRESH_TASKS,
+  GET_TASKS,
+} from '../constants';
+
+import {getTasksThunk} from './tasks';
 
 const refreshUsers = addedGroupUser => ({
   type: REFRESH_USERS,
   addedGroupUser,
+});
+
+const refreshTasks = newTasks => ({
+  type: REFRESH_TASKS,
+  newTasks,
 });
 
 const getUser = user => ({
@@ -70,7 +84,10 @@ export const createListThunk = (userId, list) => {
         dispatch(addNewList(_list));
         return _list;
       })
-      .then(__list => dispatch(refreshUsers(__list.users[0])));
+      .then(__list => {
+        dispatch(refreshUsers(__list.users[0]));
+        return __list;
+      });
   };
 };
 

@@ -4,12 +4,12 @@ import {
   GET_LISTS,
   GET_TASKS,
   CREATE_TASK,
-  ADD_USER,
   GET_USERS,
   COMPLETED_TASK,
   DELETE_TASK,
   REFRESH_USERS,
   UPDATE_LIST_NOTES,
+  REFRESH_TASKS,
 } from './constants';
 
 export const usersReducer = (state = [], action) => {
@@ -95,6 +95,9 @@ export const tasksReducer = (state = [], action) => {
 
     case DELETE_TASK:
       return [...remainingTasks];
+
+    // case REFRESH_TASKS:
+    //   return [...state, ...action.newTasks];
 
     default:
       return state;

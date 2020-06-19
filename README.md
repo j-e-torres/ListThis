@@ -3,10 +3,10 @@
 # Issues
 
 - can use back button on android from home to go back to login screen
-- new tasks created are not sorted
 - fix styling when editing notes
   - when edit is pressed, move cursor to notes
 - current user does not show up in viewusers.js after creating group
+- after created List, tasks do not show up
 
 # UX issues
 
