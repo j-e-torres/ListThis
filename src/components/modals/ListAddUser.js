@@ -37,7 +37,7 @@ class ListAddUser extends Component {
     const userExists = users.find(user => user.username === username);
 
     if (userExists) {
-      this.setState({error: 'User already belongs to group!'});
+      this.setState({error: ['User already belongs to group!']});
     } else {
       return listAddUser(userId, listId)
         .then(() =>
