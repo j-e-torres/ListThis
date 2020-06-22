@@ -80,6 +80,9 @@ class ListItems extends Component {
     const {id, listOwner, users} = params;
     const {currentListNotes, notesEditable} = this.state;
 
+    console.log('listItems.js, params', params);
+    console.log('listItems.js, users', users);
+
     const listTasks = tasks.filter(task => task.listId === id);
     const sortByCompleted = listTasks.sort((a, b) =>
       a.completed > b.completed ? 1 : -1,

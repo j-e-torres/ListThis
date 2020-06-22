@@ -5,13 +5,16 @@
 - can use back button on android from home to go back to login screen
 - fix styling when editing notes
   - when edit is pressed, move cursor to notes
-- current user does not show up in viewusers.js after creating group
 - after created List, tasks do not show up
+- listAddUser not really working.
+  - added user shows up in viewusermodal, but does not show up in params
+- the lists returned in listadduserthunk from user does not include user model
+  - no tasks as well
 
 # UX issues
 
-- add multiple items to a list in one shot
-- no list notes in create list screen
+- √ add multiple items to a list in one shot
+- √ no list notes in create list screen
 
 # refactoring
 

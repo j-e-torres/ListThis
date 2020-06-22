@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 
 import {connect} from 'react-redux';
 import {listAddUserThunk} from '../../redux/actions/user';
+import {getListsThunk} from '../../redux/actions/lists';
 
 import {
   View,
@@ -28,6 +29,7 @@ class ListAddUser extends Component {
       navigation,
       route: {params},
       listAddUser,
+      fetchLists,
     } = this.props;
     const {listId, userId, users} = params;
     const {username} = this.state;
@@ -35,16 +37,16 @@ class ListAddUser extends Component {
     const userExists = users.find(user => user.username === username);
 
     if (userExists) {
-      this.setState({error: ['User already belongs to list!']});
+      this.setState({error: 'User already belongs to group!'});
     } else {
-      return listAddUser(userId, listId, {username})
-        .then(() => this.setState({success: 'User added.'}))
+      return listAddUser(userId, listId)
         .then(() =>
           setTimeout(function() {
             navigation.goBack();
           }, 250),
         )
         .catch(e => {
+          console.log('listadduser.js, e', e.response.data);
           this.setState({
             error: ['Error! Please make sure username is correct.'],
           });
@@ -146,6 +148,7 @@ const styles = StyleSheet.create({
 const mapDispatchToProps = dispatch => ({
   listAddUser: (userId, groupId, username) =>
     dispatch(listAddUserThunk(userId, groupId, username)),
+  fetchLists: () => dispatch(getListsThunk()),
 });
 
 export default connect(
