@@ -3,24 +3,21 @@
 # Issues
 
 - can use back button on android from home to go back to login screen
-- fix styling when editing notes
-  - when edit is pressed, move cursor to notes
+- cannot create more lists
 
 # listAddUser not really working.
 
 - added user shows up in viewusermodal, but does not show up in params
-- the lists returned in listadduserthunk from user does not include user model
-- no tasks as well
 
 # UX issues
 
-- √ add multiple items to a list in one shot
-- √ no list notes in create list screen
+- keyboard viewing when in textinput
 
-# refactoring
+  - editing notes
+    - √ (kinda) when edit is pressed, move cursor to notes
+  - create list
 
-- need to fix ViewUsers
-  - add buttons to top on ListItems.js
+- see list as it is being created, make listitems the create list modal
 
 # `Login/Home page`
 
