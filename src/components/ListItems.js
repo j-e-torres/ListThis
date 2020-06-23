@@ -81,7 +81,7 @@ class ListItems extends Component {
     const {currentListNotes, notesEditable} = this.state;
 
     console.log('listItems.js, params', params);
-    console.log('listItems.js, users', users);
+    // console.log('listItems.js, users', users);
 
     const listTasks = tasks.filter(task => task.listId === id);
     const sortByCompleted = listTasks.sort((a, b) =>

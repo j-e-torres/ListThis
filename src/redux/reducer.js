@@ -9,15 +9,15 @@ import {
   DELETE_TASK,
   REFRESH_USERS,
   UPDATE_LIST_NOTES,
-  REFRESH_TASKS,
+  CREATE_TASKS,
 } from './constants';
 
 export const usersReducer = (state = [], action) => {
   let refreshingUsers;
 
-  if (action.addedGroupUser) {
+  if (action.addedListUser) {
     refreshingUsers = [...state].filter(
-      user => user.id !== action.addedGroupUser.id,
+      user => user.id !== action.addedListUser.id,
     );
   }
 
@@ -111,8 +111,8 @@ export const tasksReducer = (state = [], action) => {
     case DELETE_TASK:
       return [...remainingTasks];
 
-    // case REFRESH_TASKS:
-    //   return [...state, ...action.newTasks];
+    case CREATE_TASKS:
+      return [...state, ...action.newListTasks];
 
     default:
       return state;

@@ -30,6 +30,7 @@ class ListAddUser extends Component {
       route: {params},
       listAddUser,
       fetchLists,
+      lists,
     } = this.props;
     const {listId, userId, users} = params;
     const {username} = this.state;
@@ -39,7 +40,8 @@ class ListAddUser extends Component {
     if (userExists) {
       this.setState({error: ['User already belongs to group!']});
     } else {
-      return listAddUser(userId, listId)
+      return listAddUser(userId, listId, {username})
+        .then(() => console.log('listadduser.js, lists', lists))
         .then(() =>
           setTimeout(function() {
             navigation.goBack();
@@ -145,6 +147,8 @@ const styles = StyleSheet.create({
   },
 });
 
+const mapStateToProps = ({lists}) => ({lists});
+
 const mapDispatchToProps = dispatch => ({
   listAddUser: (userId, groupId, username) =>
     dispatch(listAddUserThunk(userId, groupId, username)),
@@ -152,6 +156,6 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps,
 )(ListAddUser);
