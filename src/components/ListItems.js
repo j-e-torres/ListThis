@@ -75,44 +75,20 @@ class ListItems extends Component {
       route: {params},
       navigation,
       tasks,
+      userLogin,
     } = this.props;
-    const {id} = params;
+    const {id, listOwner, users} = params;
     const {currentListNotes, notesEditable} = this.state;
+
+    console.log('listItems.js, params', params);
+    // console.log('listItems.js, users', users);
 
     const listTasks = tasks.filter(task => task.listId === id);
     const sortByCompleted = listTasks.sort((a, b) =>
       a.completed > b.completed ? 1 : -1,
     );
 
-    console.log('ListItems.js, id params', params);
-
     const {_completeTask, _deleteTask, _updateListNotes, handleEditable} = this;
-
-    {
-      /* {username.id === groupOwner && (
-          <TouchableOpacity
-            style={{justifyContent: 'center', alignItems: 'center'}}
-            onPress={() =>
-              navigation.navigate('GroupAddUserModal', {
-                groupId: id,
-                userId: userLogin.id,
-                users: users,
-              })
-            }>
-            <Icon name="add-user" size={40} color={colors.lightBlack} />
-            <Text style={{color: colors.lightBlack}}>Add User</Text>
-          </TouchableOpacity>
-        )} */
-
-      {
-        /* <TouchableOpacity
-          style={{justifyContent: 'center', alignItems: 'center'}}
-          onPress={() => navigation.navigate('ViewUsersModal', {id})}>
-          <Icon name="users" size={40} color={colors.lightBlack} />
-          <Text style={{color: colors.lightBlack}}>View Users</Text>
-        </TouchableOpacity> */
-      }
-    }
 
     return (
       <View style={styles.panelContainer}>
@@ -120,8 +96,32 @@ class ListItems extends Component {
           <View style={{flex: 1}}>
             <View style={styles.iconHeader}>
               <TouchableOpacity
+                style={{justifyContent: 'center', alignItems: 'center'}}
                 onPress={() => navigation.navigate('CreateTaskModal', {id})}>
                 <Icon name="add-to-list" size={40} color={colors.lightBlack} />
+                <Text style={{color: colors.lightBlack}}>Create Task</Text>
+              </TouchableOpacity>
+
+              {userLogin.username === listOwner && (
+                <TouchableOpacity
+                  style={{justifyContent: 'center', alignItems: 'center'}}
+                  onPress={() =>
+                    navigation.navigate('ListAddUserModal', {
+                      listId: id,
+                      userId: userLogin.id,
+                      users: users,
+                    })
+                  }>
+                  <Icon name="add-user" size={40} color={colors.lightBlack} />
+                  <Text style={{color: colors.lightBlack}}>Add User</Text>
+                </TouchableOpacity>
+              )}
+
+              <TouchableOpacity
+                style={{justifyContent: 'center', alignItems: 'center'}}
+                onPress={() => navigation.navigate('ViewUsersModal', {id})}>
+                <Icon name="users" size={40} color={colors.lightBlack} />
+                <Text style={{color: colors.lightBlack}}>View Users</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -319,7 +319,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapStateToProps = ({tasks}) => ({tasks});
+const mapStateToProps = ({tasks, userLogin}) => ({tasks, userLogin});
 
 const mapDispatchToProps = dispatch => ({
   completeTask: taskId => dispatch(completeTaskThunk(taskId)),

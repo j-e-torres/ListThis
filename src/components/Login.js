@@ -6,6 +6,7 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
+  KeyboardAvoidingView,
 } from 'react-native';
 
 import {connect} from 'react-redux';
@@ -37,7 +38,7 @@ class Login extends Component {
     const {error} = this.state;
 
     return (
-      <View style={styles.container}>
+      <KeyboardAvoidingView behavior="padding" style={styles.container}>
         <View style={{flex: 20, justifyContent: 'center'}}>
           <Text style={styles.title}>Welcome back</Text>
         </View>
@@ -70,7 +71,7 @@ class Login extends Component {
             <Text style={styles.buttonText}>Login</Text>
           </TouchableOpacity>
         </View>
-      </View>
+      </KeyboardAvoidingView>
     );
   }
 }

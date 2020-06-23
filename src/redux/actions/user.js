@@ -1,10 +1,29 @@
 import axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
-import {GET_USER, GET_USERS, REFRESH_USERS, CREATE_LIST} from '../constants';
+import {
+  GET_USER,
+  GET_USERS,
+  REFRESH_USERS,
+  CREATE_LIST,
+  REFRESH_LISTS,
+  CREATE_TASKS,
+} from '../constants';
 
-const refreshUsers = addedGroupUser => ({
+import {getTasksThunk} from './tasks';
+
+const refreshUsers = addedListUser => ({
   type: REFRESH_USERS,
-  addedGroupUser,
+  addedListUser,
+});
+
+const refreshLists = updatedLists => ({
+  type: REFRESH_LISTS,
+  updatedLists,
+});
+
+const createTasks = newListTasks => ({
+  type: CREATE_TASKS,
+  newListTasks,
 });
 
 const getUser = user => ({
@@ -70,7 +89,11 @@ export const createListThunk = (userId, list) => {
         dispatch(addNewList(_list));
         return _list;
       })
-      .then(__list => dispatch(refreshUsers(__list.users[0])));
+      .then(__list => {
+        dispatch(refreshUsers(__list.users[0]));
+        return __list;
+      })
+      .then(_list_ => dispatch(createTasks(_list_.tasks)));
   };
 };
 
@@ -91,6 +114,11 @@ export const listAddUserThunk = (userId, listId, username) => {
         username,
       )
       .then(res => res.data)
-      .then(user => dispatch(refreshUsers(user)));
+      .then(user => {
+        // console.log('listadduserthunk, user.lists', user.lists);
+        dispatch(refreshUsers(user));
+        return user;
+      });
+    // .then(_user => dispatch(refreshLists(_user.lists)));
   };
 };

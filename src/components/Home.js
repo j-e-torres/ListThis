@@ -16,7 +16,7 @@ class Home extends Component {
     const {fetchLists, fetchTasks, fetchUsers} = this.props;
 
     return Promise.all([fetchLists(), fetchTasks(), fetchUsers()]).catch(e =>
-      console.log(e.response),
+      console.log('home error', e.response.data),
     );
   }
 
@@ -31,8 +31,6 @@ class Home extends Component {
   render() {
     const {navigation, userLogin, lists} = this.props;
     const {logout} = this;
-
-    // console.log('home, lists', lists[0].users);
 
     return (
       <View style={styles.container}>
@@ -136,76 +134,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps,
 )(Home);
-
-// const firstTextInputRef = useRef(null);
-// const secondTextInputRef = useRef(null);
-// const thirdTextInputRef = useRef(null);
-// const fourthTextInputRef = useRef(null);
-// const fifthTextInputRef = useRef(null);
-// const sixthTextInputRef = useRef(null);
-
-// const testOnChange = ({nativeEvent}) => {
-// console.log('testOnChange', nativeEvent);
-// const {text} = nativeEvent;
-// if (text !== '') this.borderColor = colors.darkOrange;
-// else this.borderColor = colors.darkOrange;
-// };
-
-// const onOtpChange = index => {
-//   return value => {
-//     if (isNaN(Number(value))) {
-//       // do nothing when a non digit is pressed
-//       return;
-//     }
-//     console.log(index, value);
-
-//     // auto focus to next InputText if value is not blank
-//     if (value !== '') {
-//       if (index === 0) {
-//         // this[borderColor] = colors.darkOrange;
-//         secondTextInputRef.current.focus();
-//       } else if (index === 1) {
-//         thirdTextInputRef.current.focus();
-//       } else if (index === 2) {
-//         fourthTextInputRef.current.focus();
-//       } else if (index === 3) {
-//         fifthTextInputRef.current.focus();
-//       } else if (index === 4) {
-//         sixthTextInputRef.current.focus();
-//       }
-//     }
-//   };
-// };
-
-/* <View
-          style={{
-            flex: 2,
-            justifyContent: 'space-evenly',
-            alignContent: 'center',
-          }}>
-          <Text style={styles.secondaryTitle}>Enter your invitation code</Text>
-
-          <View style={styles.invitationCodeContainer}>
-            {[
-              firstTextInputRef,
-              secondTextInputRef,
-              thirdTextInputRef,
-              fourthTextInputRef,
-              fifthTextInputRef,
-              sixthTextInputRef,
-            ].map((ref, idx) => {
-              return (
-                <TextInput
-                  key={idx}
-                  multiline
-                  numberOfLines={1}
-                  maxLength={1}
-                  onChange={testOnChange}
-                  style={styles.invitationCode}
-                  onChangeText={onOtpChange(idx)}
-                  ref={ref}
-                />
-              );
-            })}
-          </View>
-        </View> */

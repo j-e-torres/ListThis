@@ -8,14 +8,15 @@ import {colors} from '../../styles';
 
 const ViewUsers = ({navigation, route: {params}, users}) => {
   const {id} = params;
+  console.log('viewusers, users', users);
 
-  const groupUsers = users.reduce((acc, user) => {
+  const listUsers = users.reduce((acc, user) => {
     let found;
 
-    if (user.groups) {
-      found = user.groups.find(group => group.id === id);
-    } else if (user.usergroup) {
-      found = user.usergroup.groupId === id ? user : undefined;
+    if (user.lists) {
+      found = user.lists.find(list => list.id === id);
+    } else if (user.userlist) {
+      found = user.userlist.listId === id ? user : undefined;
     }
 
     if (found) {
@@ -26,8 +27,8 @@ const ViewUsers = ({navigation, route: {params}, users}) => {
 
   return (
     <View style={styles.container}>
-      {groupUsers.length > 0 ? (
-        groupUsers.map((user, idx) => {
+      {listUsers.length > 0 ? (
+        listUsers.map((user, idx) => {
           return (
             <Text key={idx} style={styles.name}>
               {user.displayName}

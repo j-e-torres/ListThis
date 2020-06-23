@@ -4,20 +4,20 @@ import {
   GET_LISTS,
   GET_TASKS,
   CREATE_TASK,
-  ADD_USER,
   GET_USERS,
   COMPLETED_TASK,
   DELETE_TASK,
   REFRESH_USERS,
   UPDATE_LIST_NOTES,
+  CREATE_TASKS,
 } from './constants';
 
 export const usersReducer = (state = [], action) => {
   let refreshingUsers;
 
-  if (action.addedGroupUser) {
+  if (action.addedListUser) {
     refreshingUsers = [...state].filter(
-      user => user.id !== action.addedGroupUser.id,
+      user => user.id !== action.addedListUser.id,
     );
   }
 
@@ -44,13 +44,25 @@ export const loginReducer = (state = {}, action) => {
 };
 
 export const listsReducer = (state = [], action) => {
-  let nonUpdatedLists;
+  let unchangedListNotes;
+  let unchangedListUsers;
 
   if (action.updatedListNotes) {
-    nonUpdatedLists = [...state].filter(
+    unchangedListNotes = [...state].filter(
       list => list.id !== action.updatedListNotes.id,
     );
   }
+
+  // if (action.updatedLists) {
+  //   // unchangedListUsers = [...state].
+  //   unchangedListUsers = [...state].filter(list => {
+  //     if (!action.updatedLists.includes(list)) {
+  //       return list;
+  //     }
+  //   });
+  // }
+
+  // console.log('listsReducer, unchangedListUsers', unchangedListUsers);
 
   switch (action.type) {
     case GET_LISTS:
@@ -60,7 +72,10 @@ export const listsReducer = (state = [], action) => {
       return [...state, action.newList];
 
     case UPDATE_LIST_NOTES:
-      return [...nonUpdatedLists, action.updatedListNotes];
+      return [...unchangedListNotes, action.updatedListNotes];
+
+    // case REFRESH_TASKS:
+    //   return [...unchangedListUsers, ...action.updatedLists];
 
     default:
       return state;
@@ -95,6 +110,9 @@ export const tasksReducer = (state = [], action) => {
 
     case DELETE_TASK:
       return [...remainingTasks];
+
+    case CREATE_TASKS:
+      return [...state, ...action.newListTasks];
 
     default:
       return state;
