@@ -81,7 +81,7 @@ class CreateList extends Component {
           value={taskName}
           style={styles.input}
           onChangeText={taskName => this.setState({taskName})}
-          placeholder="Add something to list"
+          placeholder="Add to list"
         />
 
         <TouchableOpacity style={styles.button} onPress={addToList}>

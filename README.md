@@ -12,9 +12,12 @@
 # UX issues
 
 - keyboard viewing when in textinput
+
   - editing notes
     - √ (kinda) when edit is pressed, move cursor to notes
   - create list
+
+- see list as it is being created, make listitems the create list modal
 
 # `Login/Home page`
 
