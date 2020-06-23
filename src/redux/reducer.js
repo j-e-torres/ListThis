@@ -26,7 +26,7 @@ export const usersReducer = (state = [], action) => {
       return action.users;
 
     case REFRESH_USERS:
-      return [...refreshingUsers, action.addedGroupUser];
+      return [...refreshingUsers, action.addedListUser];
 
     default:
       return state;

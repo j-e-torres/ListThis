@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapStateToProps = ({userLogin}) => ({userLogin});
+const mapStateToProps = ({userLogin, users}) => ({userLogin, users});
 
 const mapDispatchToProps = dispatch => ({
   createNewList: (groupId, newList) =>
