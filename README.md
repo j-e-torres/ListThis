@@ -2,14 +2,11 @@
 
 # listAddUser not really working.
 
-- added user shows up in viewusermodal, but does not show up in params
+- added user shows up in viewusermodal, but does not show up in list params
 
 # UX issues
 
-- editing notes
-  - √ (kinda) when edit is pressed, move cursor to notes
-- create list
-- see list as it is being created, make listitems the create list modal
+- √ (kinda) when edit is pressed, move cursor to notes
 - can use back button on android from home to go back to login screen
 - after deleting tasks, tasks still show up in UserLists
 
