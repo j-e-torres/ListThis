@@ -42,7 +42,7 @@ class CreateList extends Component {
       .then(() => this.setState({success: 'Successfully created.'}))
       .then(() =>
         setTimeout(function() {
-          navigation.goBack();
+          navigation.navigate('UserLists');
         }, 250),
       )
       .catch(e => {
@@ -139,6 +139,7 @@ const styles = StyleSheet.create({
   },
   itemLine: {
     paddingLeft: 5,
+    paddingVertical: 5,
     borderLeftWidth: 1,
     borderBottomWidth: 1,
     borderLeftColor: colors.lightPink2,

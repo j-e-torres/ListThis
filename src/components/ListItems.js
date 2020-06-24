@@ -292,7 +292,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     // alignContent: 'center',
     // justifyContent: 'space-between',
-    flex: 1,
+    // flex: 1,
+    paddingVertical: 5,
   },
 
   button: {
