@@ -7,7 +7,6 @@ import {
   TouchableOpacity,
   ScrollView,
   TextInput,
-  KeyboardAvoidingView,
 } from 'react-native';
 
 import {connect} from 'react-redux';
@@ -252,7 +251,7 @@ const completed = bool =>
   StyleSheet.create({
     task: {
       flex: 3,
-      fontSize: 25,
+      fontSize: 18,
       color: bool === true ? colors.lightGrey : colors.lightBlack,
       textDecorationLine: bool === true ? 'line-through' : 'none',
     },
@@ -293,7 +292,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     // alignContent: 'center',
     // justifyContent: 'space-between',
-    flex: 1,
+    // flex: 1,
+    paddingVertical: 5,
   },
 
   button: {

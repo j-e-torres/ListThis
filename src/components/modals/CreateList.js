@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {Component} from 'react';
 import {
   View,
@@ -5,6 +6,7 @@ import {
   TextInput,
   StyleSheet,
   TouchableOpacity,
+  ScrollView,
 } from 'react-native';
 
 import {connect} from 'react-redux';
@@ -21,6 +23,7 @@ class CreateList extends Component {
       tasks: [],
       success: '',
       error: '',
+      editing: false,
     };
   }
 
@@ -39,7 +42,7 @@ class CreateList extends Component {
       .then(() => this.setState({success: 'Successfully created.'}))
       .then(() =>
         setTimeout(function() {
-          navigation.goBack();
+          navigation.navigate('UserLists');
         }, 250),
       )
       .catch(e => {
@@ -48,49 +51,81 @@ class CreateList extends Component {
   };
 
   render() {
-    const {success, error, taskName} = this.state;
+    const {success, error, taskName, tasks} = this.state;
     const {createList, addToList} = this;
 
     return (
       <View style={styles.container}>
-        {success.length > 0 && (
-          <View>
-            <Text style={styles.success}>{success}</Text>
+        <ScrollView
+          keyboardShouldPersistTaps="always"
+          contentContainerStyle={{flexGrow: 1}}>
+          {success.length > 0 && (
+            <View>
+              <Text style={styles.success}>{success}</Text>
+            </View>
+          )}
+
+          {error.length > 0 && (
+            <View>
+              {error.map((e, idx) => {
+                return (
+                  <Text style={styles.error} key={idx}>
+                    {e}
+                  </Text>
+                );
+              })}
+            </View>
+          )}
+
+          <View style={{flex: 1}}>
+            <TextInput
+              style={styles.input}
+              onChangeText={listName => this.setState({listName})}
+              placeholder="List name"
+            />
           </View>
-        )}
 
-        {error.length > 0 && (
-          <View>
-            {error.map((e, idx) => {
-              return (
-                <Text style={styles.error} key={idx}>
-                  {e}
-                </Text>
-              );
-            })}
+          <View style={{flex: 2}}>
+            {tasks.length > 0 && (
+              <ScrollView contentContainerStyle={{flexGrow: 1}}>
+                {tasks.map((task, idx) => {
+                  return (
+                    <View key={idx} style={styles.itemLine}>
+                      <Text style={styles.item}>{task.taskName}</Text>
+                    </View>
+                  );
+                })}
+              </ScrollView>
+            )}
           </View>
-        )}
 
-        <TextInput
-          style={styles.input}
-          onChangeText={listName => this.setState({listName})}
-          placeholder="List name"
-        />
+          <View
+            style={{
+              flex: 1,
+              flexDirection: 'row',
+            }}>
+            <View style={{flex: 2}}>
+              <TextInput
+                value={taskName}
+                style={styles.input}
+                onChangeText={task => this.setState({taskName: task})}
+                placeholder="Item"
+              />
+            </View>
 
-        <TextInput
-          value={taskName}
-          style={styles.input}
-          onChangeText={taskName => this.setState({taskName})}
-          placeholder="Add to list"
-        />
+            <View style={{flex: 1}}>
+              <TouchableOpacity style={styles.button} onPress={addToList}>
+                <Text style={styles.buttonText}>Add</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
 
-        <TouchableOpacity style={styles.button} onPress={addToList}>
-          <Text style={styles.buttonText}>Add to list</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.button} onPress={createList}>
-          <Text style={styles.buttonText}>Done with List</Text>
-        </TouchableOpacity>
+          <View style={{flex: 1}}>
+            <TouchableOpacity style={styles.button} onPress={createList}>
+              <Text style={styles.buttonText}>Done with List</Text>
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
       </View>
     );
   }
@@ -102,7 +137,24 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     padding: '5%',
   },
+  itemLine: {
+    paddingLeft: 5,
+    paddingVertical: 5,
+    borderLeftWidth: 1,
+    borderBottomWidth: 1,
+    borderLeftColor: colors.lightPink2,
+    borderBottomColor: colors.lightGreyBlue2,
+    flexDirection: 'row',
+    alignItems: 'center',
+    // flex: 1,
+  },
+  item: {
+    flex: 1,
+    fontSize: 18,
+    color: colors.lightBlack,
+  },
   input: {
+    // flex: 1,
     height: 50,
     marginVertical: 10,
     padding: 4,
@@ -116,6 +168,7 @@ const styles = StyleSheet.create({
     color: colors.lightBlack,
   },
   button: {
+    flexShrink: 1,
     alignItems: 'center',
     padding: 10,
     borderRadius: borders.borderRadius50,
@@ -124,8 +177,9 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   buttonText: {
+    // flex: 1,
     color: colors.lightOrange,
-    fontSize: 25,
+    fontSize: 18,
   },
   error: {
     padding: '1%',
