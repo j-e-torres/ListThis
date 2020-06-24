@@ -39,6 +39,7 @@ class SignUp extends Component {
 
     return signUp({username, displayName, password})
       .then(() => authenticate())
+      .then(() => this.setState({username: '', password: '', displayName: ''}))
       .then(() => navigation.navigate('MainStackScreen'))
       .catch(e => this.setState({error: e.response.data.errors}));
   };
