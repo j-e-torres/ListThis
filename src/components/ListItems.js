@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   ScrollView,
   TextInput,
+  KeyboardAvoidingView,
 } from 'react-native';
 
 import {connect} from 'react-redux';
@@ -98,7 +99,10 @@ class ListItems extends Component {
 
     return (
       <View style={styles.panelContainer}>
-        {notesEditable === false && (
+        <ScrollView
+          // nestedScrollEnabled={true}
+          keyboardShouldPersistTaps="always"
+          contentContainerStyle={{flexGrow: 1}}>
           <View style={{flex: 4}}>
             <View style={{flex: 1}}>
               <View style={{flex: 1}}>
@@ -159,7 +163,10 @@ class ListItems extends Component {
 
             <View style={{flex: 3}}>
               {sortByCompleted.length > 0 ? (
-                <ScrollView contentContainerStyle={{flexGrow: 1}}>
+                <ScrollView
+                  nestedScrollEnabled={true}
+                  style={{height: 200}}
+                  contentContainerStyle={{flexGrow: 1}}>
                   {sortByCompleted.map((task, idx) => {
                     return (
                       <View key={idx} style={styles.itemLine}>
@@ -205,43 +212,44 @@ class ListItems extends Component {
               )}
             </View>
           </View>
-        )}
 
-        <View style={styles.footer}>
-          <View style={styles.footerHeaderContainer}>
-            <Text style={styles.footerHeader}>Notes</Text>
+          <View style={styles.footer}>
+            <View style={styles.footerHeaderContainer}>
+              <Text style={styles.footerHeader}>Notes</Text>
 
-            {notesEditable ? (
-              <View style={styles.iconContainer}>
-                <TouchableOpacity onPress={_updateListNotes} style={{flex: 1}}>
-                  <Icon name="check" size={25} color={colors.lightBlack} />
+              {notesEditable ? (
+                <View style={styles.iconContainer}>
+                  <TouchableOpacity
+                    onPress={_updateListNotes}
+                    style={{flex: 1}}>
+                    <Icon name="check" size={25} color={colors.lightBlack} />
+                  </TouchableOpacity>
+
+                  <TouchableOpacity onPress={handleEditable} style={{flex: 1}}>
+                    <Icon name="cross" size={25} color={colors.lightBlack} />
+                  </TouchableOpacity>
+                </View>
+              ) : (
+                <TouchableOpacity
+                  onPress={handleEditable}
+                  style={{flex: 1, alignItems: 'center'}}>
+                  <Icon name="pencil" size={25} color={colors.lightBlack} />
                 </TouchableOpacity>
+              )}
+            </View>
 
-                <TouchableOpacity onPress={handleEditable} style={{flex: 1}}>
-                  <Icon name="cross" size={25} color={colors.lightBlack} />
-                </TouchableOpacity>
-              </View>
-            ) : (
-              <TouchableOpacity
-                onPress={handleEditable}
-                style={{flex: 1, alignItems: 'center'}}>
-                <Icon name="pencil" size={25} color={colors.lightBlack} />
-              </TouchableOpacity>
-            )}
+            <View style={{flex: 3}}>
+              <TextInput
+                ref={editNotes}
+                numberOfLines={1}
+                style={styles.footerContent}
+                value={currentListNotes}
+                editable={notesEditable}
+                onChangeText={text => this.setState({currentListNotes: text})}
+              />
+            </View>
           </View>
-
-          <View style={{flex: 3}}>
-            <TextInput
-              ref={editNotes}
-              // autoFocus={notesEditable ? true : false}
-              numberOfLines={10}
-              style={styles.footerContent}
-              value={currentListNotes}
-              editable={notesEditable}
-              onChangeText={text => this.setState({currentListNotes: text})}
-            />
-          </View>
-        </View>
+        </ScrollView>
       </View>
     );
   }
@@ -271,6 +279,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.white,
     padding: '4%',
+    // height: '200px',
     // justifyContent: 'space-between',
   },
 
@@ -353,8 +362,9 @@ const styles = StyleSheet.create({
   footerContent: {
     color: colors.lightBlack,
     fontSize: typography.font20,
-    // flex: 1,
     textAlignVertical: 'top',
+    paddingHorizontal: 20,
+    flex: 1,
   },
 });
 

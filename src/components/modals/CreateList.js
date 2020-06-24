@@ -29,8 +29,13 @@ class CreateList extends Component {
 
   addToList = () => {
     const {taskName, tasks} = this.state;
+    this.setState({error: ''});
 
-    this.setState({tasks: [...tasks, {taskName}], taskName: ''});
+    if (taskName.length < 1) {
+      this.setState({error: ["Can't add empty item"]});
+    } else {
+      this.setState({tasks: [...tasks, {taskName}], taskName: ''});
+    }
   };
 
   createList = () => {
@@ -87,7 +92,10 @@ class CreateList extends Component {
 
           <View style={{flex: 2}}>
             {tasks.length > 0 && (
-              <ScrollView contentContainerStyle={{flexGrow: 1}}>
+              <ScrollView
+                // style={{height: 75}}
+                nestedScrollEnabled={true}
+                contentContainerStyle={{flexGrow: 1}}>
                 {tasks.map((task, idx) => {
                   return (
                     <View key={idx} style={styles.itemLine}>
