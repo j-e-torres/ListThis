@@ -8,7 +8,6 @@ import {colors} from '../../styles';
 
 const ViewUsers = ({navigation, route: {params}, users}) => {
   const {id} = params;
-  console.log('viewusers, users', users);
 
   const listUsers = users.reduce((acc, user) => {
     let found;

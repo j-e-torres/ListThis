@@ -33,6 +33,7 @@ class ListItems extends Component {
       notesEditable: false,
       currentListNotes: listNotes,
     };
+    this.editNotes = React.createRef();
   }
 
   _updateListNotes = () => {
@@ -56,6 +57,8 @@ class ListItems extends Component {
     notesEditable
       ? this.setState({notesEditable: false})
       : this.setState({notesEditable: true});
+
+    this.editNotes.current.focus();
   };
 
   _completeTask = task => {
@@ -80,100 +83,129 @@ class ListItems extends Component {
     const {id, listOwner, users} = params;
     const {currentListNotes, notesEditable} = this.state;
 
-    console.log('listItems.js, params', params);
-    // console.log('listItems.js, users', users);
-
     const listTasks = tasks.filter(task => task.listId === id);
     const sortByCompleted = listTasks.sort((a, b) =>
       a.completed > b.completed ? 1 : -1,
     );
 
-    const {_completeTask, _deleteTask, _updateListNotes, handleEditable} = this;
+    const {
+      _completeTask,
+      _deleteTask,
+      _updateListNotes,
+      handleEditable,
+      editNotes,
+    } = this;
 
     return (
       <View style={styles.panelContainer}>
-        <View style={{flex: 1}}>
-          <View style={{flex: 1}}>
-            <View style={styles.iconHeader}>
-              <TouchableOpacity
-                style={{justifyContent: 'center', alignItems: 'center'}}
-                onPress={() => navigation.navigate('CreateTaskModal', {id})}>
-                <Icon name="add-to-list" size={40} color={colors.lightBlack} />
-                <Text style={{color: colors.lightBlack}}>Create Task</Text>
-              </TouchableOpacity>
+        {notesEditable === false && (
+          <View style={{flex: 4}}>
+            <View style={{flex: 1}}>
+              <View style={{flex: 1}}>
+                <View style={styles.iconHeader}>
+                  <TouchableOpacity
+                    style={{
+                      flex: 1,
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                    }}
+                    onPress={() =>
+                      navigation.navigate('CreateTaskModal', {id})
+                    }>
+                    <Icon
+                      name="add-to-list"
+                      size={40}
+                      color={colors.lightBlack}
+                    />
+                    <Text style={{color: colors.lightBlack}}>Create Task</Text>
+                  </TouchableOpacity>
 
-              {userLogin.username === listOwner && (
-                <TouchableOpacity
-                  style={{justifyContent: 'center', alignItems: 'center'}}
-                  onPress={() =>
-                    navigation.navigate('ListAddUserModal', {
-                      listId: id,
-                      userId: userLogin.id,
-                      users: users,
-                    })
-                  }>
-                  <Icon name="add-user" size={40} color={colors.lightBlack} />
-                  <Text style={{color: colors.lightBlack}}>Add User</Text>
-                </TouchableOpacity>
+                  {userLogin.username === listOwner && (
+                    <TouchableOpacity
+                      style={{
+                        flex: 1,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                      }}
+                      onPress={() =>
+                        navigation.navigate('ListAddUserModal', {
+                          listId: id,
+                          userId: userLogin.id,
+                          users: users,
+                        })
+                      }>
+                      <Icon
+                        name="add-user"
+                        size={40}
+                        color={colors.lightBlack}
+                      />
+                      <Text style={{color: colors.lightBlack}}>Add User</Text>
+                    </TouchableOpacity>
+                  )}
+
+                  <TouchableOpacity
+                    style={{
+                      flex: 1,
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                    }}
+                    onPress={() => navigation.navigate('ViewUsersModal', {id})}>
+                    <Icon name="users" size={40} color={colors.lightBlack} />
+                    <Text style={{color: colors.lightBlack}}>View Users</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </View>
+
+            <View style={{flex: 3}}>
+              {sortByCompleted.length > 0 ? (
+                <ScrollView contentContainerStyle={{flexGrow: 1}}>
+                  {sortByCompleted.map((task, idx) => {
+                    return (
+                      <View key={idx} style={styles.itemLine}>
+                        <Text style={completed(task.completed).task}>
+                          {task.taskName}
+                        </Text>
+
+                        {task.completed === true ? (
+                          <Text style={completed(task.completed).taskOwner} />
+                        ) : (
+                          <View style={styles.iconContainer}>
+                            <TouchableOpacity
+                              onPress={() => _completeTask(task)}
+                              style={completed(task.completed).taskOwner}>
+                              <Text>
+                                <Icon
+                                  name="circle"
+                                  size={20}
+                                  color={colors.lightBlack}
+                                />
+                              </Text>
+                            </TouchableOpacity>
+
+                            <TouchableOpacity
+                              onPress={() => _deleteTask(task)}
+                              style={completed(task.completed).taskOwner}>
+                              <Text>
+                                <Icon
+                                  name="cross"
+                                  size={20}
+                                  color={colors.lightBlack}
+                                />
+                              </Text>
+                            </TouchableOpacity>
+                          </View>
+                        )}
+                      </View>
+                    );
+                  })}
+                </ScrollView>
+              ) : (
+                <Text style={styles.noTasks}>No tasks created yet</Text>
               )}
-
-              <TouchableOpacity
-                style={{justifyContent: 'center', alignItems: 'center'}}
-                onPress={() => navigation.navigate('ViewUsersModal', {id})}>
-                <Icon name="users" size={40} color={colors.lightBlack} />
-                <Text style={{color: colors.lightBlack}}>View Users</Text>
-              </TouchableOpacity>
             </View>
           </View>
-        </View>
-
-        <View style={{flex: 3}}>
-          {sortByCompleted.length > 0 ? (
-            <ScrollView contentContainerStyle={{flexGrow: 1}}>
-              {sortByCompleted.map((task, idx) => {
-                return (
-                  <View key={idx} style={styles.itemLine}>
-                    <Text style={completed(task.completed).task}>
-                      {task.taskName}
-                    </Text>
-
-                    {task.completed === true ? (
-                      <Text style={completed(task.completed).taskOwner} />
-                    ) : (
-                      <View style={styles.iconContainer}>
-                        <TouchableOpacity
-                          onPress={() => _completeTask(task)}
-                          style={completed(task.completed).taskOwner}>
-                          <Text>
-                            <Icon
-                              name="circle"
-                              size={20}
-                              color={colors.lightBlack}
-                            />
-                          </Text>
-                        </TouchableOpacity>
-
-                        <TouchableOpacity
-                          onPress={() => _deleteTask(task)}
-                          style={completed(task.completed).taskOwner}>
-                          <Text>
-                            <Icon
-                              name="cross"
-                              size={20}
-                              color={colors.lightBlack}
-                            />
-                          </Text>
-                        </TouchableOpacity>
-                      </View>
-                    )}
-                  </View>
-                );
-              })}
-            </ScrollView>
-          ) : (
-            <Text style={styles.noTasks}>No tasks created yet</Text>
-          )}
-        </View>
+        )}
 
         <View style={styles.footer}>
           <View style={styles.footerHeaderContainer}>
@@ -200,6 +232,9 @@ class ListItems extends Component {
 
           <View style={{flex: 3}}>
             <TextInput
+              ref={editNotes}
+              // autoFocus={notesEditable ? true : false}
+              numberOfLines={10}
               style={styles.footerContent}
               value={currentListNotes}
               editable={notesEditable}
@@ -216,7 +251,7 @@ const completed = bool =>
   StyleSheet.create({
     task: {
       flex: 3,
-      fontSize: 25,
+      fontSize: 18,
       color: bool === true ? colors.lightGrey : colors.lightBlack,
       textDecorationLine: bool === true ? 'line-through' : 'none',
     },
@@ -257,6 +292,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     // alignContent: 'center',
     // justifyContent: 'space-between',
+    // flex: 1,
+    paddingVertical: 5,
   },
 
   button: {
@@ -277,6 +314,7 @@ const styles = StyleSheet.create({
     alignContent: 'center',
     alignItems: 'center',
     paddingBottom: '2%',
+    flex: 1,
   },
 
   noTasks: {
@@ -299,7 +337,6 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: colors.lightOrange,
     flex: 1,
-    // marginBottom: '2%',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-evenly',
@@ -316,6 +353,8 @@ const styles = StyleSheet.create({
   footerContent: {
     color: colors.lightBlack,
     fontSize: typography.font20,
+    // flex: 1,
+    textAlignVertical: 'top',
   },
 });
 

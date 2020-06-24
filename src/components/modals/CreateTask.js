@@ -40,7 +40,7 @@ class CreateTask extends Component {
       )
       .catch(e => {
         console.log('createTask, error', e);
-        this.setState({error: e});
+        this.setState({error: e.response.data.errors});
       });
   };
 

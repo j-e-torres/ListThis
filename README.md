@@ -1,37 +1,22 @@
 ### Things to do
 
-# Issues
-
-- can use back button on android from home to go back to login screen
-- fix styling when editing notes
-  - when edit is pressed, move cursor to notes
-
 # listAddUser not really working.
 
 - added user shows up in viewusermodal, but does not show up in params
-- the lists returned in listadduserthunk from user does not include user model
-- no tasks as well
 
 # UX issues
 
-- √ add multiple items to a list in one shot
-- √ no list notes in create list screen
-
-# refactoring
-
-- need to fix ViewUsers
-  - add buttons to top on ListItems.js
-
-# `Login/Home page`
-
-- √ unless user deletes own token/logout
-  - put logout button in nav
+- editing notes
+  - √ (kinda) when edit is pressed, move cursor to notes
+- create list
+- see list as it is being created, make listitems the create list modal
+- can use back button on android from home to go back to login screen
+- after deleting tasks, tasks still show up in UserLists
 
 # `Nav`
 
-- need an icon in top corner for a dropdown
-- will show groups and animate like slack from left
 - user skips Root screen if alrdy logged in with token
+- put logout button in nav
 
 # `Functionality`
 
