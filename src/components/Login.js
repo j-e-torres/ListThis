@@ -9,6 +9,8 @@ import {
   KeyboardAvoidingView,
 } from 'react-native';
 
+import Icon from 'react-native-vector-icons/Entypo';
+
 import {connect} from 'react-redux';
 import {loginUserThunk, authorizeTokenThunk} from '../redux/actions/user';
 import {colors, borders, typography} from '../styles';
@@ -20,8 +22,15 @@ class Login extends Component {
       username: '',
       password: '',
       error: [],
+      securePassword: true,
     };
   }
+
+  toggleShowPassword = () => {
+    const {securePassword} = this.state;
+
+    this.setState({securePassword: !securePassword});
+  };
 
   loginUser = () => {
     const {authenticate, navigation} = this.props;
@@ -29,17 +38,18 @@ class Login extends Component {
     const creds = {username, password};
     return loginUserThunk(creds)
       .then(() => authenticate())
+      .then(() => this.setState({username: '', password: ''}))
       .then(() => navigation.navigate('MainStackScreen'))
       .catch(e => this.setState({error: e.response.data.errors}));
   };
 
   render() {
-    const {loginUser} = this;
-    const {error} = this.state;
+    const {loginUser, toggleShowPassword} = this;
+    const {error, securePassword, username, password} = this.state;
 
     return (
       <KeyboardAvoidingView behavior="padding" style={styles.container}>
-        <View style={{flex: 20, justifyContent: 'center'}}>
+        <View style={{flex: 2, justifyContent: 'center'}}>
           <Text style={styles.title}>Welcome back</Text>
         </View>
 
@@ -53,19 +63,38 @@ class Login extends Component {
           })}
         </View>
 
-        <View style={{flex: 80}}>
+        <View style={{flex: 8}}>
           <TextInput
-            onChangeText={username => this.setState({username})}
+            onChangeText={_username => this.setState({username: _username})}
             style={styles.input}
             placeholder="Username"
+            value={username}
           />
 
-          <TextInput
-            onChangeText={password => this.setState({password})}
-            style={styles.input}
-            placeholder="Password"
-            secureTextEntry={true}
-          />
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'center',
+              alignContent: 'center',
+              alignItems: 'center',
+            }}>
+            <TextInput
+              onChangeText={_password => this.setState({password: _password})}
+              style={[styles.input, {flex: 1}]}
+              placeholder="Password"
+              secureTextEntry={securePassword}
+              value={password}
+            />
+            <TouchableOpacity
+              onPress={toggleShowPassword}
+              style={[styles.input, {justifyContent: 'center'}]}>
+              <Icon
+                name={securePassword ? 'eye' : 'eye-with-line'}
+                size={20}
+                color={colors.lightBlack}
+              />
+            </TouchableOpacity>
+          </View>
 
           <TouchableOpacity style={styles.button} onPress={loginUser}>
             <Text style={styles.buttonText}>Login</Text>
