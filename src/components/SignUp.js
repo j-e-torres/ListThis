@@ -6,8 +6,10 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
-  KeyboardAvoidingView,
+  ScrollView,
 } from 'react-native';
+
+import Icon from 'react-native-vector-icons/Entypo';
 
 import {connect} from 'react-redux';
 import {signUpThunk, authorizeTokenThunk} from '../redux/actions/user';
@@ -21,8 +23,15 @@ class SignUp extends Component {
       displayName: '',
       password: '',
       error: [],
+      securePassword: true,
     };
   }
+
+  toggleShowPassword = () => {
+    const {securePassword} = this.state;
+
+    this.setState({securePassword: !securePassword});
+  };
 
   registerUser = () => {
     const {signUp, navigation, authenticate} = this.props;
@@ -30,53 +39,78 @@ class SignUp extends Component {
 
     return signUp({username, displayName, password})
       .then(() => authenticate())
+      .then(() => this.setState({username: '', password: '', displayName: ''}))
       .then(() => navigation.navigate('MainStackScreen'))
       .catch(e => this.setState({error: e.response.data.errors}));
   };
 
   render() {
-    const {registerUser} = this;
-    const {error} = this.state;
+    const {registerUser, toggleShowPassword} = this;
+    const {error, securePassword, username, displayName, password} = this.state;
     return (
-      <KeyboardAvoidingView behavior="padding" style={styles.container}>
-        <View style={{flex: 20, justifyContent: 'center'}}>
-          <Text style={styles.title}>Create your account</Text>
-        </View>
-        <View>
-          {error.map((e, idx) => {
-            return (
-              <Text style={styles.error} key={idx}>
-                {e}
-              </Text>
-            );
-          })}
-        </View>
+      <View style={styles.container}>
+        <ScrollView
+          keyboardShouldPersistTaps="always"
+          contentContainerStyle={{flexGrow: 1}}>
+          <View style={{flex: 2, justifyContent: 'center'}}>
+            <Text style={styles.title}>Create your account</Text>
+          </View>
+          <View>
+            {error.map((e, idx) => {
+              return (
+                <Text style={styles.error} key={idx}>
+                  {e}
+                </Text>
+              );
+            })}
+          </View>
 
-        <View style={{flex: 80}}>
-          <TextInput
-            onChangeText={text => this.setState({username: text})}
-            style={styles.input}
-            placeholder="Username"
-          />
+          <View style={{flex: 8}}>
+            <TextInput
+              onChangeText={text => this.setState({username: text})}
+              style={styles.input}
+              placeholder="Username"
+              value={username}
+            />
 
-          <TextInput
-            onChangeText={text => this.setState({displayName: text})}
-            style={styles.input}
-            placeholder="Display Name"
-          />
+            <TextInput
+              onChangeText={text => this.setState({displayName: text})}
+              style={styles.input}
+              placeholder="Display Name"
+              value={displayName}
+            />
 
-          <TextInput
-            onChangeText={text => this.setState({password: text})}
-            style={styles.input}
-            placeholder="Password"
-            secureTextEntry={true}
-          />
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'center',
+                alignContent: 'center',
+                alignItems: 'center',
+              }}>
+              <TextInput
+                onChangeText={text => this.setState({password: text})}
+                style={[styles.input, {flex: 1}]}
+                placeholder="Password"
+                secureTextEntry={securePassword}
+                value={password}
+              />
+              <TouchableOpacity
+                onPress={toggleShowPassword}
+                style={[styles.input, {justifyContent: 'center'}]}>
+                <Icon
+                  name={securePassword ? 'eye' : 'eye-with-line'}
+                  size={20}
+                  color={colors.lightBlack}
+                />
+              </TouchableOpacity>
+            </View>
 
-          <TouchableOpacity style={styles.button} onPress={registerUser}>
-            <Text style={styles.buttonText}>Register</Text>
-          </TouchableOpacity>
-        </View>
-      </KeyboardAvoidingView>
+            <TouchableOpacity style={styles.button} onPress={registerUser}>
+              <Text style={styles.buttonText}>Register</Text>
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
+      </View>
     );
   }
 }
@@ -84,9 +118,10 @@ class SignUp extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     backgroundColor: 'white',
     padding: '5%',
+    alignContent: 'center',
   },
 
   buttonText: {
@@ -104,6 +139,7 @@ const styles = StyleSheet.create({
   },
 
   input: {
+    // flex: 1,
     height: 50,
     marginVertical: 10,
     padding: 4,

@@ -32,14 +32,14 @@ class CreateTask extends Component {
     const {id} = params;
 
     return createTask(id, {taskName})
-      .then(() => this.setState({success: 'Successfully created. '}))
+      .then(() => this.setState({success: 'Successfully added. '}))
       .then(() =>
         setTimeout(function() {
           navigation.goBack();
         }, 250),
       )
       .catch(e => {
-        console.log('createTask, error', e);
+        // console.log('createTask, error', e);
         this.setState({error: e.response.data.errors});
       });
   };
@@ -50,10 +50,6 @@ class CreateTask extends Component {
 
     return (
       <View style={styles.container}>
-        <View>
-          <Text style={styles.title}>Create a new task</Text>
-        </View>
-
         {success.length > 0 && (
           <View>
             <Text style={styles.success}>{success}</Text>
@@ -76,13 +72,13 @@ class CreateTask extends Component {
           <TextInput
             style={styles.input}
             onChangeText={taskName => this.setState({taskName})}
-            placeholder="Task name"
+            placeholder="Item"
           />
         </View>
 
         <View>
           <TouchableOpacity style={styles.button} onPress={_createTask}>
-            <Text style={styles.buttonText}>Create task</Text>
+            <Text style={styles.buttonText}>Add</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -93,7 +89,7 @@ class CreateTask extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     padding: '5%',
   },
   input: {
@@ -130,6 +126,7 @@ const styles = StyleSheet.create({
     padding: '1%',
     color: colors.paleGreen,
     fontSize: typography.font18,
+    textAlign: 'center',
   },
 });
 

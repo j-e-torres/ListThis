@@ -121,7 +121,7 @@ class ListItems extends Component {
                       size={40}
                       color={colors.lightBlack}
                     />
-                    <Text style={{color: colors.lightBlack}}>Create Task</Text>
+                    <Text style={{color: colors.lightBlack}}>Add</Text>
                   </TouchableOpacity>
 
                   {userLogin.username === listOwner && (
