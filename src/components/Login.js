@@ -45,7 +45,7 @@ class Login extends Component {
 
   render() {
     const {loginUser, toggleShowPassword} = this;
-    const {error, securePassword} = this.state;
+    const {error, securePassword, username, password} = this.state;
 
     return (
       <KeyboardAvoidingView behavior="padding" style={styles.container}>
@@ -65,9 +65,10 @@ class Login extends Component {
 
         <View style={{flex: 8}}>
           <TextInput
-            onChangeText={username => this.setState({username})}
+            onChangeText={_username => this.setState({username: _username})}
             style={styles.input}
             placeholder="Username"
+            value={username}
           />
 
           <View
@@ -78,10 +79,11 @@ class Login extends Component {
               alignItems: 'center',
             }}>
             <TextInput
-              onChangeText={password => this.setState({password})}
+              onChangeText={_password => this.setState({password: _password})}
               style={[styles.input, {flex: 1}]}
               placeholder="Password"
               secureTextEntry={securePassword}
+              value={password}
             />
             <TouchableOpacity
               onPress={toggleShowPassword}

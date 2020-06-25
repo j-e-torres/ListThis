@@ -46,7 +46,7 @@ class SignUp extends Component {
 
   render() {
     const {registerUser, toggleShowPassword} = this;
-    const {error, securePassword} = this.state;
+    const {error, securePassword, username, displayName, password} = this.state;
     return (
       <View style={styles.container}>
         <ScrollView
@@ -70,12 +70,14 @@ class SignUp extends Component {
               onChangeText={text => this.setState({username: text})}
               style={styles.input}
               placeholder="Username"
+              value={username}
             />
 
             <TextInput
               onChangeText={text => this.setState({displayName: text})}
               style={styles.input}
               placeholder="Display Name"
+              value={displayName}
             />
 
             <View
@@ -90,6 +92,7 @@ class SignUp extends Component {
                 style={[styles.input, {flex: 1}]}
                 placeholder="Password"
                 secureTextEntry={securePassword}
+                value={password}
               />
               <TouchableOpacity
                 onPress={toggleShowPassword}

@@ -17,7 +17,6 @@
 
 # `Functionality`
 
-- show password functionality
 - remove a user from list
 - remove yourself from a list
 - complete/delete a list
