@@ -4,6 +4,7 @@ import {
   GET_TASKS,
   COMPLETED_TASK,
   DELETE_TASK,
+  CREATE_TASKS,
 } from '../constants';
 
 const getTasks = tasks => ({
@@ -11,9 +12,9 @@ const getTasks = tasks => ({
   tasks,
 });
 
-const createTask = newTask => ({
-  type: CREATE_TASK,
-  newTask,
+const createTasks = newTasks => ({
+  type: CREATE_TASKS,
+  newTasks,
 });
 
 const completeTask = completedTask => ({
@@ -35,15 +36,15 @@ export const getTasksThunk = () => {
   };
 };
 
-export const createTaskThunk = (listId, newTask) => {
+export const createTasksThunk = (listId, tasks) => {
   return dispatch => {
     return axios
       .post(
         `https://listthisbackend.herokuapp.com/api/lists/${listId}/tasks`,
-        newTask,
+        tasks,
       )
       .then(res => res.data)
-      .then(task => dispatch(createTask(task)));
+      .then(list => dispatch(createTasks(list.tasks)));
   };
 };
 

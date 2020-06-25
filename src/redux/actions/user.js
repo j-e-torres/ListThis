@@ -6,10 +6,8 @@ import {
   REFRESH_USERS,
   CREATE_LIST,
   REFRESH_LISTS,
-  CREATE_TASKS,
+  CREATE_LIST_TASKS,
 } from '../constants';
-
-import {getTasksThunk} from './tasks';
 
 const refreshUsers = addedListUser => ({
   type: REFRESH_USERS,
@@ -21,8 +19,8 @@ const refreshLists = updatedLists => ({
   updatedLists,
 });
 
-const createTasks = newListTasks => ({
-  type: CREATE_TASKS,
+const createListTasks = newListTasks => ({
+  type: CREATE_LIST_TASKS,
   newListTasks,
 });
 
@@ -93,7 +91,7 @@ export const createListThunk = (userId, list) => {
         dispatch(refreshUsers(__list.users[0]));
         return __list;
       })
-      .then(_list_ => dispatch(createTasks(_list_.tasks)));
+      .then(_list_ => dispatch(createListTasks(_list_.tasks)));
   };
 };
 

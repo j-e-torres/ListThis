@@ -10,6 +10,7 @@ import {
   REFRESH_USERS,
   UPDATE_LIST_NOTES,
   CREATE_TASKS,
+  CREATE_LIST_TASKS,
 } from './constants';
 
 export const usersReducer = (state = [], action) => {
@@ -111,8 +112,11 @@ export const tasksReducer = (state = [], action) => {
     case DELETE_TASK:
       return [...remainingTasks];
 
-    case CREATE_TASKS:
+    case CREATE_LIST_TASKS:
       return [...state, ...action.newListTasks];
+
+    case CREATE_TASKS:
+      return [...state, ...action.newTasks];
 
     default:
       return state;
