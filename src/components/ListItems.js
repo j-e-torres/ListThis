@@ -49,7 +49,10 @@ class ListItems extends Component {
     return updateListNotes(id, {listNotes: currentListNotes})
       .then(() => this.setState({currentListNotes}))
       .then(() => this.handleEditable())
-      .catch(e => console.log(e.response.data));
+      .catch(e => {
+        console.log(e.response.data);
+        this.setState({error: e.reponse.data.errors});
+      });
   };
 
   handleEditable = () => {

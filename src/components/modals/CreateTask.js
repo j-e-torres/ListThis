@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {Component} from 'react';
 import {
   View,
@@ -5,10 +6,11 @@ import {
   StyleSheet,
   TextInput,
   TouchableOpacity,
+  ScrollView,
 } from 'react-native';
 
 import {connect} from 'react-redux';
-import {createTaskThunk} from '../../redux/actions/tasks';
+import {createTasksThunk} from '../../redux/actions/tasks';
 
 import {colors, borders, typography} from '../../styles';
 
@@ -19,19 +21,31 @@ class CreateTask extends Component {
       taskName: '',
       success: '',
       error: '',
+      tasks: [],
     };
   }
 
-  _createTask = () => {
-    const {taskName} = this.state;
+  addToList = () => {
+    const {taskName, tasks} = this.state;
+    this.setState({error: ''});
+
+    if (taskName.length < 1) {
+      this.setState({error: ["Can't add empty item"]});
+    } else {
+      this.setState({tasks: [...tasks, {taskName}], taskName: ''});
+    }
+  };
+
+  _createTasks = () => {
+    const {tasks} = this.state;
     const {
-      createTask,
+      createTasks,
       navigation,
       route: {params},
     } = this.props;
     const {id} = params;
 
-    return createTask(id, {taskName})
+    return createTasks(id, tasks)
       .then(() => this.setState({success: 'Successfully added. '}))
       .then(() =>
         setTimeout(function() {
@@ -39,48 +53,81 @@ class CreateTask extends Component {
         }, 250),
       )
       .catch(e => {
-        // console.log('createTask, error', e);
+        console.log('createTask, error', e);
         this.setState({error: e.response.data.errors});
       });
   };
 
   render() {
-    const {success, error} = this.state;
-    const {_createTask} = this;
+    const {success, error, tasks, taskName} = this.state;
+    const {_createTasks, addToList} = this;
 
     return (
       <View style={styles.container}>
-        {success.length > 0 && (
-          <View>
-            <Text style={styles.success}>{success}</Text>
+        <ScrollView
+          keyboardShouldPersistTaps="always"
+          contentContainerStyle={{flexGrow: 1}}>
+          {success.length > 0 && (
+            <View>
+              <Text style={styles.success}>{success}</Text>
+            </View>
+          )}
+
+          {error.length > 0 && (
+            <View>
+              {error.map((e, idx) => {
+                return (
+                  <Text style={styles.error} key={idx}>
+                    {e}
+                  </Text>
+                );
+              })}
+            </View>
+          )}
+
+          <View style={{flex: 1}}>
+            {tasks.length > 0 && (
+              <ScrollView
+                nestedScrollEnabled={true}
+                contentContainerStyle={{flexGrow: 1}}>
+                {tasks.map((task, idx) => {
+                  return (
+                    <View key={idx} style={styles.itemLine}>
+                      <Text style={styles.item}>{task.taskName}</Text>
+                    </View>
+                  );
+                })}
+              </ScrollView>
+            )}
           </View>
-        )}
 
-        {error.length > 0 && (
-          <View>
-            {error.map((e, idx) => {
-              return (
-                <Text style={styles.error} key={idx}>
-                  {e}
-                </Text>
-              );
-            })}
+          <View
+            style={{
+              flex: 2,
+              flexDirection: 'row',
+            }}>
+            <View style={{flex: 2}}>
+              <TextInput
+                value={taskName}
+                style={styles.input}
+                onChangeText={task => this.setState({taskName: task})}
+                placeholder="Item"
+              />
+            </View>
+
+            <View style={{flex: 1}}>
+              <TouchableOpacity style={styles.button} onPress={addToList}>
+                <Text style={styles.buttonText}>Add</Text>
+              </TouchableOpacity>
+            </View>
           </View>
-        )}
 
-        <View>
-          <TextInput
-            style={styles.input}
-            onChangeText={taskName => this.setState({taskName})}
-            placeholder="Item"
-          />
-        </View>
-
-        <View>
-          <TouchableOpacity style={styles.button} onPress={_createTask}>
-            <Text style={styles.buttonText}>Add</Text>
-          </TouchableOpacity>
-        </View>
+          <View style={{flex: 1}}>
+            <TouchableOpacity style={styles.button} onPress={_createTasks}>
+              <Text style={styles.buttonText}>Done with items</Text>
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
       </View>
     );
   }
@@ -91,6 +138,22 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-start',
     padding: '5%',
+  },
+  itemLine: {
+    paddingLeft: 5,
+    paddingVertical: 5,
+    borderLeftWidth: 1,
+    borderBottomWidth: 1,
+    borderLeftColor: colors.lightPink2,
+    borderBottomColor: colors.lightGreyBlue2,
+    flexDirection: 'row',
+    alignItems: 'center',
+    // flex: 1,
+  },
+  item: {
+    flex: 1,
+    fontSize: 18,
+    color: colors.lightBlack,
   },
   input: {
     height: 50,
@@ -131,7 +194,7 @@ const styles = StyleSheet.create({
 });
 
 const mapDispatchToProps = dispatch => ({
-  createTask: (listId, newTask) => dispatch(createTaskThunk(listId, newTask)),
+  createTasks: (listId, newTask) => dispatch(createTasksThunk(listId, newTask)),
 });
 
 export default connect(

@@ -9,6 +9,7 @@ export const REFRESH_LISTS = 'REFRESH_LISTS';
 
 export const GET_TASKS = 'GET_TASKS';
 export const CREATE_TASK = 'CREATE_TASK';
+export const CREATE_LIST_TASKS = 'CREATE_LIST_TASKS';
 export const CREATE_TASKS = 'CREATE_TASKS';
 export const COMPLETED_TASK = 'COMPLETE_TASK';
 export const DELETE_TASK = 'DELETE_TASK';
