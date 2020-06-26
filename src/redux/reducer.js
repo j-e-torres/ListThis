@@ -11,6 +11,7 @@ import {
   UPDATE_LIST_NOTES,
   CREATE_TASKS,
   CREATE_LIST_TASKS,
+  DELETE_LIST_TASK,
 } from './constants';
 
 export const usersReducer = (state = [], action) => {
@@ -47,6 +48,7 @@ export const loginReducer = (state = {}, action) => {
 export const listsReducer = (state = [], action) => {
   let unchangedListNotes;
   let unchangedListUsers;
+  let deletedListTask;
 
   if (action.updatedListNotes) {
     unchangedListNotes = [...state].filter(
@@ -54,16 +56,19 @@ export const listsReducer = (state = [], action) => {
     );
   }
 
-  // if (action.updatedLists) {
-  //   // unchangedListUsers = [...state].
-  //   unchangedListUsers = [...state].filter(list => {
-  //     if (!action.updatedLists.includes(list)) {
-  //       return list;
-  //     }
-  //   });
-  // }
+  if (action.deleteListTask) {
+    deletedListTask = [...state].map(list => {
+      const foundIndex = list.tasks.findIndex(
+        task => task.id === action.deleteListTask.id,
+      );
 
-  // console.log('listsReducer, unchangedListUsers', unchangedListUsers);
+      if (foundIndex > -1) {
+        list.tasks.splice(foundIndex, 1);
+      }
+
+      return list;
+    });
+  }
 
   switch (action.type) {
     case GET_LISTS:
@@ -75,8 +80,8 @@ export const listsReducer = (state = [], action) => {
     case UPDATE_LIST_NOTES:
       return [...unchangedListNotes, action.updatedListNotes];
 
-    // case REFRESH_TASKS:
-    //   return [...unchangedListUsers, ...action.updatedLists];
+    case DELETE_LIST_TASK:
+      return deletedListTask;
 
     default:
       return state;

@@ -1,10 +1,10 @@
 import axios from 'axios';
 import {
-  CREATE_TASK,
   GET_TASKS,
   COMPLETED_TASK,
   DELETE_TASK,
   CREATE_TASKS,
+  DELETE_LIST_TASK,
 } from '../constants';
 
 const getTasks = tasks => ({
@@ -25,6 +25,11 @@ const completeTask = completedTask => ({
 const deleteTask = deletedTask => ({
   type: DELETE_TASK,
   deletedTask,
+});
+
+const deleteTaskFromList = deleteListTask => ({
+  type: DELETE_LIST_TASK,
+  deleteListTask,
 });
 
 export const getTasksThunk = () => {
@@ -61,6 +66,7 @@ export const deleteTaskThunk = task => {
   return dispatch => {
     return axios
       .delete(`https://listthisbackend.herokuapp.com/api/tasks/${task.id}`)
-      .then(() => dispatch(deleteTask(task)));
+      .then(() => dispatch(deleteTask(task)))
+      .then(() => dispatch(deleteTaskFromList(task)));
   };
 };

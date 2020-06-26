@@ -3,6 +3,7 @@
 # listAddUser not really working.
 
 - added user shows up in viewusermodal, but does not show up in list params
+  - may have found the issue in backend .then([ ...])
 
 # UX issues
 

@@ -62,7 +62,7 @@ const UserLists = ({route: {params}, navigation, userLogin, lists}) => {
                         {list.listName}
                       </Text>
 
-                      {list.tasks && (
+                      {list.tasks.length > 0 ? (
                         <View>
                           <Text style={styles.listItems}>
                             {list.tasks[0] ? list.tasks[0].taskName : ''}
@@ -77,6 +77,10 @@ const UserLists = ({route: {params}, navigation, userLogin, lists}) => {
                               ? 'list continued...'
                               : ''}
                           </Text>
+                        </View>
+                      ) : (
+                        <View>
+                          <Text style={styles.listItems}>No Tasks</Text>
                         </View>
                       )}
                     </TouchableOpacity>
