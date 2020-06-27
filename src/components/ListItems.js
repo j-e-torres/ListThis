@@ -7,7 +7,6 @@ import {
   TouchableOpacity,
   ScrollView,
   TextInput,
-  KeyboardAvoidingView,
 } from 'react-native';
 
 import {connect} from 'react-redux';
