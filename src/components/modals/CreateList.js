@@ -27,8 +27,9 @@ class CreateList extends Component {
     };
   }
 
-  addToList = () => {
+  addToList = ({nativeEvent}) => {
     const {taskName, tasks} = this.state;
+    // console.log(nativeEvent);
     this.setState({error: ''});
 
     if (taskName.length < 1) {
@@ -43,16 +44,20 @@ class CreateList extends Component {
 
     const {listName, tasks} = this.state;
 
-    return createNewList(userLogin.id, {listName, tasks})
-      .then(() => this.setState({success: 'Successfully created.'}))
-      .then(() =>
-        setTimeout(function() {
-          navigation.navigate('UserLists');
-        }, 250),
-      )
-      .catch(e => {
-        this.setState({error: e.response.data.errors});
-      });
+    if (listName.length > 0) {
+      return createNewList(userLogin.id, {listName, tasks})
+        .then(() => this.setState({success: 'Successfully created.'}))
+        .then(() =>
+          setTimeout(function() {
+            navigation.navigate('UserLists');
+          }, 250),
+        )
+        .catch(e => {
+          this.setState({error: e.response.data.errors});
+        });
+    } else {
+      this.setState({error: ['List name cannot be empty']});
+    }
   };
 
   render() {
@@ -87,6 +92,7 @@ class CreateList extends Component {
               style={styles.input}
               onChangeText={listName => this.setState({listName})}
               placeholder="List name"
+              autoFocus={true}
             />
           </View>
 

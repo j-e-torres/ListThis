@@ -89,7 +89,7 @@ export const listsReducer = (state = [], action) => {
       return [...unchangedListNotes, action.updatedListNotes];
 
     case DELETE_LIST_TASK:
-      return deletedListTask;
+      return [...deletedListTask];
 
     case REFRESH_LISTS:
       return [...addedNewListTasks, action.updatedList];

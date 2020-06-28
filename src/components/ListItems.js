@@ -67,13 +67,18 @@ class ListItems extends Component {
   _completeTask = task => {
     const {completeTask} = this.props;
 
-    return completeTask(task.id);
+    return completeTask(task.id).catch(e => {
+      console.log('completeTask, e', e.reponse.data);
+    });
   };
 
   _deleteTask = task => {
     const {deleteTask} = this.props;
+    console.log('deleteTask, task', task);
 
-    return deleteTask(task);
+    return deleteTask(task).catch(e => {
+      console.log('deleteTask, e', e.response.data);
+    });
   };
 
   render() {
