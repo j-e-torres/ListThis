@@ -5,6 +5,7 @@ import {
   DELETE_TASK,
   CREATE_TASKS,
   DELETE_LIST_TASK,
+  REFRESH_LISTS,
 } from '../constants';
 
 const getTasks = tasks => ({
@@ -32,6 +33,11 @@ const deleteTaskFromList = deleteListTask => ({
   deleteListTask,
 });
 
+const refreshLists = updatedList => ({
+  type: REFRESH_LISTS,
+  updatedList,
+});
+
 export const getTasksThunk = () => {
   return dispatch => {
     return axios
@@ -49,7 +55,11 @@ export const createTasksThunk = (listId, tasks) => {
         tasks,
       )
       .then(res => res.data)
-      .then(list => dispatch(createTasks(list.tasks)));
+      .then(list => {
+        dispatch(createTasks(list.tasks));
+        return list;
+      })
+      .then(_list => dispatch(refreshLists(_list)));
   };
 };
 

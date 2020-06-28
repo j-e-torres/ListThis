@@ -40,7 +40,10 @@ class Login extends Component {
       .then(() => authenticate())
       .then(() => this.setState({username: '', password: ''}))
       .then(() => navigation.navigate('MainStackScreen'))
-      .catch(e => this.setState({error: e.response.data.errors}));
+      .catch(e => {
+        console.log('login e', e.response.data);
+        this.setState({error: e.response.data.errors});
+      });
   };
 
   render() {
