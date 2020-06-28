@@ -5,18 +5,12 @@ import {
   GET_USERS,
   REFRESH_USERS,
   CREATE_LIST,
-  REFRESH_LISTS,
   CREATE_LIST_TASKS,
 } from '../constants';
 
 const refreshUsers = addedListUser => ({
   type: REFRESH_USERS,
   addedListUser,
-});
-
-const refreshLists = updatedLists => ({
-  type: REFRESH_LISTS,
-  updatedLists,
 });
 
 const createListTasks = newListTasks => ({

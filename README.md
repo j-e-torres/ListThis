@@ -3,13 +3,13 @@
 # listAddUser not really working.
 
 - added user shows up in viewusermodal, but does not show up in list params
-  - may have found the issue in backend .then([ ...])
+  - may have found the issue in backend listadduser .then([ ...])
 
-# UX issues
+# issues
 
 - √ (kinda) when edit is pressed, move cursor to notes
 - can use back button on android from home to go back to login screen
-- after deleting tasks, tasks still show up in UserLists
+- if deleting too quickly, causes error
 
 # `Nav`
 

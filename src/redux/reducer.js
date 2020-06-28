@@ -12,6 +12,7 @@ import {
   CREATE_TASKS,
   CREATE_LIST_TASKS,
   DELETE_LIST_TASK,
+  REFRESH_LISTS,
 } from './constants';
 
 export const usersReducer = (state = [], action) => {
@@ -49,6 +50,13 @@ export const listsReducer = (state = [], action) => {
   let unchangedListNotes;
   let unchangedListUsers;
   let deletedListTask;
+  let addedNewListTasks;
+
+  if (action.updatedList) {
+    addedNewListTasks = [...state].filter(
+      list => list.id !== action.updatedList.id,
+    );
+  }
 
   if (action.updatedListNotes) {
     unchangedListNotes = [...state].filter(
@@ -81,8 +89,10 @@ export const listsReducer = (state = [], action) => {
       return [...unchangedListNotes, action.updatedListNotes];
 
     case DELETE_LIST_TASK:
-      return deletedListTask;
+      return [...deletedListTask];
 
+    case REFRESH_LISTS:
+      return [...addedNewListTasks, action.updatedList];
     default:
       return state;
   }
