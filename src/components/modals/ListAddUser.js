@@ -90,6 +90,7 @@ class ListAddUser extends Component {
               this.setState({username: username.toLowerCase()})
             }
             placeholder="Username"
+            autoFocus={true}
           />
         </View>
 

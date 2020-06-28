@@ -112,6 +112,7 @@ class CreateTask extends Component {
                 style={styles.input}
                 onChangeText={task => this.setState({taskName: task})}
                 placeholder="Item"
+                autoFocus={true}
               />
             </View>
 
