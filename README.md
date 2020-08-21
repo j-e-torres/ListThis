@@ -9,7 +9,7 @@
 
 - √ (kinda) when edit is pressed, move cursor to notes
 - can use back button on android from home to go back to login screen
-- if deleting too quickly, causes error
+- if deleting too quickly, get an error for null in backend
 
 # `Nav`
 
