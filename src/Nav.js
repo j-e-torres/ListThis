@@ -2,6 +2,11 @@ import React, {Component} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 
+import AsyncStorage from '@react-native-community/async-storage';
+
+import {connect} from 'react-redux';
+import {authorizeTokenThunk} from './redux/actions/user';
+
 // import {Animated, Easing} from 'react-native';
 
 import {
@@ -89,12 +94,42 @@ const MainStackScreen = () => {
   );
 };
 
-export default class Nav extends Component {
+class Nav extends Component {
+  constructor() {
+    super();
+
+    this.state = {
+      loggedIn: false,
+    };
+  }
+
+  async componentDidMount() {
+    const {authenticate} = this.props;
+
+    console.log('nav componentdidmount props', this.props);
+
+    try {
+      let token = await AsyncStorage.getItem('token');
+
+      if (token) {
+        return authenticate()
+          .then(() => this.setState({loggedIn: true}))
+          .catch(e => {
+            console.log('nav authenticate', e.response.data);
+          });
+      }
+    } catch (err) {
+      throw err;
+    }
+  }
+
   render() {
+    const {loggedIn} = this.state;
+
     return (
       <NavigationContainer>
         <RootStack.Navigator
-          initialRouteName="RootNav"
+          // initialRouteName={loggedIn ? 'MainStackScreen' : 'RootNav'}
           mode="modal"
           screenOptions={{
             headerStyle: {
@@ -106,42 +141,21 @@ export default class Nav extends Component {
             },
             headerTitleAlign: 'center',
           }}>
-          <RootStack.Screen
-            name="MainStackScreen"
-            component={MainStackScreen}
-            options={{headerShown: false}}
-          />
-          <RootStack.Screen
-            name="RootNav"
-            component={RootNav}
-            options={{
-              headerShown: false,
-              // transitionSpec: {
-              //   open: {
-              //     duration: 750,
-              //     easing: Easing.out(Easing.poly(4)),
-              //     timing: Animated.timing,
-              //     useNativeDriver: true,
-              //   },
-              // },
-              // screenInterpolator: sceneProps => {
-              //   const {layout, position, scene} = sceneProps;
-              //   const thisSceneIndex = scene.index;
-
-              //   const height = layout.initHeight;
-              //   const translateY = position.interpolate({
-              //     inputRange: [
-              //       thisSceneIndex - 1,
-              //       thisSceneIndex,
-              //       thisSceneIndex + 1,
-              //     ],
-              //     outputRange: [height, 0, 0],
-              //   });
-
-              //   return {transform: [{translateY}]};
-              // },
-            }}
-          />
+          {loggedIn ? (
+            <RootStack.Screen
+              name="MainStackScreen"
+              component={MainStackScreen}
+              options={{headerShown: false}}
+            />
+          ) : (
+            <RootStack.Screen
+              name="RootNav"
+              component={RootNav}
+              options={{
+                headerShown: false,
+              }}
+            />
+          )}
 
           <RootStack.Screen
             name="ViewUsersModal"
@@ -179,3 +193,12 @@ export default class Nav extends Component {
     );
   }
 }
+
+const mapDispatchToProps = dispatch => ({
+  authenticate: () => dispatch(authorizeTokenThunk()),
+});
+
+export default connect(
+  null,
+  mapDispatchToProps,
+)(Nav);

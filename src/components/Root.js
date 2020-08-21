@@ -16,24 +16,6 @@ class Root extends Component {
     };
   }
 
-  async componentDidMount() {
-    const {authenticate, navigation} = this.props;
-
-    try {
-      let token = await AsyncStorage.getItem('token');
-
-      if (token) {
-        return authenticate()
-          .then(() => navigation.navigate('MainStackScreen'))
-          .catch(e => {
-            console.log('authenticate Root', e.response.data);
-          });
-      }
-    } catch (err) {
-      throw err;
-    }
-  }
-
   render() {
     const {navigation} = this.props;
 
