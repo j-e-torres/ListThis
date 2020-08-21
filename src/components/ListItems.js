@@ -74,7 +74,7 @@ class ListItems extends Component {
 
   _deleteTask = task => {
     const {deleteTask} = this.props;
-    console.log('deleteTask, task', task);
+    // console.log('deleteTask, task', task);
 
     return deleteTask(task).catch(e => {
       console.log('deleteTask, e', e.response.data);
