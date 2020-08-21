@@ -4,11 +4,6 @@ import {createStackNavigator} from '@react-navigation/stack';
 
 import AsyncStorage from '@react-native-community/async-storage';
 
-import {connect} from 'react-redux';
-import {authorizeTokenThunk} from './redux/actions/user';
-
-// import {Animated, Easing} from 'react-native';
-
 import {
   Home,
   ListItems,
@@ -20,6 +15,7 @@ import {
   CreateList,
   ListAddUser,
   CreateTask,
+  IsLoading,
 } from './components';
 
 const MainStack = createStackNavigator();
@@ -94,29 +90,24 @@ const MainStackScreen = () => {
   );
 };
 
-class Nav extends Component {
+export default class Nav extends Component {
   constructor() {
     super();
 
     this.state = {
       loggedIn: false,
+      loading: true,
     };
   }
 
   async componentDidMount() {
-    const {authenticate} = this.props;
-
-    console.log('nav componentdidmount props', this.props);
-
     try {
       let token = await AsyncStorage.getItem('token');
 
       if (token) {
-        return authenticate()
-          .then(() => this.setState({loggedIn: true}))
-          .catch(e => {
-            console.log('nav authenticate', e.response.data);
-          });
+        this.setState({loggedIn: true, loading: false});
+      } else {
+        this.setState({loading: false});
       }
     } catch (err) {
       throw err;
@@ -124,12 +115,15 @@ class Nav extends Component {
   }
 
   render() {
-    const {loggedIn} = this.state;
+    const {loading} = this.state;
+
+    if (loading) {
+      return <IsLoading />;
+    }
 
     return (
       <NavigationContainer>
         <RootStack.Navigator
-          // initialRouteName={loggedIn ? 'MainStackScreen' : 'RootNav'}
           mode="modal"
           screenOptions={{
             headerStyle: {
@@ -141,21 +135,19 @@ class Nav extends Component {
             },
             headerTitleAlign: 'center',
           }}>
-          {loggedIn ? (
-            <RootStack.Screen
-              name="MainStackScreen"
-              component={MainStackScreen}
-              options={{headerShown: false}}
-            />
-          ) : (
-            <RootStack.Screen
-              name="RootNav"
-              component={RootNav}
-              options={{
-                headerShown: false,
-              }}
-            />
-          )}
+          <RootStack.Screen
+            name="MainStackScreen"
+            component={MainStackScreen}
+            options={{headerShown: false}}
+          />
+
+          <RootStack.Screen
+            name="RootNav"
+            component={RootNav}
+            options={{
+              headerShown: false,
+            }}
+          />
 
           <RootStack.Screen
             name="ViewUsersModal"
@@ -193,12 +185,3 @@ class Nav extends Component {
     );
   }
 }
-
-const mapDispatchToProps = dispatch => ({
-  authenticate: () => dispatch(authorizeTokenThunk()),
-});
-
-export default connect(
-  null,
-  mapDispatchToProps,
-)(Nav);
