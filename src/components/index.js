@@ -4,7 +4,13 @@ import ListItems from './ListItems';
 import Root from './Root';
 import Login from './Login';
 import SignUp from './SignUp';
-import {ViewUsers, CreateList, ListAddUser, CreateTask} from './modals';
+import {
+  ViewUsers,
+  CreateList,
+  ListAddUser,
+  CreateTask,
+  IsLoading,
+} from './modals';
 
 export {
   UserLists,
@@ -17,4 +23,5 @@ export {
   CreateList,
   ListAddUser,
   CreateTask,
+  IsLoading,
 };

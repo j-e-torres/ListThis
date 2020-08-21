@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 
-// import {Animated, Easing} from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 
 import {
   Home,
@@ -15,6 +15,7 @@ import {
   CreateList,
   ListAddUser,
   CreateTask,
+  IsLoading,
 } from './components';
 
 const MainStack = createStackNavigator();
@@ -90,11 +91,39 @@ const MainStackScreen = () => {
 };
 
 export default class Nav extends Component {
+  constructor() {
+    super();
+
+    this.state = {
+      loggedIn: false,
+      loading: true,
+    };
+  }
+
+  async componentDidMount() {
+    try {
+      let token = await AsyncStorage.getItem('token');
+
+      if (token) {
+        this.setState({loggedIn: true, loading: false});
+      } else {
+        this.setState({loading: false});
+      }
+    } catch (err) {
+      throw err;
+    }
+  }
+
   render() {
+    const {loading} = this.state;
+
+    if (loading) {
+      return <IsLoading />;
+    }
+
     return (
       <NavigationContainer>
         <RootStack.Navigator
-          initialRouteName="RootNav"
           mode="modal"
           screenOptions={{
             headerStyle: {
@@ -111,35 +140,12 @@ export default class Nav extends Component {
             component={MainStackScreen}
             options={{headerShown: false}}
           />
+
           <RootStack.Screen
             name="RootNav"
             component={RootNav}
             options={{
               headerShown: false,
-              // transitionSpec: {
-              //   open: {
-              //     duration: 750,
-              //     easing: Easing.out(Easing.poly(4)),
-              //     timing: Animated.timing,
-              //     useNativeDriver: true,
-              //   },
-              // },
-              // screenInterpolator: sceneProps => {
-              //   const {layout, position, scene} = sceneProps;
-              //   const thisSceneIndex = scene.index;
-
-              //   const height = layout.initHeight;
-              //   const translateY = position.interpolate({
-              //     inputRange: [
-              //       thisSceneIndex - 1,
-              //       thisSceneIndex,
-              //       thisSceneIndex + 1,
-              //     ],
-              //     outputRange: [height, 0, 0],
-              //   });
-
-              //   return {transform: [{translateY}]};
-              // },
             }}
           />
 
