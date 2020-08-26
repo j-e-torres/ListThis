@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 
-import AsyncStorage from '@react-native-community/async-storage';
+// import AsyncStorage from '@react-native-community/async-storage';
 
 import {
   Home,
@@ -15,7 +15,7 @@ import {
   CreateList,
   ListAddUser,
   CreateTask,
-  IsLoading,
+  // IsLoading,
 } from './components';
 
 const MainStack = createStackNavigator();
@@ -100,26 +100,26 @@ export default class Nav extends Component {
     };
   }
 
-  async componentDidMount() {
-    try {
-      let token = await AsyncStorage.getItem('token');
+  // async componentDidMount() {
+  //   try {
+  //     let token = await AsyncStorage.getItem('token');
 
-      if (token) {
-        this.setState({loggedIn: true, loading: false});
-      } else {
-        this.setState({loading: false});
-      }
-    } catch (err) {
-      throw err;
-    }
-  }
+  //     if (token) {
+  //       this.setState({loggedIn: true, loading: false});
+  //     } else {
+  //       this.setState({loading: false});
+  //     }
+  //   } catch (err) {
+  //     throw err;
+  //   }
+  // }
 
   render() {
-    const {loading} = this.state;
+    // const {loading} = this.state;
 
-    if (loading) {
-      return <IsLoading />;
-    }
+    // if (loading) {
+    //   return <IsLoading />;
+    // }
 
     return (
       <NavigationContainer>
