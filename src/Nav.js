@@ -91,36 +91,7 @@ const MainStackScreen = () => {
 };
 
 export default class Nav extends Component {
-  constructor() {
-    super();
-
-    this.state = {
-      loggedIn: false,
-      loading: true,
-    };
-  }
-
-  // async componentDidMount() {
-  //   try {
-  //     let token = await AsyncStorage.getItem('token');
-
-  //     if (token) {
-  //       this.setState({loggedIn: true, loading: false});
-  //     } else {
-  //       this.setState({loading: false});
-  //     }
-  //   } catch (err) {
-  //     throw err;
-  //   }
-  // }
-
   render() {
-    // const {loading} = this.state;
-
-    // if (loading) {
-    //   return <IsLoading />;
-    // }
-
     return (
       <NavigationContainer>
         <RootStack.Navigator
