@@ -95,6 +95,7 @@ export default class Nav extends Component {
     return (
       <NavigationContainer>
         <RootStack.Navigator
+          initialRouteName="RootNav"
           mode="modal"
           screenOptions={{
             headerStyle: {
