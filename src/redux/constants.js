@@ -5,6 +5,7 @@ export const REFRESH_USERS = 'REFRESH_USERS';
 export const GET_LISTS = 'GET_LISTS';
 export const CREATE_LIST = 'CREATE_LIST';
 export const UPDATE_LIST_NOTES = 'UPDATE_LIST_NOTES';
+export const UPDATE_LISTS = 'UPDATE_LISTS';
 export const REFRESH_LISTS = 'REFRESH_LISTS';
 
 export const GET_TASKS = 'GET_TASKS';

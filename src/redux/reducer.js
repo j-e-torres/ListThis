@@ -52,6 +52,9 @@ export const listsReducer = (state = [], action) => {
   let deletedListTask;
   let addedNewListTasks;
 
+  // if (action.updatedLists) {
+  // }
+
   if (action.updatedList) {
     addedNewListTasks = [...state].filter(
       list => list.id !== action.updatedList.id,

@@ -42,7 +42,7 @@ class SignUp extends Component {
       .then(() => this.setState({username: '', password: '', displayName: ''}))
       .then(() => navigation.navigate('MainStackScreen'))
       .catch(e => {
-        console.log('signup e', e.reponse.data);
+        console.log('signup e', e.response.data);
         this.setState({error: e.response.data.errors});
       });
   };

@@ -10,8 +10,11 @@ import {
 } from 'react-native';
 
 import {connect} from 'react-redux';
+
 import {completeTaskThunk, deleteTaskThunk} from '../redux/actions/tasks';
+
 import {updateListNotesThunk} from '../redux/actions/lists';
+import {getTasksThunk} from '../redux/actions/tasks';
 
 import Icon from 'react-native-vector-icons/Entypo';
 
@@ -74,7 +77,7 @@ class ListItems extends Component {
 
   _deleteTask = task => {
     const {deleteTask} = this.props;
-    console.log('deleteTask, task', task);
+    // console.log('deleteTask, task', task);
 
     return deleteTask(task).catch(e => {
       console.log('deleteTask, e', e.response.data);
@@ -87,6 +90,7 @@ class ListItems extends Component {
       navigation,
       tasks,
       userLogin,
+      fetchTasks,
     } = this.props;
     const {id, listOwner, users} = params;
     const {currentListNotes, notesEditable} = this.state;
@@ -114,6 +118,20 @@ class ListItems extends Component {
             <View style={{flex: 1}}>
               <View style={{flex: 1}}>
                 <View style={styles.iconHeader}>
+                  <TouchableOpacity
+                    style={{
+                      flex: 1,
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                    }}
+                    onPress={
+                      () => fetchTasks()
+                      // .then(() => navigation.navi)
+                    }>
+                    <Icon name="ccw" size={40} color={colors.lightBlack} />
+                    <Text style={{color: colors.lightBlack}}>Refresh</Text>
+                  </TouchableOpacity>
+
                   <TouchableOpacity
                     style={{
                       flex: 1,
@@ -382,6 +400,7 @@ const mapDispatchToProps = dispatch => ({
   deleteTask: task => dispatch(deleteTaskThunk(task)),
   updateListNotes: (listId, listNotes) =>
     dispatch(updateListNotesThunk(listId, listNotes)),
+  fetchTasks: () => dispatch(getTasksThunk()),
 });
 
 export default connect(
