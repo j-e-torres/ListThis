@@ -15,7 +15,15 @@ import {connect} from 'react-redux';
 import {stickyNotesTiltDegrees} from '../helperFunctions';
 import {colors, borders, typography} from '../styles';
 
-const UserLists = ({route: {params}, navigation, userLogin, lists}) => {
+import {getListsThunk} from '../redux/actions/lists';
+
+const UserLists = ({
+  route: {params},
+  navigation,
+  userLogin,
+  lists,
+  fetchLists,
+}) => {
   const {id} = userLogin;
 
   const userLists = lists.reduce((acc, list) => {
@@ -34,7 +42,20 @@ const UserLists = ({route: {params}, navigation, userLogin, lists}) => {
     <View style={styles.panelContainer}>
       <View style={styles.iconHeader}>
         <TouchableOpacity
-          style={{justifyContent: 'center', alignItems: 'center'}}
+          style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+          onPress={
+            () => fetchLists()
+            // .then(() => navigation.navi)
+          }>
+          <Icon name="ccw" size={40} color={colors.lightBlack} />
+          <Text style={{color: colors.lightBlack}}>Refresh</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}
           onPress={() => navigation.navigate('CreateListModal', {id})}>
           <Icon name="add-to-list" size={40} color={colors.lightBlack} />
           <Text style={{color: colors.lightBlack}}>New List</Text>
@@ -167,4 +188,11 @@ const mapStateToProps = ({userLogin, lists}) => {
   };
 };
 
-export default connect(mapStateToProps)(UserLists);
+const mapDispatchToProps = dispatch => ({
+  fetchLists: () => dispatch(getListsThunk()),
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(UserLists);
